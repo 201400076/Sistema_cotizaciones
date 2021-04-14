@@ -21,15 +21,17 @@
             <td class="primeraFila">Cantidad</td>
             <td class="primeraFila">Unidad</td>
             <td class="primeraFila">Detalle</td>
-            <td class="primeraFila">Adjuntar Arhivo</td>
+            
         </tr>
         <td><input type="text" name='nro' size='10' class='centrado'></td>
         <td><input type="text" name='cantidad' size='10' class='centrado'></td>
         <td><input type="text" name='unidad' size='10' class='centrado'></td>
         <td><input type="text" name='detalle' size='10' class='centrado'></td>
-        <td><input type="submit" name='adjuntar' size='10' value='adjuntar' class='centrado'></td>
         <td><input type="submit" name='Insertar' size='10' value='insertar'class='centrado'></td>
     </table>
+    <div>
+    <a> Justifiacion</a><input type="submit" value="adjuntar">
+    </div>
     <input type="submit">
     <h1>Proyecto</h1>
 </body>
