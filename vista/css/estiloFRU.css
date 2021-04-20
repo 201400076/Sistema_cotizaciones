@@ -1,0 +1,94 @@
+*{
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center; 
+}
+
+body {
+    background-color: #cccbcb;
+}
+  
+input[type=text], input[type=email], input[type=password], select{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    resize: vertical;
+}
+
+.seleccion{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    resize: vertical;
+}
+  
+label {
+    padding: 10px 10px 10px 0;
+    display: inline-block;
+}
+
+input[type=submit] {
+    width: 90%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: solid;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+  
+.container {
+    border-style: solid;
+    width: 700px;
+
+    background-color: #f2f2f2;
+    padding: 15px;
+    align-content: center;
+    margin: 0 auto;
+    margin-top: 150px;
+}
+
+
+.col-50 {
+    float: left;
+    width: 50%;
+    margin-top: 6px;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+  
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+  
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+.container, .col-25, .col-75, .col50, input[type=submit],input[type=button] {
+    width: 100%;
+    margin-top: 0;
+    }
+}
