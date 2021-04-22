@@ -1,5 +1,5 @@
 <?php
-require_once('../modelo/unidad.php');
+require_once('../modelo/unidadAdministrativa.php');
 class UnidadControlador extends Unidad {
     private $modelo;
     public function __construct()
@@ -14,7 +14,7 @@ class UnidadControlador extends Unidad {
             "monto_tope" => $_POST['monto_tope']
         ];
         $unidad = $unidad->register("unidad", $dato);
-        header("location:http://proyecto/formulariounidadadministrativa.php");
+        header("location:http://proyecto/Sistema_cotizaciones/vista/formulariounidadadministrativa.php");
     }
 }
 ?>

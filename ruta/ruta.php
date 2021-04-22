@@ -1,5 +1,5 @@
 <?php
-    require_once('../controlador/unidadControlador.php');
+    require_once('../controladores/unidadControlador.php');
     if (isset($_GET['ruta'])) {
         $metodo = $_GET['ruta'];
         $UnidadControlador = new UnidadControlador('.');

@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="/css/miestilo.css">
+	<link rel="stylesheet" href="../librerias/css/miestilo.css">
 
 </head>
 
@@ -24,7 +24,7 @@
 				<h2><span class="glyphicon glyphicon-edit"></span> Nueva Unidad Administrativa</h2>
 				<hr>
 				<div class="unidadAdministrativa">
-					<form class="form-horizontal" method="post" action="/ruta/ruta.php?ruta=register" role="form" id="unidad_administrativa">
+					<form class="form-horizontal" method="post" action="/Sistema_cotizaciones/ruta/ruta.php?ruta=register" role="form" id="unidad_administrativa">
 						<div class="row">
 							<div class="col-md-12">
 								<label for="unidad_administrativa" >Nombre Unidad Administrativa:</label>
