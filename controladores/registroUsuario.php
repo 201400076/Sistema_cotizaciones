@@ -77,8 +77,6 @@
         return false;   
     }
 
-    //(!preg_match("/^(?!-+)[a-zA-Z-ñáéíóú\s]*$/"))
-
     function isEmail($corr){
         if(filter_var($corr, FILTER_VALIDATE_EMAIL)){
             return true;
@@ -105,11 +103,11 @@
         }
     }
 
-    function usuarioExiste($usu){
+    function usuarioExiste($usuario){
         global $estadoconexion;
 
-        $stmt = $estadoconexion->prepare("SELECT id_usuario FROM usuarios WHERE usuario = ? LIMIT 1");
-        $stmt->bind_param("s", $usu);
+        $stmt = $estadoconexion->prepare("SELECT id_usuarios FROM usuarios WHERE usuario = ? LIMIT 1");
+        $stmt->bind_param("s", $usuario);
         $stmt->execute();
         $stmt->store_result();
         $num = $stmt->num_rows;
@@ -134,7 +132,6 @@
         $stmt->bind_param("sssss", $nom, $apell, $corr, $usu, $pass);
 
         if($stmt->execute()){
-            //echo $stmt->insert_id;
             return $estadoconexion->insert_id;
         }else{
             return 0;
@@ -144,8 +141,6 @@
     function mostrarErrores($errors){
         echo count($errors);
         if(count($errors) > 0){
-            //echo "<div id='error' class='alert alert-danger' role='alert'><a href='#' onclick=\"ShowHide('error');\">[X]</a><ul>";
-
             foreach($errors as $error){
                 echo "<li>".$error."</li>";
             }
@@ -153,5 +148,4 @@
             echo "</div>";
         }
     }
-
 ?>
