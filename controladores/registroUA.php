@@ -1,5 +1,5 @@
 <?php
-    require '../configuraciones/conexion.php';
+    require '../conexion.php';
     $conn = new Conexion();
     $estadoconexion = $conn->getConn();
 
