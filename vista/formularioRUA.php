@@ -5,7 +5,7 @@
 	<title>Formulario Registro de Usuario Unidad Administrativa</title>
 	<meta charset="utf-8"/>
 	<meta name="description"/>
-    <link rel="stylesheet" type="text/css" href="../vista/css/estiloFRU.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../css/estiloFRU.css" media="screen" />
 	<style>
         
         input[type=button]{
@@ -38,7 +38,7 @@
                     <label for="nombres">Nombre(s):</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="nombres" name="nombres" placeholder="" >
+                    <input type="text" id="nombres" name="nombres" placeholder="Nombre(s) *">
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                     <label for="apellidos">Apellido(s):</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="apellidos" name="apellidos" placeholder="" >
+                    <input type="text" id="apellidos" name="apellidos" placeholder="Apellido(s) *" >
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
                     <label for="correo">Correo electrónico:</label>
                 </div>
                 <div class="col-75">
-                    <input type="email" id="correo" name="correo" placeholder="" >
+                    <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com" >
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                     <label for="usuario">Usuario:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="usuario" name="usuario" placeholder="" >
+                    <input type="text" id="usuario" name="usuario" placeholder="Al menos 6 caracteres" >
                 </div>
             </div>
 
@@ -102,7 +102,7 @@
                     <label for="password">Contraseña:</label>
                 </div>
                 <div class="col-75">
-                    <input type="password" id="password" name="password" placeholder="" >
+                    <input type="password" id="password" name="password" placeholder="Entre 8-16, al menos(1 mayuscula,1 minuscula,1 numero" >
                 </div>
             </div>
 
@@ -111,7 +111,7 @@
                     <label for="password_con">Confirmar Contraseña:</label>
                 </div>
                 <div class="col-75">
-                    <input type="password" id="password_con" name="password_con" placeholder="" >
+                    <input type="password" id="password_con" name="password_con" placeholder="Repita la contrasena" >
                 </div>
             </div>
 

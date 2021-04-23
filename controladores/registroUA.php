@@ -4,6 +4,7 @@
     $estadoconexion = $conn->getConn();
 
     $errors = array();
+    $error = "";
 
     if(!empty($_POST)){
 
@@ -16,52 +17,61 @@
         $password = $_POST['password'];
         $password_con = $_POST['password_con'];
 
-        //validaciones
-        if(!isNull($nombres, $apellidos, $correo, $unidad_administrativa, $rol, $usuario, $password, $password_con)){
-            $alerta = "Debe llenar todos los campos";
-            echo "<p class='error'>* ".$alerta."</p>";
-            $errors[] = $alerta;
+        if(empty($nombres) || empty($apellidos) || empty($correo) || empty($unidad_administrativa) || empty($rol) || empty($usuario) || empty($password)){
+            $error = "* Todos los campos son obligatorios";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(!validarPatron($nombres, "/^[a-zA-Z-ñáéíóú, ]*$/")){
+            $error = "* Nombre no Valido";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(!validarPatron($apellidos, "/^[a-zA-Z-ñáéíóú, ]*$/")){
+            $error = "* Apellido no Valido";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(!validarPatron($correo, "/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/")){
+            $error = "* Correo no Valido";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(usuarioExiste($usuario)){
+            $error = "El nombre de usuario ".$usuario. " ya existe";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(!validarPatron($usuario, "/^[a-zA-Z]((\.|_|-)?[a-zA-Z0-9]+){5}$/D")){
+            $error = "* Usuario no Valido";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(!validarPatron($password, "/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/")){
+            $error = "* Contrasena no Valida";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if (!validarPassword($password, $password_con)){
+            $error = "Las contrasenas no coinciden";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
         }
 
-        if(!(validarCadena($nombres))){
-            echo "<p class='error'>* Nombre no Valido</p>";
-            $errors[] = "Nombre no Valido";
-        }
-
-        if(!isEmail($correo)){
-            $errors[] = "Direccion de correo invalida";
-        }
-
-        if(!validarPassword($password, $password_con)){
-            $errors[] = "Las contrasenas no coinciden";
-            echo "<p class='error'>* Las contrasenas no coinciden</p>";
-        }
-
-        if(usuarioExiste($usuario)){
-            $errors[] = "El nombre de usuario $usuario ya existe";
-        }
-        
         if(count($errors) == 0){ //no errores
             $pass_hash = hashPassword($password);
 
             $registro = registraUsuario($nombres, $apellidos, $correo, $unidad_administrativa, $rol, $usuario, $pass_hash);
             if($registro > 0){
-                //header('Location: ../index.php');
-                
                 echo '<script language="javascript">alert("Usuario Registrado..!!");window.location.href="../index.php"</script>';
                 exit;        
             }else{
-                //$errors[] = "Error al registrar";
+                echo '<script language="javascript">window.location.href="../index.php"</script>';
+                $error = "Error al registrar";
+                echo "<p class='error'>".$error."</p>";
+                $errors[] = $error;
             }    
-
         }
         //echo mostrarErrores($errors);
     }
 
-    function validarCadena($str){
+    function validarPatron($str, $patron){
         $str = trim($str);
         if ($str !== '') {
-            $pattern = '/^[a-zA-Z, ]*$/';
+            $pattern = $patron;
             if (preg_match($pattern, $str)) {
                 return true;   
             }
