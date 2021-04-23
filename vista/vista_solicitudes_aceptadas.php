@@ -1,3 +1,7 @@
+<?php
+	include_once("layouts/navegacion.php");
+
+?>
 <div class="container-fluid">
 
 
@@ -14,37 +18,50 @@
 							<div class="table-responsive">
 								<table class="table">
 									<tbody>
-										<tr class="warning">
+										<tr align="center"class="warning">
 											<th>#</th>
 											<th>Fecha</th>
-											<th>Detalle</th>
+											<th>Solicitante</th>
+											<!-- <th>Detalle</th>
 											<th>Departamento</th>
-											<th>Unidad</th>
+											<th>Unidad</th> -->
 											<th>Estado</th>
 											
-											<th class="text-right">Acciones</th>
+											<!-- <th class="text-right">Acciones</th> -->
 
 										</tr>
-										<tr>
-											<td>10</td>
-											<td>07-04-2021</td>
-											<td>
+
+										<?php
+											$i=0;
+											foreach($dato as $valor):
+											do{
+										
+										?>
+										<tr align="center">
+											<td><?php echo $valor[$i]['id_solicitudes'] ?></td>
+											<td><?php echo $valor[$i]['fecha']?></td>
+
+											<td><?php echo $valor[$i]['nombres']?></td>
+
+											<!-- <td>
 												Compra de Sillas<br>
-												<small>PDF<br></small>
-												<small><i class="glyphicon glyphicon-envelope"></i> Archivo</small>
+												<div class="text-center">
+ 													<a href=""> <img src="../recursos/imagenes/pdf.png" class="rounded" alt="chania" width="25" heigth="25"></a>
+												</div>
 											</td>
 											<td>
 												Inf - Sistemas
 											</td>
 											
-											<td>MEMI</td>
+											<td>MEMI</td> -->
+
 											<td>
-												<span class="label label-success">Aceptado</span>
+												<span class="label label-success"><?php echo $valor[$i]['estado']?></span>
 
 											</td>
 											
 
-											<td class="text-right">
+											<!-- <td class="text-right">
 												<div class="btn-group dropleft">
 													<button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														Acciones
@@ -56,9 +73,19 @@
 														<a class="dropdown-item" href="#" title="Borrar cotización" onclick="eliminar('230')"><i class="fa fa-trash"></i> Eliminar</a>
 													</div>
 												</div>
-											</td>
+											</td> -->
 
 										</tr>
+
+
+										<?php
+										$i++;
+										}
+										while($i<sizeof($valor));
+
+										endforeach;
+										?>
+										
 									</tbody>
 								</table>
 								<div class="float-right">
@@ -83,3 +110,8 @@
 
 
 </div>
+
+<?php
+include_once("layouts/footer.php");
+
+?>
