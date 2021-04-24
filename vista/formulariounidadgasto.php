@@ -9,7 +9,7 @@ include_once("layouts/navegacion.php");
             <h2><span class="glyphicon glyphicon-edit"></span> Nueva Unidad De Gasto</h2>
             <hr>
             <div class="unidadGasto">
-                <form class="form-horizontal" method="post" action="../ruta/ruta.php?ruta=register" role="form" id="unidad_gasto">
+                <form class="form-horizontal" method="post" action="../ruta/rutaGasto.php?ruta=register" role="form" id="unidad_gasto">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="nombre_gasto">Nombre Unidad de Gasto:</label>
