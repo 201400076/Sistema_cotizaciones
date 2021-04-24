@@ -1,26 +1,39 @@
 <?php
+require_once("../configuraciones/conexion.php");
     class Unidad{
         private $modelo;
-        private $database;
+        private $conexion;
+        private $conexion_activo;
+        
         public function __construct()
         {
             $this->modelo = array();
-            $this->database = new PDO('mysql:host=localhost;dbname=proyecto', 'root', '');
+            $this->conexion = new Conexion();
+            $this->conexion_activo = $this->conexion->getConn();
         }
-        public function register($tabla, $dato){
-            var_dump($dato);
-            $nombre = $dato["nombre"];
-            $facultad = $dato["facultad"];
-            $monto_tope = $dato["monto_tope"];
+        public function register($dato){
             
-            $consulta = 'insert into '.$tabla.' (id, nombre_unidad, facultad, monto_tope) values(null, "'.$nombre.'", "'.$facultad.'", "'.$monto_tope.'")';
-            $resultado = $this->database->query($consulta);
-            if ($resultado){
-                return true;
+            $id_facultad = $dato["id_facultad"];
+            $nombre_unidad = $dato["nombre_unidad"];
+            $monto_tope = 0;
+            
+            $stmt = $this->conexion_activo->prepare("INSERT INTO unidad_administrativa (nombre_unidad, id_facultad, monto_tope) VALUES(?,?,?)");
+            $stmt->bind_param("sii", $nombre_unidad, $id_facultad, $monto_tope);
+            if ($stmt->execute()) {
+                return $this->conexion_activo->insert_id;
             } else {
-                return false;
+                return 0;
             }
-            
+
         }
+
+        public function getUnidadAdministrativa(){
+            $stmt = $this->conexion_activo->prepare("SELECT * FROM unidad_administrativa");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $this->modelo = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return $this->modelo;
+        }    
     }
 ?>

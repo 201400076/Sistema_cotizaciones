@@ -14,7 +14,18 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../librerias/css/miestilo.css">
-
+	<style>
+		input:valid,
+		textarea:valid {
+			border: 1px solid green;
+			border-radius: 4px;
+		}
+		input:invalid,
+		textarea:invalid {
+			border: 1px solid red;
+			border-radius: 4px;
+		}
+	</style>
 </head>
 
 <body>
@@ -23,31 +34,39 @@
 			<div class="col-md-12">
 				<h2><span class="glyphicon glyphicon-edit"></span> Nueva Unidad Administrativa</h2>
 				<hr>
+					<a href="../ruta/rutaGasto.php?ruta=unidad">Ir a Unidad Gasto:</a>
+				<hr>
 				<div class="unidadAdministrativa">
-					<form class="form-horizontal" method="post" action="/Sistema_cotizaciones/ruta/ruta.php?ruta=register" role="form" id="unidad_administrativa">
+					<form class="form-horizontal" method="post" action="../ruta/ruta.php?ruta=register" role="form" id="unidad_administrativa">
 						<div class="row">
 							<div class="col-md-12">
-								<label for="unidad_administrativa" >Nombre Unidad Administrativa:</label>
+								<label for="id_facultad">Facultad:</label>
 								<div class="form-group">
-									<input name="unidad_administrativa" type="text" class="form-control" id="unidad_administrativa">
+									<select class="form-control" name="id_facultad" id="id_facultad">
+										<option value="">Seleccionar facultad...</option>   
+										<?php
+											foreach ($facultades as $facultad) {
+												?>
+												<option value="<?php echo $facultad['id_facultad']?>"><?php echo $facultad['nombre_facultad']?></option>
+
+												<?php 
+											}
+										?>
+									</select>
 								</div>
 							</div>
+
 							<div class="col-md-12">
-								<label for="facultad" >Facultad:</label>
+								<label for="nombre_unidad">Nombre Unidad Administrativa:</label>
 								<div class="form-group">
-									<input name="facultad" type="text" class="form-control" id="facultad">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<label for="monto_tope" >Monto Tope Bs:</label>
-								<div class="form-group">
-									<input name="monto_tope" type="text" class="form-control" id="monto_tope">
+									<input name="nombre_unidad" type="text" class="form-control" id="nombre_unidad" required pattern="[A-Za-z]{4,40}"
+           title="Letras, Tamaño mínimo: 4. Tamaño máximo: 40" >
 								</div>
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="text-center">
-								<button type="submit" class="btn btn-info" >
+								<button type="submit" class="btn btn-info">
 									Registrar
 								</button>
 							</div>

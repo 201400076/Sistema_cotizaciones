@@ -1,24 +1,27 @@
 <?php
+require_once("../configuraciones/conexion.php");
     class UnidadGasto{
         private $modelo;
-        private $database;
+        private $conexion;
+        private $conexion_activo;
+
         public function __construct()
         {
             $this->modelo = array();
-            $this->database = new PDO('mysql:host=localhost;dbname=proyecto', 'root', '');
+            $this->conexion = new Conexion();
+            $this->conexion_activo = $this->conexion->getConn();
         }
-        public function register($tabla, $dato){
-            //var_dump($dato);
-            $nombre = $dato["nombre"];
-            $unidad_administrativa = $dato["unidad_administrativa"];
-            $consulta = 'insert into '.$tabla.'(id, nombre_unidad_gasto, nombre_unidad_administrativa) values(null, "'.$nombre.'", "'.$unidad_administrativa.'")';
-            $resultado = $this->database->query($consulta);
-            if ($resultado){
-                return true;
-            } else {
-                return false;
-            }
+        public function register($dato){
+            $id_unidad = $dato["id_unidad"];
+            $nombre_gasto = $dato["nombre_gasto"];
             
+            $stmt = $this->conexion_activo->prepare("INSERT INTO unidad_gasto (id_unidad, nombre_gasto) VALUES(?,?)");
+            $stmt->bind_param("is", $id_unidad, $nombre_gasto);
+            if ($stmt->execute()) {
+                return $this->conexion_activo->insert_id;
+            } else {
+                return 0;
+            }
         }
     }
 ?>

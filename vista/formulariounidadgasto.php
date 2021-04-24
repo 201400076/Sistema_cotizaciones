@@ -13,8 +13,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/miestilo.css">
+    <link rel="stylesheet" href="../librerias/css/miestilogasto.css">
+    <style>
+        input:valid,
+        textarea:valid {
+            border: 1px solid green;
+            border-radius: 4px;
+        }
 
+        input:invalid,
+        textarea:invalid {
+            border: 1px solid red;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,32 +35,39 @@
             <div class="col-md-12">
                 <h2><span class="glyphicon glyphicon-edit"></span> Nueva Unidad De Gasto</h2>
                 <hr>
-                <div class="unidad">
-                    <form class="form-horizontal" method="post" action="/ruta/ruta.php?ruta=register" role="form" id="unidad_gasto">
+                <div class="unidadGasto">
+                    <form class="form-horizontal" method="post" action="../ruta/rutaGasto.php?ruta=register" role="form" id="unidad_gasto">
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="unidad_gasto" >Nombre Unidad de Gasto:</label>
+                                <label for="nombre_gasto">Nombre Unidad de Gasto:</label>
                                 <div class="form-group">
-                                    <input name="nombre_unidad_gasto" type="text" class="form-control" id="nombre_unidad_gasto">
+                                    <input name="nombre_gasto" type="text" class="form-control" id="nombre_gasto" required pattern="[A-Za-z]{4,40}" title="Letras, Tamaño mínimo: 4. Tamaño máximo: 40">
+
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <label for="unidad_administrativa" >Unidad Administrativa:</label>
+                                <label for="id_facultad">Unidad Administrativa:</label>
                                 <div class="form-group">
-                                    <select name="nombre_unidad_administrativa" type="text" class="form-control" id="nombre_unidad_administrativa" onchange="load(1);">
-                                        <option value="">Selecciona Unidad Administrativa</option>
-                                        <option value="sistemas">sistemas</option>
-                                        <option value="informatica">informatica</option>
+                                    <select class="form-control" name="id_unidad" id="id_unidad">
+                                        <option value="">Seleccionar Unidad Administrativa...</option>
+                                        <?php
+                                        foreach ($unidades as $unidad) {
+                                        ?>
+                                            <option value="<?php echo $unidad['id_unidad'] ?>"><?php echo $unidad['nombre_unidad'] ?></option>
+
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
-
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-info">
-                                    Registrar
-                                </button>
+                            <br>
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info">
+                                        Registrar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
