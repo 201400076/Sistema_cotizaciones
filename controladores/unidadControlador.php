@@ -42,6 +42,16 @@ class UnidadControlador extends Unidad {
         
         header("location: ../ruta/ruta.php");
     }
+    public static function unidadControlador(){
+        $unidad = new Unidad();
+        $unidades = $unidad->getUnidadAdministrativa();
+        require_once("../vista/formulariounidadgasto.php");
+    }
+    public static function listarControlador(){
+        $unidad = new Unidad();
+        $unidades = $unidad->getUnidadAdministrativa();
+        require_once("../vista/listarUnidadesAdministrativas.php");
+    }
     
 }
 ?>

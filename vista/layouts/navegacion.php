@@ -23,6 +23,8 @@
     <!--alerts CSS -->
  
     <link href="../librerias/css/topbar.css">
+    <link rel="stylesheet" href="../librerias/css/miestilo.css">
+    <link rel="stylesheet" href="../librerias/css/miestilogasto.css">
 
 </head>
 
