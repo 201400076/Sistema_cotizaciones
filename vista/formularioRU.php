@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Formulario Registro de Usuario Unidad Administrativa</title>
+	<title>Formulario Registro de Usuario</title>
 	<meta charset="utf-8"/>
 	<meta name="description"/>
     <link rel="stylesheet" type="text/css" href="../vista/css/estiloFRU.css" media="screen" />
@@ -30,7 +30,7 @@
 
     <div class="container">
         
-        <h2>Formulario de Registro de Usuario de Unidad Administrativa</h2>
+        <h2>Formulario de Registro de Usuario</h2>
         
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
             <div class="row">
@@ -38,7 +38,7 @@
                     <label for="nombres">Nombre(s):</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="nombres" name="nombres" placeholder="" >
+                    <input type="text" id="nombres" name="nombres" placeholder="Nombre(s) *">
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                     <label for="apellidos">Apellido(s):</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="apellidos" name="apellidos" placeholder="" >
+                    <input type="text" id="apellidos" name="apellidos" placeholder="Apellido(s) *" >
                 </div>
             </div>
 
@@ -56,35 +56,7 @@
                     <label for="correo">Correo electrónico:</label>
                 </div>
                 <div class="col-75">
-                    <input type="email" id="correo" name="correo" placeholder="" >
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-25">
-                    <label for="unidad_administrativa">Unidad Administrativa:</label>
-                </div>
-                <div class="col-75">
-                    <select class="seleccion" id="unidad_administrativa" name="unidad_administrativa" >
-                        <option selected hidden value="">Unidades Administrativas</option>
-                        <option class="seleccion" value="unidad administrativa 1">Unidad Administrativa 1</option>
-                        <option class="seleccion" value="unidad administrativa 2">Unidad Administrativa 2</option>
-                        <option class="seleccion" value="unidad administrativa 3">Unidad Administrativa 3</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-25">
-                    <label for="rol">Rol:</label>
-                </div>
-                <div class="col-75">
-                    <select id="rol" name="rol" >
-                        <option selected hidden value="">Roles</option>
-                        <option value="Rol 1">Rol 1</option>
-                        <option value="Rol 2">Rol 2</option>
-                        <option value="Rol 3">Rol 3</option>
-                    </select>
+                    <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com" >
                 </div>
             </div>
 
@@ -93,7 +65,7 @@
                     <label for="usuario">Usuario:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="usuario" name="usuario" placeholder="" >
+                    <input type="text" id="usuario" name="usuario" placeholder="Al menos 6 caracteres" >
                 </div>
             </div>
 
@@ -102,7 +74,7 @@
                     <label for="password">Contraseña:</label>
                 </div>
                 <div class="col-75">
-                    <input type="password" id="password" name="password" placeholder="" >
+                    <input type="password" id="password" name="password" placeholder="Entre 8-16, al menos(1 mayuscula,1 minuscula,1 numero" >
                 </div>
             </div>
 
@@ -111,7 +83,7 @@
                     <label for="password_con">Confirmar Contraseña:</label>
                 </div>
                 <div class="col-75">
-                    <input type="password" id="password_con" name="password_con" placeholder="" >
+                    <input type="password" id="password_con" name="password_con" placeholder="Repita la contrasena" >
                 </div>
             </div>
 
@@ -125,7 +97,7 @@
             </div>
 
             <?php
-                include("../controladores/registroUA.php");
+                include("../controladores/registroUsuario.php");
             ?>
 
         </form>   

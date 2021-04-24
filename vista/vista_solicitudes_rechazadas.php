@@ -1,3 +1,6 @@
+<?php
+	include_once("layouts/navegacion.php");
+?>
 <div class="container-fluid">
 
 
@@ -17,18 +20,28 @@
 										<tr align="center"class="warning">
 											<th>#</th>
 											<th>Fecha</th>
-											<th>Detalle</th>
+											<th>Solicitante</th>
+											<!-- <th>Detalle</th>
 											<th>Departamento</th>
-											<th>Unidad</th>
+											<th>Unidad</th> -->
 											<th>Estado</th>
 											
-											<th class="text-right">Acciones</th>
+											<!-- <th class="text-right">Acciones</th> -->
 
 										</tr>
+
+										<?php
+											$i=0;
+											foreach($dato as $valor):	
+											do{										
+										?>
+
 										<tr align="center">
-											<td>10</td>
-											<td>07-04-2021</td>
-											<td>
+											<td><?php echo $valor[$i]['id_solicitudes']?></td>
+											<td><?php echo $valor[$i]['fecha']?></td>
+
+											<td><?php echo $valor[$i]['nombres']?></td>
+											<!-- <td>
 												Compra de Sillas<br>
 												
 												<div class="text-center">
@@ -39,12 +52,12 @@
 												Inf - Sistemas
 											</td>
 											
-											<td>MEMI</td>
+											<td>MEMI</td> -->
 											<td>
-												<span class="label label-danger">Rechazado</span>
+												<span class="label label-danger"><?php echo $valor[$i]['estado']?></span>
+											</td>
 
-
-											<td class="text-right">
+											<!-- <td class="text-right">
 												<div class="btn-group dropleft">
 													<button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														Acciones
@@ -56,9 +69,17 @@
 														<a class="dropdown-item" href="#" title="Borrar cotización" onclick="eliminar('230')"><i class="fa fa-trash"></i> Eliminar</a>
 													</div>
 												</div>
-											</td>
+											</td> -->
 
 										</tr>
+
+										<?php
+										$i++;
+										}
+										while($i<sizeof($valor));
+										endforeach;
+										?>
+
 									</tbody>
 								</table>
 								<div class="float-right">
@@ -82,3 +103,7 @@
 
 
 </div>
+<?php
+	include_once("layouts/footer.php");
+
+?>

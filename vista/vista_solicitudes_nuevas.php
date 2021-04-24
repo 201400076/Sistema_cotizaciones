@@ -1,9 +1,10 @@
 
-
-<div class="container-fluid">
+<?php
+	include_once("layouts/navegacion.php");
 	
-
-
+	
+?>	
+<div class="container-fluid">
 
 	<div class="row">
 		<div class="col-md-12">
@@ -18,37 +19,51 @@
 							<div class="table-responsive">
 								<table class="table">
 									<tbody>
-										<tr class="warning">
+										<tr align="center"class="warning">
 											<th>#</th>
 											<th>Fecha</th>
-											<th>Detalle</th>
+											<!-- <th>Detalle</th>
 											<th>Departamento</th>
-											<th>Unidad</th>
+											<th>Unidad</th> -->
+
+											<th>Solicitante</th>
 											<th>Estado</th>
 										
-											<th class="text-right">Acciones</th>
+											<!-- <th class="text-right">Acciones</th> -->
 
 										</tr>
-										<tr>
-											<td>10</td>
-											<td>07-04-2021</td>
-											<td>
-												Compra de Sillas<br>
-												<small>PDF<br></small>
-												<small><i class="glyphicon glyphicon-envelope"></i> Archivo</small>
+								
+										<?php
+										$i=0;
+										foreach($dato as $valor):
+										do{
+									
+										
+										?>
+										<tr align="center">
+											<td><?php echo($valor[$i]['id_solicitudes'])?></td>
+											<td><?php echo($valor[$i]['fecha'])?></td>
+
+											<td><?php echo($valor[$i]['nombres'])?></td>	
+
+											<!-- <td>
+												<?php echo($valor[0]['detalle'])?><br>
+												<div class="text-center">
+ 													<a href=""> <img src="../recursos/imagenes/pdf.png" class="rounded" alt="chania" width="25" heigth="25"></a>
+												</div>
 											</td>
 											<td>
 												Inf - Sistemas
 											</td>
 											
-											<td>MEMI</td>
+											<td>MEMI</td> -->
 											<td>
-												<span class="label label-warning">Pendiente</span>
+												<span class="label label-warning"><?php echo($valor[$i]['estado'])?></span>
 
 											</td>
 											
 
-											<td class="text-right">
+											<!-- <td class="text-right">
 												<div class="btn-group dropleft">
 													<button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														Acciones
@@ -59,9 +74,22 @@
 							
 													</div>
 												</div>
-											</td>
+											</td> -->
 
 										</tr>
+
+
+									<!-- ################segunda fila manual de momento -->
+								
+
+
+										<?php
+										$i++;
+										}
+										while($i<sizeof($valor));
+										endforeach;	
+																			
+										?>
 									</tbody>
 								</table>
 								<div class="float-right">
@@ -81,3 +109,7 @@
 		</div>
 	</div>
 </div>
+<?php
+include_once("layouts/footer.php");
+
+?>

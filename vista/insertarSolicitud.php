@@ -8,7 +8,7 @@
 </head>
 <body>
     <?php
-    include('../modelo/conexion.php');
+    include('../modelo/conexionPablo.php');
     $idPedido="pd-001";
     $archivo="ruta.pdf";
         if($_FILES['archivo']['error']){
@@ -28,20 +28,21 @@
                 move_uploaded_file($_FILES['archivo']['tmp_name'],$destino . $_FILES['archivo']['name']);
                 $archivo=$destino . $_FILES['archivo']['name'];
                 echo "el archivo" . $_FILES['archivo']['name'] . "se guardo<br>";       
-                header('Location:solicitudes.php');         
+                     
             }else{
                 echo "no se puedo copiar el archivo";
             }
             
         }
-        $idItem=$_POST["id"];
+        $idItem="12";
         $cantidad=$_POST["cantidad"];
         $unidad=$_POST["unidad"];
         $detalle=$_POST["detalle"];
         $archivo=$_FILES["archivo"]["name"];
-        $sql = "INSERT INTO `items`(`id_items`, `id_pedido`, `cantidad`, `unidad`, `detalle`, `archivo`) VALUES (:id,:idPedido,:cantidad,:unidad,:detalle,:archivo)";
+        $sql = "INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo) VALUES (:idPedido,:cantidad,:unidad,:detalle,:archivo)";
         $resultado=$conexion->prepare($sql);
-        $resultado->execute(array(":id"=>$idItem,":idPedido"=>$idPedido, ":cantidad"=>$cantidad,":unidad"=>$unidad,":detalle"=>$detalle,":archivo"=>$archivo));        
+        $resultado->execute(array(":idPedido"=>$idPedido, ":cantidad"=>$cantidad,":unidad"=>$unidad,":detalle"=>$detalle,":archivo"=>$archivo));        
+        header("Location:solicitudes.php");
     ?>
 </body>
 </html>
