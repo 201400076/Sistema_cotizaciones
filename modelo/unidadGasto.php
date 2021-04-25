@@ -31,6 +31,17 @@ require_once("../configuraciones/conexion.php");
             $stmt->close();
             return $this->modelo;
         }
+        public function eliminarUnidadGastoPorUnidadAdmin($id){
+            $stmt = $this->conexion_activo->prepare("DELETE FROM unidad_gasto WHERE id_unidad=?");
+            $stmt->bind_param("s", $id);
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                $stmt->close();
+                return false;
+            }
+        }
         
     }
 ?>

@@ -138,7 +138,13 @@
                                     class="mdi mdi-contact-mail"></i><span class="hide-menu">Clientes</span></a>
 
                         </li> -->
-
+                        <li class="<?php echo $active?>">
+                            <a class="has-arrow <?php echo $active?> " href="#" aria-expanded="false"><i class="mdi mdi-barcode"></i><span
+                                    class="hide-menu">Home</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li ><a href="../ruta/ruta.php" id="nueva" name="nueva">Home</a></li>
+                            </ul>
+                        </li>
                         <li class="<?php echo $active?>">
                             <a class="has-arrow <?php echo $active?> " href="#" aria-expanded="false"><i class="mdi mdi-barcode"></i><span
                                     class="hide-menu">Solicitudes</span></a>

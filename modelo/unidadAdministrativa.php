@@ -34,6 +34,39 @@ require_once("../configuraciones/conexion.php");
             $this->modelo = $result->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
             return $this->modelo;
-        }    
+        }  
+        public function editarUnidad($id){
+            $stmt = $this->conexion_activo->prepare("SELECT * FROM unidad_administrativa WHERE id_unidad=?");
+            $stmt->bind_param("s", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $this->modelo = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return $this->modelo;
+        }  
+        public function actualizarUnidad($dato){
+            $id_facultad = $dato["id_facultad"];
+            $nombre_unidad = $dato["nombre_unidad"];
+            $id_unidad = $dato["id_unidad"];
+            $monto_tope = $dato["monto_tope"];
+            $stmt = $this->conexion_activo->prepare("UPDATE unidad_administrativa SET nombre_unidad=?, id_facultad=?, monto_tope=? WHERE id_unidad=".$id_unidad);
+            $stmt->bind_param("sii", $nombre_unidad, $id_facultad, $monto_tope);
+            if ($stmt->execute()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        public function eliminarUnidad($id){
+            $stmt = $this->conexion_activo->prepare("DELETE FROM unidad_administrativa WHERE id_unidad=?");
+            $stmt->bind_param("s", $id);
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                $stmt->close();
+                return false;
+            }
+        }
     }
 ?>

@@ -1,11 +1,11 @@
 <?php
-if (isset($_GET['ruta'])) {
+/*if (isset($_GET['ruta'])) {
 	# code...
 } else {
 	header("location: ../ruta/ruta.php");
-}
+}*/
 
-$active = "";
+$active = "active";
 include_once("layouts/navegacion.php");
 
 ?>
@@ -17,7 +17,7 @@ include_once("layouts/navegacion.php");
 			<div class="unidadAdministrativa">
 				<h1></h1>
 				<hr>
-				<a class="btn btn-primary" href="../ruta/ruta.php">Crear Nueva Unidad Administrativa:</a>
+				<a class="btn btn-primary" href="../ruta/ruta.php?ruta=index">Crear Nueva Unidad Administrativa:</a>
 				<hr>
 				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa:</a>
 				<hr>
