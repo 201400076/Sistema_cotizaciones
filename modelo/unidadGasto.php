@@ -23,5 +23,14 @@ require_once("../configuraciones/conexion.php");
                 return 0;
             }
         }
+        public function getUnidadGasto(){
+            $stmt = $this->conexion_activo->prepare("SELECT * FROM unidad_gasto");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $this->modelo = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return $this->modelo;
+        }
+        
     }
 ?>

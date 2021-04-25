@@ -1,4 +1,10 @@
 <?php
+if (isset($_GET['ruta'])) {
+	# code...
+} else {
+	header("location: ../ruta/ruta.php");
+}
+
 $active = "";
 include_once("layouts/navegacion.php");
 

@@ -31,6 +31,10 @@ class UnidadControlador extends Unidad {
             echo "<p class='error'>* ".$alerta."</p>";
             $errors[] = $alerta;
         } 
+        if(!Validacion::validarTexto($dato["nombre_unidad"])){
+            echo "<p class='error'>* Nombre no Valido contiene espacios en blancos/p>";
+            $errors[] = "Nombre no Valido";
+        }
         if (count($errors)>0) {
             var_dump($errors);
         } else {

@@ -26,19 +26,23 @@ class UnidadControlador extends UnidadGasto {
             echo "<p class='error'>* ".$alerta."</p>";
             $errors[] = $alerta;
         }
+        if(!Validacion::validarTexto($dato["nombre_gasto"])){
+            echo "<p class='error'>* Nombre no Valido contiene espacios en blanco</p>";
+            $errors[] = "Nombre no Valido";
+        }
         if (count($errors)>0) {
             var_dump($errors);
         } else {
             #echo "no tiene errores";
             $unidad = $unidad->register($dato);
         }
+        
+        
+        //header("location: ../ruta/rutaGasto.php");
         header("location: ../ruta/rutaGasto.php?ruta=unidad");
     }
     
-    public static function unidadControlador(){
-        $unidad = new Unidad();
-        $unidades = $unidad->getUnidadAdministrativa();
-        require_once("../vista/formulariounidadgasto.php");
-    }
+    
+    
 }
 ?>

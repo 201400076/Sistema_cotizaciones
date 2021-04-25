@@ -14,7 +14,7 @@ include_once("layouts/navegacion.php");
                         <div class="col-md-12">
                             <label for="nombre_gasto">Nombre Unidad de Gasto:</label>
                             <div class="form-group">
-                                <input name="nombre_gasto" type="text" class="form-control" id="nombre_gasto" required pattern="[A-Za-z]{4,40}" title="Letras, Tamaño mínimo: 4. Tamaño máximo: 40">
+                                <input name="nombre_gasto" type="text" class="form-control" id="nombre_gasto" required pattern="[A-Za-z, ]{4,40}" title="Letras, Tamaño mínimo: 4. Tamaño máximo: 40">
 
                             </div>
                         </div>
@@ -48,6 +48,7 @@ include_once("layouts/navegacion.php");
         </div>
     </div>
 </div>
+
 <?php
 include_once("layouts/footer.php");
 

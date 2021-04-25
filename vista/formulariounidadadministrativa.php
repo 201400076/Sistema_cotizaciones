@@ -33,7 +33,7 @@ include_once("layouts/navegacion.php");
 						<div class="col-md-12">
 							<label for="nombre_unidad">Nombre Unidad Administrativa:</label>
 							<div class="form-group">
-								<input name="nombre_unidad" type="text" class="form-control" id="nombre_unidad" required pattern="[A-Za-z]{4,40}" title="Letras, Tamaño mínimo: 4. Tamaño máximo: 40">
+								<input name="nombre_unidad" type="text" class="form-control" id="nombre_unidad" required pattern="[A-Za-z, ]{4,40}" title="Letras, Tamaño mínimo: 4. Tamaño máximo: 40">
 							</div>
 						</div>
 					</div>
