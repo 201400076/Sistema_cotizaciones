@@ -6,7 +6,7 @@ include_once("layouts/navegacion.php");
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<h1><span class="glyphicon glyphicon-edit"></span> Nueva Unidad Administrativa</h1>
+			<h2><span class="glyphicon glyphicon-edit"></span> Nueva Unidad Administrativa</h2>
 			<hr>
 			<a href="../ruta/ruta.php?ruta=unidad">Ir a Unidad Gasto:</a>
 			<hr>
