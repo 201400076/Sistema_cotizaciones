@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +26,10 @@
 
 </head>
 <body>
-
-    <div class="container">
+<?php
+    include_once("../vista/layouts/navegacion.php");
+?>
+    <div class="container" style="width: 650px;">
         
         <h2>Formulario de Registro de Usuario</h2>
         
@@ -74,7 +75,7 @@
                     <label for="password">Contraseña:</label>
                 </div>
                 <div class="col-75">
-                    <input type="password" id="password" name="password" placeholder="Entre 8-16, al menos(1 mayuscula,1 minuscula,1 numero" required>
+                    <input type="password" id="password" name="password" placeholder="Entre 8-16, al menos(1 mayuscula,1 minuscula,1 numero)" required>
                 </div>
             </div>
 
@@ -92,16 +93,19 @@
                     <input type="submit" value="REGISTRAR">
                 </div>
                 <div class="col-50">
-                    <input type="button" id="boton-cancelar" onClick="window.parent.location='../index.php'" value="CANCELAR">
+                    <input type="button" id="boton-cancelar" onClick="window.parent.location='../vista/home.php'" value="CANCELAR">
                 </div>
             </div>
 
             <?php
-                include("../controladores/registroUsuario.php");
+                include_once("../controladores/registroUsuario.php");
             ?>
 
         </form>   
     </div>
+    <?php
+        include_once("../vista/layouts/footer.php");
+    ?>
 
 </body>
 </html>
