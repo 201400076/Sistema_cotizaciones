@@ -34,7 +34,6 @@ require_once("../configuraciones/conexion.php");
             return false;
         }
     }
-<<<<<<< HEAD
     function usuarioExiste($usuario){
         global $estadoconexion;
 
@@ -51,7 +50,5 @@ require_once("../configuraciones/conexion.php");
             return false;
         }
     }
-=======
->>>>>>> evelin
 }
 ?>

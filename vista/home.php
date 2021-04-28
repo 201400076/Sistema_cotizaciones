@@ -19,27 +19,17 @@ include_once("layouts/navegacion.php");
 				<hr>
 				<h3>Seccion Unidades Administrativas</h3>
 				<hr>
-<<<<<<< HEAD
-<<<<<<< HEAD
-				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa</a>
-				<hr>
-				<a class="btn btn-primary" href="../vista/formularioRU.php">Crear Nuevo Usuario</a>
-=======
-				<a class="btn btn-primary" href="../ruta/ruta.php?ruta=unidad">Crear Nueva Unidad Gasto:</a>
-				<hr>
-				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa:</a>
->>>>>>> evelin
-				<hr>
-				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listarGasto">Listar Unidad de Gasto:</a>
-=======
 				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../ruta/ruta.php?ruta=index">Crear Nueva Unidad Administrativa</a>
 				<hr>
+				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../ruta/ruta.php?ruta=unidad">Crear Nueva Unidad de Gasto</a>
+				<hr>
 				<a class="btn btn-danger" style="width: 300px;" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa</a>
+				<hr>
+				<a class="btn btn-danger" style="width: 300px;" href="../ruta/ruta.php?ruta=listarGasto">Listar Unidad Gasto</a>
 				<hr>
 				<h3>Seccion Usuarios</h3>
 				<hr>
 				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../vista/formularioRU.php">Crear Nuevo Usuario</a>
->>>>>>> bb1e7ac923f27e83fd853ccce6e26ccd64b80484
 				<hr>
 			</div>
 		</div>
