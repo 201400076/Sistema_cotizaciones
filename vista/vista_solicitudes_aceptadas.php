@@ -84,7 +84,7 @@
 										
 									</tbody>
 								</table>
-								<div class="float-right">
+								<!-- <div class="float-right">
 									<nav aria-label="Page navigation example">
 										<ul class="pagination">
 											<li class="disabled page-item"><span><a class="page-link">‹ Siguiente</a></span></li>
@@ -92,7 +92,7 @@
 											<li class="page-item"><span><a class="page-link">Anterior ›</a></span></li>
 										</ul>
 									</nav>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
