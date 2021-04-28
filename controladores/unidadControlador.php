@@ -36,6 +36,11 @@ class UnidadControlador extends Unidad {
             echo "<p class='error'>* Nombre no Valido contiene espacios en blancos/p>";
             $errors[] = "Nombre no Valido";
         }
+        if (UnidadControlador::existeUnidadControlador($dato["nombre_unidad"])) {
+            $alerta = "unidad administrativa ya existe";
+            //echo "<p class='error'>* ".$alerta."</p>";
+            $errors[] = $alerta;
+        } 
         if (count($errors)>0) {
             var_dump($errors);
         } else {
@@ -52,6 +57,11 @@ class UnidadControlador extends Unidad {
         $unidades = $unidad->getUnidadAdministrativa();
         require_once("../vista/formulariounidadgasto.php");
     }
+    public static function listarGastoControlador() {
+        $unidadGasto = new UnidadGasto();
+        $unidadesGasto = $unidadGasto->getUnidadGasto();
+        require_once("../vista/listarUnidadesGasto.php");
+    }
     public static function listarControlador(){
         $unidad = new Unidad();
         $unidades = $unidad->getUnidadAdministrativa();
@@ -67,6 +77,27 @@ class UnidadControlador extends Unidad {
         } else {
             UnidadControlador::listarControlador();
         }
+    }
+    public static function editarUnidadGastoControlador($id){
+        $unidadGasto = new UnidadGasto();
+        $unidad = new Unidad();
+        $unidadGasto = $unidadGasto->editarUnidadGasto($id);
+        var_dump($unidadGasto);
+        if (count($unidadGasto) > 0) {
+            $unidades = $unidad->getUnidadAdministrativa();
+            require_once("../vista/editarUnidadGasto.php");
+        } else {
+            UnidadControlador::listarGastoControlador();
+        }
+    }
+    public static function existeUnidadControlador($nombre){
+        $unidad = new Unidad();
+        $existe = false;
+        $existe = $unidad->existeUnidad($nombre);
+        
+        if ($existe) {
+            return $existe;
+        } 
     }
     public static function actualizarControlador(){
         $unidad = new Unidad();
@@ -102,30 +133,30 @@ class UnidadControlador extends Unidad {
             //echo "<p class='error'>* Nombre no Valido contiene espacios en blancos/p>";
             $errors[] = "Nombre no Valido";
         }
-        if (count($errors)>0) {
-            $unidad = new Unidad();
-            $facultad = new Facultad();
-            $unidad = $unidad->editarUnidad($id);
-            if (count($unidad) > 0) {
-                $facultades = $facultad->getFacultad();
-                require_once("../vista/editarUnidadAdministrativa.php");
+        
+        
+            if (count($errors)>0) {
+                $unidad = new Unidad();
+                $facultad = new Facultad();
+                $unidad = $unidad->editarUnidad($id);
+                if (count($unidad) > 0) {
+                    $facultades = $facultad->getFacultad();
+                    require_once("../vista/editarUnidadAdministrativa.php");
+                } else {
+                    UnidadControlador::listarControlador();
+                }
             } else {
-                UnidadControlador::listarControlador();
+                $status = $unidad->actualizarUnidad($dato);
+                if ($status == 0) {
+                    $facultades = $facultad->getFacultad();
+                    require_once("../vista/editarUnidadAdministrativa.php");
+                } else {
+                    UnidadControlador::listarControlador();
+                }
             }
-        } else {
-            $status = $unidad->actualizarUnidad($dato);
-            if ($status == 0) {
-                $facultades = $facultad->getFacultad();
-                require_once("../vista/editarUnidadAdministrativa.php");
-            } else {
-                UnidadControlador::listarControlador();
-            }
-        }
 
     }
-
-
-
+    
     public static function eliminarControlador($id){
         $unidad = new Unidad();
         $unidadGasto = new UnidadGasto();
@@ -143,4 +174,3 @@ class UnidadControlador extends Unidad {
     }
     
 }
-?>

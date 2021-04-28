@@ -11,12 +11,12 @@
 
     </div>
  
-    <script src="../js/jquery.min.js"></script>
+    <script src="../librerias/js/jquery.min.js"></script>
     
     <!--Menu sidebar -->
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js"></script>
-    <script src="../js/custom.min.js"></script>
+    <script src="../librerias/js/custom.min.js"></script>
   
 
 
