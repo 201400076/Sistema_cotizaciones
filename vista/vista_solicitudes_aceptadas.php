@@ -3,16 +3,12 @@
 
 ?>
 <div class="container-fluid">
-
-
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title">Solicitudes Aceptadas</h4>
-					
 					<div class="row">
-
 						<div id="resultados" class="col-sm-12 "></div>
 						<div class="outer_div" style="width:100%">
 							<div class="table-responsive">
@@ -88,7 +84,7 @@
 										
 									</tbody>
 								</table>
-								<div class="float-right">
+								<!-- <div class="float-right">
 									<nav aria-label="Page navigation example">
 										<ul class="pagination">
 											<li class="disabled page-item"><span><a class="page-link">‹ Siguiente</a></span></li>
@@ -96,7 +92,7 @@
 											<li class="page-item"><span><a class="page-link">Anterior ›</a></span></li>
 										</ul>
 									</nav>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>

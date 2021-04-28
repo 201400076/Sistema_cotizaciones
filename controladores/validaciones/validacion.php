@@ -55,19 +55,3 @@ require_once("../configuraciones/conexion.php");
 >>>>>>> evelin
 }
 ?>
-function usuarioExiste($usuario){
-        global $estadoconexion;
-
-        $stmt = $estadoconexion->prepare("SELECT id_usuarios FROM usuarios WHERE nombre_ = ? LIMIT 1");
-        $stmt->bind_param("s", $usuario);
-        $stmt->execute();
-        $stmt->store_result();
-        $num = $stmt->num_rows;
-        $stmt->close();
-        
-        if($num > 0){
-            return true;
-        }else{
-            return false;
-        }
-    }

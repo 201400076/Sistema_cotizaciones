@@ -1,9 +1,9 @@
           
             <footer class="footer">
-                © Sitio web desarrollado y gestionado por la grupo empresa <a href="programandoelfuturo.srl@gmail.com"
+                © Sitio web desarrollado y gestionado por la grupo empresa <a 
                     target="_blank">PF S.R.L</a> 
                     <div class="text-center">
-                        contactos: +591 - 7777777
+                        contactos:(+591) 76436540 – 44355215	
                     </div>
                 </footer>
        
