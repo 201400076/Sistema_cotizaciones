@@ -42,7 +42,7 @@
             $sql = "INSERT INTO items_pendientes(cantida,unidad,detalle,archivo,ruta,id_usuarios) VALUES (:cantida,:unidad,:detalle,:archivo,:ruta,:id_usuarios)";
             $resultado=$this->bd->prepare($sql);
             $resultado->execute(array(":cantida"=>$cantidad,":unidad"=>$unidad,":detalle"=>$detalle,":archivo"=>$archivo,":ruta"=>$ruta,":id_usuarios"=>$id_usuario));                    
-            header("Location:solicitudes_vista");
+            header("Location:solicitudes_vista.php");
         }        
         public function ultimoPedido(){            
             $consulta="SELECT MAX(id_pedido) as id_pedido FROM pedido";

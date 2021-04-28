@@ -8,6 +8,10 @@
     <title>solicitud de pedido</title>
 </head>
 <body>
+    <?php
+    $active="active";
+    include_once("layouts/navegacion.php");
+    ?>
 <?php
     require_once("../modelo/solicitudes_modelo.php");
     $id_usuario=1;
@@ -35,7 +39,7 @@
     }
     
 ?>
-    <h1>Solicitud de Pedido # <?php echo $nro?></h1>
+    <h1>Solicitudsss de Pedido # <?php echo $nro?></h1>
     <h2><?php echo $_POST["fecha"]?></h2>
     <h2> Solicitado por: <?php echo $encargado?></h2>
     <h2></h2>
@@ -77,8 +81,11 @@
         </div>
         <div id="justificacion">
             <textarea id="just" name="just" class="just" cols="149" rows="10" placeholder="Justificacion del pedido.."></textarea>
-        </div>e
+        </div>
         <input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
     </form>   
+    <?php
+        include_once("layouts/footer.php");
+    ?>
 </body>
 </html>
