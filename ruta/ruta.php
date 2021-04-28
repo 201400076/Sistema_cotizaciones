@@ -1,5 +1,6 @@
 <?php
 require_once('../controladores/unidadControlador.php');
+//require_once('../controladores/unidadControladorGasto.php');
 
 if (isset($_GET['ruta'])) {
     $metodo = $_GET['ruta'];
@@ -17,7 +18,7 @@ if (isset($_GET['ruta'])) {
                 }
             }
         } else {
-            # esto sirve para trabajar con otros modelos es necesario utilizar ifelse
+            # esto sirve para trabajar con otros modelos es necesario utilizar ifelse     
         }
     } else {
         $UnidadControlador = new UnidadControlador('.');

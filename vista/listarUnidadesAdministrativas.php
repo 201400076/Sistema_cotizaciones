@@ -6,7 +6,7 @@ include_once("layouts/navegacion.php");
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <h2><span class="glyphicon glyphicon-edit"></span> Lista de Unidades Administrativas</h2>
+        <h2 class="text-center font-weight-lights">Lista Unidades Administrativas</h2></h2>
             <div class=" ">
                 <h1></h1>
                 <hr>

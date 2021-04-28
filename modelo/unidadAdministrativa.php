@@ -35,6 +35,7 @@ require_once("../configuraciones/conexion.php");
             $stmt->close();
             return $this->modelo;
         }  
+         
         public function editarUnidad($id){
             $stmt = $this->conexion_activo->prepare("SELECT * FROM unidad_administrativa WHERE id_unidad=?");
             $stmt->bind_param("s", $id);
@@ -65,6 +66,20 @@ require_once("../configuraciones/conexion.php");
                 return true;
             } else {
                 $stmt->close();
+                return false;
+            }
+        }
+        public function existeUnidad($nombre){
+            $stmt = $this->conexion_activo->prepare("SELECT nombre_unidad FROM unidad_administrativa WHERE nombre_unidad = ?  LIMIT 1");
+            $stmt->bind_param("s", $nombre);
+            $stmt->execute();
+            $stmt->store_result();
+            $num = $stmt->num_rows;
+            $stmt->close();
+            var_dump($num);
+            if($num > 0){
+                return true;
+            }else{
                 return false;
             }
         }
