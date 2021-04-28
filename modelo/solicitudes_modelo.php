@@ -17,10 +17,10 @@
             header("Location:solicitudes_vista");
         }
         public function getItems($id){
-            $consulta="SELECT cantida, unidad, detalle,archivo FROM items_pendientes, usuarios WHERE items_pendientes.id_usuarios=" . $id;
+            $consulta="SELECT id_pendientes,cantida, unidad, detalle,archivo FROM items_pendientes, usuarios WHERE items_pendientes.id_usuarios=" . $id;
             $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
             return $sql;
-            header("Location:solicitudes_vista");
+            header("Location:solicitudes_vista.php");
         }
         public function addItems($idPedido,$cantidad,$unidad,$detalle,$archivo){                                            
             $sql = "INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo) VALUES (:idPedido,:cantidad,:unidad,:detalle,:archivo)";
@@ -42,7 +42,7 @@
             $sql = "INSERT INTO items_pendientes(cantida,unidad,detalle,archivo,ruta,id_usuarios) VALUES (:cantida,:unidad,:detalle,:archivo,:ruta,:id_usuarios)";
             $resultado=$this->bd->prepare($sql);
             $resultado->execute(array(":cantida"=>$cantidad,":unidad"=>$unidad,":detalle"=>$detalle,":archivo"=>$archivo,":ruta"=>$ruta,":id_usuarios"=>$id_usuario));                    
-            header("Location:solicitudes_vista.php");
+           
         }        
         public function ultimoPedido(){            
             $consulta="SELECT MAX(id_pedido) as id_pedido FROM pedido";
@@ -74,6 +74,23 @@
             $sql = "INSERT INTO solicitudes(id_pedido,estado) VALUES (?,?)";                
             $resultado=$this->bd->prepare($sql);
             $resultado->execute([$dato,"pendiente"]);
+        }
+
+        public function borrarItem($id){
+            $sql = "DELETE FROM items_pendientes WHERE items_pendientes.id_pendientes=?";                
+            $resultado=$this->bd->prepare($sql);
+            $resultado->execute([$id]);
+        }
+
+        public function getUsuario($id_usuario){
+            $consulta="SELECT nombres,apellidos FROM usuarios WHERE usuarios.id_usuarios=".$id_usuario;
+            $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);      
+
+            foreach($sql as $s):
+                $dato=$s->nombres;
+                $apellido=$s->apellidos;
+            endforeach;
+            return $apellido." ".$dato;  
         }
     }
 ?>

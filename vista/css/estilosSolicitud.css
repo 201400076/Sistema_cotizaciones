@@ -13,7 +13,7 @@ h1{
     border-color: red;
 }
 #justificacion{
-    padding: 20px;
+    padding: 20px 0px;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -44,19 +44,20 @@ h1{
   text-align: left;
   background-color: #F2F7F8;
   color: white;
-} 
+}
 #tablaItems{
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
-  
   #tablaItems td, #tablaItems th {
     border: 1px solid #ddd;
     padding: 8px;
   }
   #tablaItems tr .primeraFila{
       text-align: center;
+      background-color: #F2F7F8;
+      color: black;
   }
   #tablaItems tr:nth-child(even){background-color: #f2f2f2;}
   
@@ -67,6 +68,10 @@ h1{
     padding-bottom: 12px;
     text-align: left;
     background-color: #F2F7F8;
+    color: white;
+  }
+  .cr{
+    background-color:#4CAF50 ;
     color: white;
   }
 
@@ -89,7 +94,6 @@ h1{
   }
   
   #enviarSolicitud:hover {background-color: #3e8e41}
-  
   #enviarSolicitud:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
