@@ -9,6 +9,11 @@
 </head>
 <body>
 <?php
+$active = "";
+include_once("layouts/navegacion.php");
+
+?>
+<?php
     $_POST["nro"]=1;
     $_POST["fecha"]=date("Y-m-d");
     $encargado="juan peres";

@@ -34,27 +34,5 @@ require_once("../configuraciones/conexion.php");
             return false;
         }
     }
-
-
-
-
-
-    /*public static function isExiste($nombre){
-        $conexion = new Conexion();
-        $conexion_activo = $conexion->getConn();
-
-        $stmt = $conexion_activo->prepare("SELECT id FROM unidad_gasto WHERE nombre_gasto = ? LIMIT 1");
-        $stmt->bind_param("s", $nombre);
-        $stmt->execute();
-        $stmt->store_result();
-        $num = $stmt->num_rows;
-
-        if ($num > 0) {
-            return true;
-        } else {
-            return false;
-        }
-                   
-    }*/
 }
 ?>

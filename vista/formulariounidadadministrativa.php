@@ -6,9 +6,7 @@ include_once("layouts/navegacion.php");
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<h2><span class="glyphicon glyphicon-edit"></span> Nueva Unidad Administrativa</h2>
-			<hr>
-			<a href="../ruta/ruta.php?ruta=unidad">Ir a Unidad Gasto:</a>
+			<h2 class="text-center font-weight-lights">Formulario Unidad Administrativa</h2></h2>
 			<hr>
 			<div class="unidadAdministrativa">
 				<form class="form-horizontal" method="post" action="../ruta/ruta.php?ruta=register" role="form" id="unidad_administrativa">
@@ -39,8 +37,8 @@ include_once("layouts/navegacion.php");
 					</div>
 					<div class="col-md-12">
 						<div class="text-center">
-							<button type="submit" class="btn btn-info">
-								Registrar
+							<button type="submit" class="btn btn-success">
+								REGISTRAR
 							</button>
 						</div>
 					</div>

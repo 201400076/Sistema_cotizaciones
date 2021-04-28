@@ -19,7 +19,11 @@ include_once("layouts/navegacion.php");
 				<hr>
 				<a class="btn btn-primary" href="../ruta/ruta.php?ruta=index">Crear Nueva Unidad Administrativa:</a>
 				<hr>
+				<a class="btn btn-primary" href="../ruta/ruta.php?ruta=unidad">Crear Nueva Unidad Gasto:</a>
+				<hr>
 				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa:</a>
+				<hr>
+				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listarGasto">Listar Unidad de Gasto:</a>
 				<hr>
 			</div>
 		</div>
