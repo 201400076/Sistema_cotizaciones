@@ -17,11 +17,15 @@ include_once("layouts/navegacion.php");
 			<div class="unidadAdministrativa">
 				<h1></h1>
 				<hr>
-				<a class="btn btn-primary" href="../ruta/ruta.php?ruta=index">Crear Nueva Unidad Administrativa</a>
+				<h3>Seccion Unidades Administrativas</h3>
 				<hr>
-				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa</a>
+				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../ruta/ruta.php?ruta=index">Crear Nueva Unidad Administrativa</a>
 				<hr>
-				<a class="btn btn-primary" href="../vista/formularioRU.php">Crear Nuevo Usuario</a>
+				<a class="btn btn-danger" style="width: 300px;" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa</a>
+				<hr>
+				<h3>Seccion Usuarios</h3>
+				<hr>
+				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../vista/formularioRU.php">Crear Nuevo Usuario</a>
 				<hr>
 			</div>
 		</div>
