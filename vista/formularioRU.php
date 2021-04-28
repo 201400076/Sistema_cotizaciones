@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +26,10 @@
 
 </head>
 <body>
-
-    <div class="container">
+<?php
+    include_once("../vista/layouts/navegacion.php");
+?>
+    <div class="container" style="width: 650px;">
         
         <h2>Formulario de Registro de Usuario</h2>
         
@@ -38,7 +39,7 @@
                     <label for="nombres">Nombre(s):</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="nombres" name="nombres" placeholder="Nombre(s) *">
+                    <input type="text" id="nombres" name="nombres" placeholder="Nombre(s) *" required>
                 </div>
             </div>
 
@@ -47,7 +48,7 @@
                     <label for="apellidos">Apellido(s):</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="apellidos" name="apellidos" placeholder="Apellido(s) *" >
+                    <input type="text" id="apellidos" name="apellidos" placeholder="Apellido(s) *" required>
                 </div>
             </div>
 
@@ -56,7 +57,7 @@
                     <label for="correo">Correo electrónico:</label>
                 </div>
                 <div class="col-75">
-                    <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com" >
+                    <input type="email" id="correo" name="correo" placeholder="ejemplo@gmail.com" required>
                 </div>
             </div>
 
@@ -65,7 +66,7 @@
                     <label for="usuario">Usuario:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="usuario" name="usuario" placeholder="Al menos 6 caracteres" >
+                    <input type="text" id="usuario" name="usuario" placeholder="Al menos 6 caracteres" required>
                 </div>
             </div>
 
@@ -74,7 +75,7 @@
                     <label for="password">Contraseña:</label>
                 </div>
                 <div class="col-75">
-                    <input type="password" id="password" name="password" placeholder="Entre 8-16, al menos(1 mayuscula,1 minuscula,1 numero" >
+                    <input type="password" id="password" name="password" placeholder="Entre 8-16, al menos(1 mayuscula,1 minuscula,1 numero)" required>
                 </div>
             </div>
 
@@ -83,7 +84,7 @@
                     <label for="password_con">Confirmar Contraseña:</label>
                 </div>
                 <div class="col-75">
-                    <input type="password" id="password_con" name="password_con" placeholder="Repita la contrasena" >
+                    <input type="password" id="password_con" name="password_con" placeholder="Repita la contrasena" required>
                 </div>
             </div>
 
@@ -92,16 +93,19 @@
                     <input type="submit" value="REGISTRAR">
                 </div>
                 <div class="col-50">
-                    <input type="button" id="boton-cancelar" onClick="window.parent.location='../index.php'" value="CANCELAR">
+                    <input type="button" id="boton-cancelar" onClick="window.parent.location='../vista/home.php'" value="CANCELAR">
                 </div>
             </div>
 
             <?php
-                include("../controladores/registroUsuario.php");
+                include_once("../controladores/registroUsuario.php");
             ?>
 
         </form>   
     </div>
+    <?php
+        include_once("../vista/layouts/footer.php");
+    ?>
 
 </body>
 </html>

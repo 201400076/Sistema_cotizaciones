@@ -54,10 +54,10 @@
 
             $registro = registraUsuario($nombres, $apellidos, $correo, $usuario, $pass_hash);
             if($registro > 0){
-                echo '<script language="javascript">alert("Usuario Registrado..!!");window.location.href="../index.php"</script>';
+                echo '<script language="javascript">window.location.href="../vista/home.php"</script>';
                 exit;        
             }else{
-                echo '<script language="javascript">window.location.href="../index.php"</script>';
+                echo '<script language="javascript">window.location.href="../vista/home.php"</script>';
                 $error = "Error al registrar";
                 echo "<p class='error'>".$error."</p>";
                 $errors[] = $error;
@@ -148,4 +148,5 @@
             echo "</div>";
         }
     }
+
 ?>

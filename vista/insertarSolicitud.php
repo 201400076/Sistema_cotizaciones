@@ -9,7 +9,7 @@
 <body>
     <?php
     include('../modelo/conexionPablo.php');
-    $idPedido="pd-001";
+    $idPedido=1;
     $archivo="ruta.pdf";
         if($_FILES['archivo']['error']){
             switch($_FILES['archivo']['error']){
