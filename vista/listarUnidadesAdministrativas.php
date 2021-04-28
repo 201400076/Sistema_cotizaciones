@@ -46,8 +46,8 @@ include_once("layouts/navegacion.php");
                                 <td><?php echo $unidad['nombre_unidad'] ?></td>
                                 <td><?php echo $unidad['monto_tope'] ?></td>
                                 <td>
-                                    <a class="btn btn-success" href="/ruta/ruta.php?ruta=editar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Editar </a>
-                                    <a class="btn btn-danger" href="/ruta/ruta.php?ruta=eliminar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Eliminar</a>
+                                    <a class="btn btn-success" href="../ruta/ruta.php?ruta=editar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Editar </a>
+                                    <a class="btn btn-danger" href="../ruta/ruta.php?ruta=eliminar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Eliminar</a>
                                 </td>
                             </tr>
                         <?php
