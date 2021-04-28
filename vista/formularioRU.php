@@ -27,8 +27,11 @@
 </head>
 <body>
 <?php
+     $active="active";
     include_once("../vista/layouts/navegacion.php");
+
 ?>
+
     <div class="container" style="width: 650px;">
         
         <h2>Formulario de Registro de Usuario</h2>
