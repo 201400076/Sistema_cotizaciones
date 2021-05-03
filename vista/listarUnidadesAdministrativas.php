@@ -6,7 +6,7 @@ include_once("layouts/navegacion.php");
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <h2><span class="glyphicon glyphicon-edit"></span> Lista de Unidades Administrativas</h2>
+        <h2 class="text-center font-weight-lights">Lista Unidades Administrativas</h2></h2>
             <div class=" ">
                 <h1></h1>
                 <hr>
@@ -46,8 +46,13 @@ include_once("layouts/navegacion.php");
                                 <td><?php echo $unidad['nombre_unidad'] ?></td>
                                 <td><?php echo $unidad['monto_tope'] ?></td>
                                 <td>
+<<<<<<< HEAD
                                     <a class="btn btn-success" href="../ruta/ruta.php?ruta=editar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Editar </a>
                                     <a class="btn btn-danger" href="../ruta/ruta.php?ruta=eliminar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Eliminar</a>
+=======
+                                    <a class="btn btn-info" href="/ruta/ruta.php?ruta=editar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Asignar Monto Tope </a>
+                                    <!--<a class="btn btn-primary" href="/ruta/ruta.php?ruta=eliminar&md=unidad&id=<?php echo $unidad['id_unidad'] ?>"> Eliminar</a>-->
+>>>>>>> evelin
                                 </td>
                             </tr>
                         <?php
