@@ -32,7 +32,7 @@
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(usuarioExiste($usuario)){
-            $error = "El nombre de usuario ".$usuario. " ya existe";
+            $error = "* El nombre de usuario ".$usuario. " ya existe";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($usuario, "/^[a-zA-Z]((\.|_|-)?[a-zA-Z0-9]+){5}$/D")){
@@ -40,11 +40,11 @@
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($password, "/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/")){
-            $error = "* Contrasena no Valida";
+            $error = "* Contraseña no Valida";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if (!validarPassword($password, $password_con)){
-            $error = "Las contrasenas no coinciden";
+            $error = "* Las contraseñas no coinciden";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }
@@ -54,7 +54,7 @@
 
             $registro = registraUsuario($nombres, $apellidos, $correo, $usuario, $pass_hash);
             if($registro > 0){
-                echo '<script language="javascript">window.location.href="../vista/home.php"</script>';
+                echo '<script language="javascript">window.location.href="../vista/registroExitoso.php"</script>';
                 exit;        
             }else{
                 echo '<script language="javascript">window.location.href="../vista/home.php"</script>';
