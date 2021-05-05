@@ -33,6 +33,8 @@ include_once("layouts/navegacion.php");
 				<hr>
 				<a class="btn btn-danger" href="../ruta/ruta.php?ruta=listarGasto">Listar Unidad de Gasto:</a>
 				<hr>
+				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../vista/asignarRoles.php">Asignar Roles a Usuarios</a>
+				<hr>
 			</div>
 		</div>
 

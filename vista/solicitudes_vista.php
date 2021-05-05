@@ -10,7 +10,10 @@
 </head>
 <body>
 <?php
+
     require_once("../modelo/solicitudes_modelo.php");
+    echo '<script>
+        Swal.fire("Any fool can use a computer");</script>';
     $id_usuario=1;
     $pedidos=new Solicitudes();
     $registros=$pedidos->getItems($id_usuario);
@@ -19,18 +22,23 @@
     $encargado=$pedidos->getUsuario($id_usuario);  
     $nro=$pedidos->getPedido($id_usuario);
     if(isset($_POST["cr"])){           
+        
         $cantidad=$_POST["cantidad"];
         $unidad=$_POST["unidad"];;
         $detalle=$_POST["detalle"];;
         $archivo=$_FILES["archivo"]["name"];
         $peso=$_FILES["archivo"]["size"];
         $ruta="C:\wamp64\www\proyectos";
-        
-        if(empty($archivo) && empty($detalle)){            
+        if(!empty($unidad) && ((strlen($unidad)>1 && (strlen($unidad<=10))))){
+            if(empty($archivo) && (empty($detalle) || (strlen($detalle)>1 && (strlen($detalle<=200))))){            
+            }else{
+                $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  
+                header("Location:solicitudes_vista");          
+            }
         }else{
-            $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  
-            header("Location:solicitudes_vista");          
+
         }
+       
     }
     if(isset($_POST["enviarSolicitud"])){
         $fecha=$_POST["fecha"];
@@ -75,7 +83,7 @@
                 <td><input type="text" name='unidad' size='10' class='centrado'></td>
                 <td><input type="text" name='detalle' size='10' class='centrado'></td>
                 <td><input type="file" name='archivo' id='archivo' value="adjuntar" accept=".pdf"></td>
-                <td><input type="submit" name='cr' class="cr" value='insertar' id="cr"></td>
+                <td><input type="submit" name='cr' class="cr" value='insertar' id="cr" onclick="validarCampos($_POST['cantidad'])"></td>
             </table>
         </div>
         <div id="justificacion">
@@ -84,4 +92,5 @@
         <input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
     </form>   
 </body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </html>
