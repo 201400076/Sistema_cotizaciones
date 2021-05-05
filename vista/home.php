@@ -21,7 +21,11 @@ include_once("layouts/navegacion.php");
 				<hr>
 				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../ruta/ruta.php?ruta=index">Crear Nueva Unidad Administrativa</a>
 				<hr>
+				<a class="btn btn-primary" style="width: 300px;background-color: #45A049;" href="../ruta/ruta.php?ruta=unidad">Crear Nueva Unidad de Gasto</a>
+				<hr>
 				<a class="btn btn-danger" style="width: 300px;" href="../ruta/ruta.php?ruta=listar">Listar Unidad Administrativa</a>
+				<hr>
+				<a class="btn btn-danger" style="width: 300px;" href="../ruta/ruta.php?ruta=listarGasto">Listar Unidad Gasto</a>
 				<hr>
 				<h3>Seccion Usuarios</h3>
 				<hr>

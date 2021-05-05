@@ -71,7 +71,7 @@
                     endforeach
                 ?>
                 <td><input type="text" name='id' size='10' class='centrado' value="<?php echo $_POST['nro'];?>" readonly></td>
-                <td><input type="number" name='cantidad' size='10' class='centrado' min="1" max="1000000"></td>
+                <td><input type="number" name='cantidad' size='10' class='centrado' min="1" max="1000000" require></td>
                 <td><input type="text" name='unidad' size='10' class='centrado'></td>
                 <td><input type="text" name='detalle' size='10' class='centrado'></td>
                 <td><input type="file" name='archivo' id='archivo' value="adjuntar" accept=".pdf"></td>

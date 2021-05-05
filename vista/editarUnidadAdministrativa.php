@@ -6,7 +6,7 @@ include_once("layouts/navegacion.php");
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<h2><span class="glyphicon glyphicon-edit"></span> Modificar Datos de Unidad Administrativa</h2>
+			<h2 class="text-center font-weight-lights">Asignar monto tope a unidad administrativa</h2>
 			<hr>
 			<div class="unidadAdministrativa">
 				<form class="form-horizontal" method="post" action="../ruta/ruta.php?ruta=actualizar&md=unidad&id=<?php echo $id?>" role="form" id="unidad_administrativa">
@@ -37,7 +37,7 @@ include_once("layouts/navegacion.php");
 						<div class="col-md-12">
 							<label for="monto_tope">Monto Tope (Bs):</label>
 							<div class="form-group">
-								<input value="<?php echo $unidad[0]['monto_tope']; ?>" name="monto_tope" type="number" class="form-control" id="monto_tope" required pattern="[0-9]" title="Numeros">
+								<input value="<?php echo $unidad[0]['monto_tope']; ?>" name="monto_tope" type="number" class="form-control" id="monto_tope" required pattern="[0-9]" title="Numeros" min="1">
 							</div>
 						</div>
 					</div>
