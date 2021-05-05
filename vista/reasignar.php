@@ -5,8 +5,10 @@
     $db_contra = "";
 
     $conexion = mysqli_connect($db_host, $db_usuario, $db_contra, $db_nombre);
-    $consulta = "SELECT u.id_usuarios, u.nombres, u.apellidos, u.usuario, r.nombreRol FROM roles r INNER JOIN usuarios u ON r.id_usuario = u.id_usuarios";
+    //$consulta = "SELECT u.id_usuarios, u.nombres, u.apellidos, u.usuario, r.nombreRol FROM roles r INNER JOIN usuarios u ON r.id_usuario = u.id_usuarios";
 ?>
+
+<!DOCTYPE html>
 <html lang="en"><head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,6 +40,11 @@
 
 
 <body class="fix-header card-no-border">
+
+
+<?php 
+    $user = $_GET["user"];
+?>
 
     <div class="preloader" style="display: none;">
         <svg class="circular" viewBox="25 25 50 50">
@@ -108,26 +115,21 @@
         </aside>
 
 
-        <div class="page-wrapper" style="min-height: 600px;"> <!-- 352 -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <!--  desde aqui el contenido ferrrrrrrrrrrr-->
+        <div class="page-wrapper" style="min-height: 600px;">
 
             <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <section class="container">
                 <h2><span class="glyphicon glyphicon-edit"></span>Asignar Rol</h2>
-                <form>
+                <form name="form1" method="get" action="insertarRol.php">
                     <label for="usuario">Usuario: </label>
-                    <input type="text" name="usuario" placeholder="Usuario">
+                    <input type="text" name="usuario" placeholder="Usuario" value="<?php echo $user?>" readonly>
                     <label for="rol">Tipo Usuario</label>
                     <select name="rol" id="rol">
-                        <option value="1">Usuario Administrador</option>
-                        <option value="2">Usuario Unidad de Gasto</option>
-                        <option value="3">Usuario Unidad Administrativa</option>
-                        <option value="0">Ninguno</option>
+                        <option value="Usuario Administrador">Usuario Administrador</option>
+                        <option value="Usuario Unidad de Gasto">Usuario Unidad de Gasto</option>
+                        <option value="Usuario Unidad Administrativa">Usuario Unidad Administrativa</option>
                     </select>
                     <input type="submit" value="Asignar Rol" class="btn_save">
                 </form>
