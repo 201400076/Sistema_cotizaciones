@@ -10,7 +10,7 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="card-title">Solicitudes Nuevas</h4>
+					<h4 class="card-title">Solicitudes Pendientes</h4>
 					
 					<div class="row">
 
@@ -34,6 +34,7 @@
 										</tr>
 								
 										<?php
+									 
 										$i=0;
 										foreach($dato as $valor):
 										do{

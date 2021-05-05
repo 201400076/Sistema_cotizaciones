@@ -22,7 +22,9 @@ class SolicitudesController{
         $solicitud =new Solicitud();
 		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios","pedido.id_pedido=solicitudes.id_pedido
                                                             AND usuarios.id_usuarios=pedido.id_usuarios
-                                                            AND estado='pendiente'");
+                                                            AND estado='pendiente'
+                                                            order by fecha desc");
+        //$contarFilas=$dato->num_rows();
        $active="active";
        // echo json_encode($dato);
         require_once("../vista/vista_solicitudes_nuevas.php");
