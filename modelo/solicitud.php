@@ -19,6 +19,7 @@ class Solicitud{
 
         $consul="select * from ".$tabla." where ".$condicion.";";
             $resu=$this->db->query($consul);
+           // $contarFilas=$resu->num_rows;
             while($filas = $resu->FETCHALL(PDO::FETCH_ASSOC)) {
                 $this->Modelo[]=$filas;
             }
