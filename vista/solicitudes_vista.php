@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +10,7 @@
 <body>
 <?php
 
-    require_once("../modelo/solicitudes_modelo.php");
-    echo '<script>
-        Swal.fire("Any fool can use a computer");</script>';
+    require_once("../modelo/solicitudes_modelo.php");    
     $id_usuario=1;
     $pedidos=new Solicitudes();
     $registros=$pedidos->getItems($id_usuario);
@@ -87,7 +84,7 @@
             </table>
         </div>
         <div id="justificacion">
-            <textarea id="just" name="just" class="just" cols="133" rows="10" placeholder="Justificacion del pedido.."></textarea>
+            <textarea id="just" name="just" class="just" cols="133" rows="10" placeholder="Justificacion del pedido..."></textarea>
         </div>
         <input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
     </form>   

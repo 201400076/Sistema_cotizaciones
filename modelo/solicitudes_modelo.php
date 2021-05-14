@@ -92,5 +92,22 @@
             endforeach;
             return $apellido." ".$dato;  
         }
+
+        public function getItemsPedido($id_usuario,$id_pedido,$id_solicitud){
+            $consulta="SELECT i.cantidad, i.unidad, i.detalle, i.archivo FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes=".$id_solicitud." && p.id_pedido=".$id_pedido;
+            $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
+            return $sql;
+            header("Location:solicitudes_vista.php");                    
+        }
+
+        public function getJustificacion($id_usuario,$id_pedido,$id_solicitud){
+            $consulta="SELECT p.justificacion FROM solicitudes s, pedido p WHERE (s.id_pedido=p.id_pedido) && s.id_solicitudes=".$id_solicitud." && p.id_pedido=".$id_pedido;
+            $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);      
+            foreach($sql as $s):
+                $dato=$s->justificacion;                
+            endforeach;
+            return $dato;  
+        }
+
     }
 ?>

@@ -149,13 +149,8 @@
                             <a class="has-arrow <?php echo $active?> " href="#" aria-expanded="false"><i class="mdi mdi-barcode"></i><span
                                     class="hide-menu">Solicitudes</span></a>
                             <ul aria-expanded="false" class="collapse">
-<<<<<<< HEAD
                                 <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva">Solicitudes Nuevas</a></li>
                                 <!-- <li><a href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
-=======
-                                <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva">Pendientes</a></li>
-                               <!--  <li><a href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
->>>>>>> d0ef4e140e4d2c0f0888b33d195cf36ec3228f9f
 								<li><a href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li> -->
 
                             </ul>
