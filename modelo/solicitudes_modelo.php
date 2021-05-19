@@ -6,8 +6,20 @@
             require_once("conexionPablo.php");
             $this->bd=Conectar::conexion();        
         }
+        
+        public function getTamPedido($id){            
+            $consulta="SELECT  p.id_usuarios from items_pendientes p where p.id_usuarios=" . $id;
+            $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
+            $row=0;
+            foreach($sql as $a):    
+                $row++;
+            endforeach;                        
+            return $row;
+            //header("Location:solicitudes_vista");
+        }
+
         public function getPedido($id){            
-            $consulta="SELECT pedido.id_pedido from pedido, usuarios where pedido.id_usuarios=" . $id;
+            $consulta="SELECT pedido.id_pedido from pedido where pedido.id_usuarios=" . $id;
             $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
             $row=0;
             foreach($sql as $a):    
@@ -17,7 +29,7 @@
             header("Location:solicitudes_vista");
         }
         public function getItems($id){
-            $consulta="SELECT id_pendientes,cantida, unidad, detalle,archivo FROM items_pendientes, usuarios WHERE items_pendientes.id_usuarios=" . $id;
+            $consulta="SELECT id_pendientes,cantida, unidad, detalle,archivo FROM items_pendientes WHERE items_pendientes.id_usuarios=" . $id;
             $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
             return $sql;
             header("Location:solicitudes_vista.php");
@@ -35,8 +47,8 @@
             $dato=$this->ultimoPedido();
             $this->moveItems($dato,$this->getItems($id_usuarios));
             $this->removeItemsPendientes($id_usuarios);
-            $this->addSolicitud($dato);
-            header("Location:solicitudes_vista");
+            $this->addSolicitud($dato);              
+            header("Location:solicitudes_vista");          
         }
         public function addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta){                                            
             $sql = "INSERT INTO items_pendientes(cantida,unidad,detalle,archivo,ruta,id_usuarios) VALUES (:cantida,:unidad,:detalle,:archivo,:ruta,:id_usuarios)";

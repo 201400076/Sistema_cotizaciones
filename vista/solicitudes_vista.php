@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/estilosSolicitud.css">
+    <script src="../librerias/js/sweetalert2.all.min.js"></script>
+    <script src="../librerias/js/jquery-3.6.0.js"></script>
     <title>solicitud de pedido</title>
 </head>
 <body>
@@ -18,29 +20,54 @@
     $_POST["fecha"]=date("Y-m-d");
     $encargado=$pedidos->getUsuario($id_usuario);  
     $nro=$pedidos->getPedido($id_usuario);
-    if(isset($_POST["cr"])){           
-        
+    if(isset($_POST["cr"])){                   
         $cantidad=$_POST["cantidad"];
         $unidad=$_POST["unidad"];;
         $detalle=$_POST["detalle"];;
         $archivo=$_FILES["archivo"]["name"];
         $peso=$_FILES["archivo"]["size"];
         $ruta="C:\wamp64\www\proyectos";
-        if(!empty($unidad) && ((strlen($unidad)>1 && (strlen($unidad<=10))))){
-            if(empty($archivo) && (empty($detalle) || (strlen($detalle)>1 && (strlen($detalle<=200))))){            
+        if(!empty($cantidad) && $cantidad>0){
+            if(!empty($unidad) && ((strlen($unidad)>1 && (strlen($unidad<=10))))){
+                $checkArchivo=!empty($archivo);
+                $checkDetalle=!empty($detalle) && strlen($detalle)>1 && strlen($detalle<=200);
+                if($checkArchivo || $checkDetalle){
+                    $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  
+                    echo "<script language='javascript'>
+                    Swal.fire('agrego un item');
+                    </script>";
+                    header("Location:solicitudes_vista");  
+                }else{                    
+                    echo "<script language='javascript'>
+                    Swal.fire('debe ingresar un detalle o un archivo');
+                    </script>";        
+                }
             }else{
-                $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  
-                header("Location:solicitudes_vista");          
-            }
-        }else{
-
-        }
-       
+                echo "<script language='javascript'>
+                Swal.fire('Debe introducir una unidad validad');
+                </script>";
+            }           
+        } else{
+            echo "<script language='javascript'>
+                Swal.fire('Debe introducir una cantidad valida!');
+                </script>";
+        }    
     }
     if(isset($_POST["enviarSolicitud"])){
         $fecha=$_POST["fecha"];
         $justificacion=$_POST["just"];
-        $pedidos->addPedido($fecha,$justificacion,$id_usuario);
+        $tamPedido=$pedidos->getTamPedido($id_usuario);
+        if($tamPedido>0){
+            echo "<script language='javascript'>
+                    Swal.fire('Su pedido fue eviado exitosamente!');
+                    </script>"; 
+            $pedidos->addPedido($fecha,$justificacion,$id_usuario);                       
+        }else{
+            echo "<script language='javascript'>
+                    Swal.fire('Debe ingresar al menos un item!');
+                    </script>";
+        }
+        
     }
     
 ?>
@@ -76,7 +103,7 @@
                     endforeach
                 ?>
                 <td><input type="text" name='id' size='10' class='centrado' value="<?php echo $_POST['nro'];?>" readonly></td>
-                <td><input type="number" name='cantidad' size='10' class='centrado' min="1" max="1000000" require></td>
+                <td><input type="number" name='cantidad' size='10' class='centrado' min="1" max="1000000"></td>
                 <td><input type="text" name='unidad' size='10' class='centrado'></td>
                 <td><input type="text" name='detalle' size='10' class='centrado'></td>
                 <td><input type="file" name='archivo' id='archivo' value="adjuntar" accept=".pdf"></td>

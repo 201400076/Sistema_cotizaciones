@@ -38,8 +38,9 @@
     <div id="form-detalle">
         <label>Solicitado por: Montecinos Gomez Juan Pablo</label><br>
         <label>Unidad de gasto: Laboratorio de informatica y sistemas</label><br>
-        <label>Fecha de solicitud: 2021-04-20</label>
-
+        <label>Fecha de solicitud: 2021-04-20</label><br>
+        <label> Monto de la unidad administrativa: Bs. 20000.-</label><br>
+        <label> Monto del pedido: Bs. 200.-</label>
         <div id="tabla">
             <table id="tablaItems">
                 <tr>
@@ -72,13 +73,23 @@
 </form>
 
 <!-- MARCO  -->
+    <?php
+        if(isset($_POST["ej"])){
+            
+        }
+    ?>
+    <input type="submit" id="ej">
 
 <div class="botones">
     <button id="botonAceptar">Aceptar</button>
     <button id="botonRechazar">Rechazar</button>
+
+    
 </div>
 
 <script>
+   
+
         $('#botonAceptar').on('click', function(){
             Swal.fire({
                 title: 'Esta seguro de aceptar esta Solicitud?',
