@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/estilosSolicitud.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <script src="../librerias/js/sweetalert2.all.min.js"></script>
     <script src="../librerias/js/jquery-3.6.0.js"></script>
     <title>solicitud de pedido</title>
+    <link rel="stylesheet" href="css/vista_detalle.css">
 </head>
 <body>
 <?php
@@ -116,5 +116,5 @@
         <input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
     </form>   
 </body>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!--<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>-->
 </html>

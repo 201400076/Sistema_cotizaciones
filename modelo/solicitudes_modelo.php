@@ -15,7 +15,7 @@
                 $row++;
             endforeach;                        
             return $row;
-            //header("Location:solicitudes_vista");
+            header("Location:solicitudes_vista");
         }
 
         public function getPedido($id){            
