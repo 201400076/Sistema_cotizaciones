@@ -25,8 +25,8 @@
 <body>
 <?php
     $id_usuario=1;
-    $id_pedido=76;
-    $id_solicitud=20;
+    $id_pedido=79;
+    $id_solicitud=23;
     require_once("../modelo/solicitudes_modelo.php");   
     $pedidos=new Solicitudes();
     $registros=$pedidos->getItemsPedido($id_usuario,$id_pedido,$id_solicitud);
@@ -49,6 +49,7 @@
                     <th class="primeraFila">Unidad</th>
                     <th class="primeraFila">Detalle</th>
                     <th class="primeraFila">Archivo</th>              
+                    <th class="primeraFila">Accion</th>              
                 </tr>
                 <?php
                     foreach ($registros as $registro):
@@ -61,7 +62,9 @@
                         <td><?php echo $registro->unidad?></td>
                         <td><?php echo $registro->detalle?></td>
                         <td><?php echo $registro->archivo?></td>    
-                                             
+                        <td>
+                            <a type="button">Ver...</a>
+                        </td>    
                 </tr>
                 <?php
                     endforeach

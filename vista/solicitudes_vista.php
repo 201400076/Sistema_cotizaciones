@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Last-Modified" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  <meta http-equiv="Pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <script src="../librerias/js/sweetalert2.all.min.js"></script>
     <script src="../librerias/js/jquery-3.6.0.js"></script>
     <title>solicitud de pedido</title>
-    <link rel="stylesheet" href="css/vista_detalle.css">
+    <link rel="stylesheet" href="css/estilosSolicitud.css?v=<?php echo(rand()); ?>" />
 </head>
 <body>
 <?php
@@ -27,11 +30,19 @@
         $archivo=$_FILES["archivo"]["name"];
         $peso=$_FILES["archivo"]["size"];
         $ruta="C:\wamp64\www\proyectos";
+        $carpeta="../archivos/";
         if(!empty($cantidad) && $cantidad>0){
             if(!empty($unidad) && ((strlen($unidad)>1 && (strlen($unidad<=10))))){
                 $checkArchivo=!empty($archivo);
                 $checkDetalle=!empty($detalle) && strlen($detalle)>1 && strlen($detalle<=200);
                 if($checkArchivo || $checkDetalle){
+                    if(file_exists($carpeta) || @mkdir($carpeta)){
+                        $orgien=$_FILES["archivo"]["tmp_name"];
+                        $destino=$carpeta.$_FILES["archivo"]["name"];
+                        if(@move_uploaded_file($orgien,$destino)){
+                            $ruta=$destino;
+                        }
+                    }
                     $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  
                     echo "<script language='javascript'>
                     Swal.fire('agrego un item');
@@ -71,6 +82,15 @@
     }
     
 ?>
+    <nav>
+        <div class="titulo">
+            <label>Sistema de Cotizaciones</label>
+        </div>
+        
+        <div>
+            <a href="">Home</a>            
+        </div>
+    </nav>
     <h1>Solicitud de Pedido # <?php echo $nro?></h1>
     <h2><?php echo $_POST["fecha"]?></h2>
     <h2> Solicitado por: <?php echo $encargado?></h2>
@@ -79,11 +99,11 @@
         <div id="tabla">
            <table id="tablaItems">
                 <tr>
-                    <th class="primeraFila">Nro</th>
-                    <th class="primeraFila">Cantidad</th>
-                    <th class="primeraFila">Unidad</th>
-                    <th class="primeraFila">Detalle</th>
-                    <th class="primeraFila">Archivo</th>              
+                    <th class="primeraFila" id="pNro">Nro</th>
+                    <th class="primeraFila" id="pCantidad">Cantidad</th>
+                    <th class="primeraFila" id="pUnidad">Unidad</th>
+                    <th class="primeraFila" id="pDetalle">Detalle</th>
+                    <th class="primeraFila" id="pArchivo">Archivo</th>              
                     
                 </tr>
                 <?php
