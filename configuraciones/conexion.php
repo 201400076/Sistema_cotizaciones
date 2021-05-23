@@ -1,5 +1,5 @@
 <?php
-    require('../configuracion.php');
+    require('../modelo/configuracion.php');
     class Conexion{
         private $conexion;
         

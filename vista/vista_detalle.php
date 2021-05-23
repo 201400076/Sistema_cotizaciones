@@ -26,7 +26,9 @@
 <?php
     $id_usuario=1;
     $id_pedido=76;
-    $id_solicitud=20;
+    $id_solicitud=15;
+    $monto_solicitud=5000;
+    $monto_unidad=200000;
     require_once("../modelo/solicitudes_modelo.php");   
     $pedidos=new Solicitudes();
     $registros=$pedidos->getItemsPedido($id_usuario,$id_pedido,$id_solicitud);
@@ -39,8 +41,8 @@
         <label>Solicitado por: Montecinos Gomez Juan Pablo</label><br>
         <label>Unidad de gasto: Laboratorio de informatica y sistemas</label><br>
         <label>Fecha de solicitud: 2021-04-20</label><br>
-        <label> Monto de la unidad administrativa: Bs. 20000.-</label><br>
-        <label> Monto del pedido: Bs. 200.-</label>
+        <label> Monto de la unidad administrativa: Bs. 200000.-</label><br>
+        <label> Monto del pedido: Bs. 5000.-</label>
         <div id="tabla">
             <table id="tablaItems">
                 <tr>
@@ -83,54 +85,14 @@
 <div class="botones">
     <button id="botonAceptar">Aceptar</button>
     <button id="botonRechazar">Rechazar</button>
-
-    
+    <button id="botonCancelar">Cancelar</button>
 </div>
 
 <script>
-   
-
-        $('#botonAceptar').on('click', function(){
-            Swal.fire({
-                title: 'Esta seguro de aceptar esta Solicitud?',
-                text: "",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'SI',
-                cancelButtonText: 'NO'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('SOLICITUD ACEPTADA!','','success')
-                }else{
-                    Swal.fire('AUTORIZACION CANCELADA!','Se cancelo la autorizacion de la Solicitud','info')
-                }
-            })
-        })
-
-        $('#botonRechazar').on('click', function(){
-            Swal.fire({
-                input: 'textarea',
-                inputLabel: 'Justificacion de Rechazo de Solicitud',
-                inputPlaceholder: 'Ingrese los motivos por el cual se rechazo la solicitud de Pedido...',
-                inputAttributes: {
-                    'aria-label': 'Type your message here'
-                },
-                showCancelButton: true
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('SOLICITUD RECHAZADA!','Se registro la justificacion para el rechazo de la solicitud','success')
-                }else{
-                    Swal.fire('RECHAZO DE SOLICITUD CANCELADA!','Se cancelo el rechazo de la Solicitud','info')
-                }
-            })
-
-                if (text) {
-                Swal.fire(text)
-                }
-        })   
-    </script>
-
+    var id = '<?php echo($id_solicitud);?>';
+    var montoSolicitud = '<?php echo($monto_solicitud);?>';
+    var montoUnidad = '<?php echo($monto_unidad);?>';
+</script>
+<script src="../controladores/evaluarPedidoSolicitud.js"></script>
 </body>
 </html>
