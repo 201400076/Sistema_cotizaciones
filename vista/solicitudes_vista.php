@@ -40,7 +40,7 @@
                         $orgien=$_FILES["archivo"]["tmp_name"];
                         $destino=$carpeta.$_FILES["archivo"]["name"];
                         if(@move_uploaded_file($orgien,$destino)){
-                            $ruta=$destino;
+                            $ruta="archivos/".$_FILES["archivo"]["name"];
                         }
                     }
                     $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  

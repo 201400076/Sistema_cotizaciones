@@ -29,7 +29,7 @@
             header("Location:solicitudes_vista");
         }
         public function getItems($id){
-            $consulta="SELECT id_pendientes,cantida, unidad, detalle,archivo FROM items_pendientes WHERE items_pendientes.id_usuarios=" . $id;
+            $consulta="SELECT id_pendientes,cantida, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios=" . $id;
             $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
             return $sql;
             header("Location:solicitudes_vista.php");
@@ -71,9 +71,10 @@
                 $u=$r->unidad;            
                 $d=$r->detalle;
                 $a=$r->archivo;
-                $sql = "INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo) VALUES (?,?,?,?,?)";                
+                $ruta=$r->ruta;
+                $sql = "INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo,ruta) VALUES (?,?,?,?,?,?)";                
                 $resultado=$this->bd->prepare($sql);
-                $resultado->execute([$dato,$c,$u,$d,$a]);
+                $resultado->execute([$dato,$c,$u,$d,$a,$ruta]);
             endforeach;
         }
 
@@ -106,7 +107,7 @@
         }
 
         public function getItemsPedido($id_usuario,$id_pedido,$id_solicitud){
-            $consulta="SELECT i.cantidad, i.unidad, i.detalle, i.archivo FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes=".$id_solicitud." && p.id_pedido=".$id_pedido;
+            $consulta="SELECT i.cantidad, i.unidad, i.detalle, i.archivo, i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes=".$id_solicitud." && p.id_pedido=".$id_pedido;
             $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
             return $sql;
             header("Location:solicitudes_vista.php");                    
