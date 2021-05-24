@@ -8,19 +8,6 @@
     <script src="../librerias/js/jquery-3.6.0.js"></script>
     <title>Document</title>
     <link rel="stylesheet" href="css/estilosSolicitud.css">
-
-    <style>
-         .botones{
-            width: auto;
-            margin-top: 100px;
-            text-align: center;
-        }
-        
-        button{
-            display: inline-block;
-        }
-    </style>
-
 </head>
 <body>
 <?php
@@ -49,11 +36,10 @@
     </nav>
 <form action="">    
     <div id="form-detalle">
-        <label>Solicitado por: Montecinos Gomez Juan Pablo</label><br>
-        <label>Unidad de gasto: Laboratorio de informatica y sistemas</label><br>
-        <label>Fecha de solicitud: 2021-04-20</label><br>
-        <label> Monto de la unidad administrativa: Bs. 200000.-</label><br>
-        <label> Monto del pedido: Bs. 5000.-</label>
+    <h1>Solicitud de Cotizacion</h1>
+    <h1>Expresado en bolivianos</h1>        
+        <label>Unidad de administrativa: Laboratorio de informatica y sistemas</label><br>
+        <label>Fecha de solicitud: 2021-04-20</label><br>        
         <div id="tabla">
             <table id="tablaItems">
                 <tr>
@@ -62,7 +48,8 @@
                     <th class="primeraFila">Unidad</th>
                     <th class="primeraFila">Detalle</th>
                     <th class="primeraFila">Archivo</th>              
-                    <th class="primeraFila">Accion</th>              
+                    <th class="primeraFila">Precio Unit</th>              
+                    <th class="primeraFila">Precio Parcial</th>  
                 </tr>
                 <?php
                     foreach ($registros as $registro):
@@ -73,39 +60,31 @@
                         $_POST['nro']++;?></td>
                         <td><?php echo $registro->cantidad?></td>
                         <td><?php echo $registro->unidad?></td>
-                        <td><?php echo $registro->detalle?></td>
-                        <td><?php echo $registro->archivo?></td>    
+                        <td><?php echo $registro->detalle?></td>                          
                         <td>
                             <a target="_black" href="<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/proyectos/'.$registro->ruta ?>"type='button'>Ver...</a>
                         </td>    
+                        <td><input type="number" name='unitario' size='10' class='centrado' min="1" max="1000000"></td>
+                        <td></td>                                                
                 </tr>
                 <?php
                     endforeach
                 ?>
+                 <tr>
+                    <th class="primeraFila">Precio Total</th>
+                    <th class="primeraFila"></th>
+                    <th class="primeraFila"></th>
+                    <th class="primeraFila"></th>
+                    <th class="primeraFila"></th>
+                    <th class="primeraFila"></th>
+                    <th class="primeraFila">15555</th>  
+                </tr>
             </table>
-        </div>
-        <textarea name="justificacion" id="justificacion" cols="30" rows="10"><?php echo $just?></textarea>
+           
+        </div>        
     </div>
 </form>
-
-<!-- MARCO  -->
-    <?php
-        if(isset($_POST["ej"])){
-            
-        }
-    ?>
-
-<div class="botones">
-    <button id="botonAceptar">Aceptar</button>
-    <button id="botonRechazar">Rechazar</button>
-    <button id="botonCancelar">Cancelar</button>
-</div>
-
-<script>
-    var id = '<?php echo($id_solicitud);?>';
-    var montoSolicitud = '<?php echo($monto_solicitud);?>';
-    var montoUnidad = '<?php echo($monto_unidad);?>';
-</script>
+<input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
 <script src="../controladores/evaluarPedidoSolicitud.js"></script>
 </body>
 </html>
