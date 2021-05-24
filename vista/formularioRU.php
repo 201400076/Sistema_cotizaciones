@@ -27,6 +27,7 @@
 </head>
 <body>
 <?php
+    $active = "active";
     include_once("../vista/layouts/navegacion.php");
 ?>
 

@@ -10,6 +10,7 @@
 </head>
 <body>
 <?php
+    $active = "active";
     include_once("../vista/layouts/navegacion.php");
     include_once("../vista/layouts/footer.php");
 ?>
