@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enviar Correos</title>
     <link rel="stylesheet" href="./css/estiloRol.css">
+    <script src="../librerias/js/sweetalert2.all.min.js"></script>
+    <script src="../librerias/js/jquery-3.6.0.js"></script>
 </head>
 <body>
 <?php
@@ -23,7 +25,7 @@
         <h2 style="text-align:center;">Envio de cotizaciones a empresas</h2>
     </div>
     <br>
-    <form action="enviarCorreos.php" method="post">
+    <form action="enviarCorreos.php" method="post" id="formulario">
         <div class="container">
             <div class="row">
                 <div class="col-md-6" >
@@ -62,7 +64,7 @@
                         <td>".$registroEmpresas['id_empresa']."</td>
                         <td>".$registroEmpresas['nombre_empresa']."</td>
                         <td>".$registroEmpresas['correo_empresa']."</td>
-                        <td><input type='checkbox' name='marcar[]' value=".$registroEmpresas['correo_empresa']."/></td>
+                        <td><input type='checkbox' name='marcar[]' id='marcar' value=".$registroEmpresas['correo_empresa']."/></td>
                     </tr>";
                 } 
             ?>						 
@@ -71,11 +73,14 @@
         <br />				
         <div class="text-center">
             <button type="submit" name="enviar" class="btn btn-success" value="Marcar empresa">
-                Enviar
+                ENVIAR
             </button>
         </div>
+        <script src="../controladores/validarEnvioCorreos.js"></script>
+
+
         <?php
-        require_once('../vista/enviarCorreos.php');
+        //require_once('../vista/enviarCorreos.php');
         include_once("../vista/layouts/footer.php");
         ?>
     </form>
