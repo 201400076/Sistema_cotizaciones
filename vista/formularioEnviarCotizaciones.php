@@ -9,47 +9,76 @@
 </head>
 <body>
 <?php
-        require_once('../configuraciones/conexion.php');
-        $conn = new Conexion();
-        $estadoConexion = $conn->getConn();
-        $empresas = "SELECT * FROM empresas";
-        $queryEmpresas=$estadoConexion->query($empresas);
-    ?>
-<form action="enviarCorreos.php" method="post">
-	
-    <table id="example">
-		<div class="alert alert-success">
-			<h2 style="text-align:center;">Enviar Cotizaciones a empresas</h2>
-		</div>
-		<thead>
-			<tr>
-                <th>Codigo Empresa</th>
-				<th>Nombre Empresa</th>
-				<th>Correo Empresa</th>
-				<th>Accion</th>
-			</tr>
-		</thead>
-	    <tbody>
-		<?php
-		while($registroEmpresas=$queryEmpresas->fetch_array(MYSQLI_BOTH)){
-            echo "<tr>
-                    <td>".$registroEmpresas['id_empresa']."</td>
-                    <td>".$registroEmpresas['nombre_empresa']."</td>
-                    <td>".$registroEmpresas['correo_empresa']."</td>
-                    <td><input type='checkbox' name='marcar[]' value=".$registroEmpresas['correo_empresa']."/></td>
-                </tr>";
-            } 
-        ?>						 
-		</tbody>
-	</table>
-	<br />				
-	<button type="submit" name="enviar" value="Marcar empresa">
-		Enviar
-	</button>
-    <?php
-    require_once('../vista/enviarCorreos.php');
-    ?>
+    $active = "";
+    include_once("layouts/navegacion.php");
 
-</form>
+    require_once('../configuraciones/conexion.php');
+    $conn = new Conexion();
+    $estadoConexion = $conn->getConn();
+    $empresas = "SELECT * FROM empresas";
+    $queryEmpresas=$estadoConexion->query($empresas);
+?>
+<div class="container-fluid">
+    <div>
+        <h2 style="text-align:center;">Envio de cotizaciones a empresas</h2>
+    </div>
+    <br>
+    <form action="enviarCorreos.php" method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6" >
+                    <div style="width: 100%;">
+                        <label for="remitente" style="width: 25%;">Remitente:</label>  
+                        <input name="remitente" id="remitente" type="text" style="width: 50%;" required><br>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="asunto" style="width: 25%;">Asunto:</label>  
+                        <input name="asunto" id="asunto" type="text" style="width: 50%;" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="descripcion" style="width: 25%;">Descripcion:</label> 
+                    <textarea name="descripcion" id="descripcion" style="width: 70%;"  cols="50%" rows="3" placeholder="Ingrese detalles..." required></textarea> 
+                </div>
+            </div>
+        <br>
+        <div>
+            <h3 style="text-align: center;">Lista de Empresas</h3>
+        </div>
+        <table id="tablaEmpresas">
+            <thead>
+                <tr>
+                    <th>Codigo Empresa</th>
+                    <th>Nombre Empresa</th>
+                    <th>Correo Empresa</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            while($registroEmpresas=$queryEmpresas->fetch_array(MYSQLI_BOTH)){
+                echo "<tr>
+                        <td>".$registroEmpresas['id_empresa']."</td>
+                        <td>".$registroEmpresas['nombre_empresa']."</td>
+                        <td>".$registroEmpresas['correo_empresa']."</td>
+                        <td><input type='checkbox' name='marcar[]' value=".$registroEmpresas['correo_empresa']."/></td>
+                    </tr>";
+                } 
+            ?>						 
+            </tbody>
+        </table>
+        <br />				
+        <div class="text-center">
+            <button type="submit" name="enviar" class="btn btn-success" value="Marcar empresa">
+                Enviar
+            </button>
+        </div>
+        <?php
+        require_once('../vista/enviarCorreos.php');
+        include_once("../vista/layouts/footer.php");
+        ?>
+    </form>
+</div>
 </body>
 </html>

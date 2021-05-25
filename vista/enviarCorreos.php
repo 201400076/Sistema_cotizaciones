@@ -36,23 +36,23 @@ function enviarCorreos($correo){
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'CORREO_ORIGEN';//correo
-        $mail->Password = 'CONTRASENA_DEL_CORREO_ORIGEN';//Contrasena
+        $mail->Username = 'marcoescalera2017@gmail.com';//correo
+        $mail->Password = 'Xmaesc1997X';//Contrasena
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
     
         //Destino
-        $mail->setFrom('CORREO ORIGEN', 'NOMBRE DEL EMISARIO');    //Configurar el emisario(origen)
+        $mail->setFrom('marcoescalera2017@gmail.com', 'Marco');    //Configurar el emisario(origen)
 
         $mail->addAddress($correo); //<--Enviar a este correo
-    
+
         //Archivos adjuntos
-        //$mail->addAttachment('../recursos/imagenes/icono.jpg', 'iconoEjemplo.jpg');    //Optional name
+        $mail->addAttachment('../archivos/Dimesiones de silla ideal.pdf', 'archivoEjemplo.pdf');    //Optional name
     
         //Contenido
         $mail->isHTML(true);
-        $mail->Subject = 'PRUEBA 4';
-        $mail->Body    = 'Este es el ejemplo #4 para probar el envio de correos a multiples destinos con archivo adjunto';
+        $mail->Subject = 'PRUEBA 7';
+        $mail->Body    = 'Este es el ejemplo #7 para probar el envio de correos a multiples destinos con archivo adjunto en este caso PDF';
     
         $mail->send();
         echo 'Correo enviado!';
