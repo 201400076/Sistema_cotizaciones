@@ -1,4 +1,5 @@
 <?php
+	$active = "";
 	include_once("layouts/navegacion.php");
 ?>
 <div class="container-fluid">
@@ -19,18 +20,23 @@
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
-											<th>Fecha</th>
+											<th>Fecha-Recepcion</th>
+											<th>Fecha-Rechazo</th>
 											<th>Solicitante</th>
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>
 											<th>Unidad</th> -->
+											<th>unidad</th>
 											<th>Estado</th>
+											<th>Informe</th>
+
 											
 											<!-- <th class="text-right">Acciones</th> -->
 
 										</tr>
 
 										<?php
+										
 											$i=0;
 											foreach($dato as $valor):	
 											do{										
@@ -39,8 +45,11 @@
 										<tr align="center">
 											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 											<td><?php echo $valor[$i]['fecha']?></td>
+											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
 
 											<td><?php echo $valor[$i]['nombres']?></td>
+
+											<td><?php echo $valor[$i]['nombre_gasto']?></td>
 											<!-- <td>
 												Compra de Sillas<br>
 												
@@ -56,7 +65,12 @@
 											<td>
 												<span class="label label-danger"><?php echo $valor[$i]['estado']?></span>
 											</td>
+											
 
+											<td>
+									
+												<a class="btn btn-info" target="_blank" href="../vista/vistaPDFRechazadas.php">Ver Informe</a>
+											</td>
 											<!-- <td class="text-right">
 												<div class="btn-group dropleft">
 													<button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

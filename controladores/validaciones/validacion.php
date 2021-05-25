@@ -34,6 +34,10 @@ require_once("../configuraciones/conexion.php");
             return false;
         }
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af3d9df64eeef8eeb31cbb131604d9d55fe7036
     function usuarioExiste($usuario){
         global $estadoconexion;
 
@@ -50,5 +54,9 @@ require_once("../configuraciones/conexion.php");
             return false;
         }
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af3d9df64eeef8eeb31cbb131604d9d55fe7036
 }
 ?>

@@ -20,8 +20,10 @@ class SolicitudesController{
     static function mostrar_nueva($condicion){
 
         $solicitud =new Solicitud();
-		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios","pedido.id_pedido=solicitudes.id_pedido
+		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto","pedido.id_pedido=solicitudes.id_pedido
                                                             AND usuarios.id_usuarios=pedido.id_usuarios
+                                                            AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+                                                            AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
                                                             AND estado='pendiente'
                                                             order by fecha desc");
         //$contarFilas=$dato->num_rows();
@@ -33,9 +35,12 @@ class SolicitudesController{
     static function mostrar_aceptada($condicion){
 
         $solicitud =new Solicitud();
-		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios","pedido.id_pedido=solicitudes.id_pedido
-                                                             AND usuarios.id_usuarios=pedido.id_usuarios
-                                                             AND estado='aceptada'");
+		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto","pedido.id_pedido=solicitudes.id_pedido
+                                                            AND usuarios.id_usuarios=pedido.id_usuarios
+                                                            AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+                                                            AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
+                                                            AND estado='aceptada'
+                                                            order by fecha desc");
        $active="active";
        // echo json_encode($dato);
         require_once("../vista/vista_solicitudes_aceptadas.php");
@@ -44,12 +49,24 @@ class SolicitudesController{
     static function mostrar_rechazada($condicion){
 
         $solicitud =new Solicitud();
-		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios","pedido.id_pedido=solicitudes.id_pedido
-                                                             AND usuarios.id_usuarios=pedido.id_usuarios
-                                                             AND estado='rechazada'");
+		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto","pedido.id_pedido=solicitudes.id_pedido
+                                                        AND usuarios.id_usuarios=pedido.id_usuarios
+                                                        AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+                                                        AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
+                                                        AND estado='rechazada'
+                                                        order by fecha desc");
        $active="active";
        // echo json_encode($dato);
         require_once("../vista/vista_solicitudes_rechazadas.php");
+
+    }
+
+    static function mostrar_PDF($condicion){
+
+
+       $active="active";
+       // echo json_encode($dato);
+        require_once("../vista/vistaPDFRechazadas.php");
 
     }
 }

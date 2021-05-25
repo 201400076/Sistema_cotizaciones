@@ -1,4 +1,5 @@
 <?php
+$active = "";
 	include_once("layouts/navegacion.php");
 
 ?>
@@ -16,18 +17,22 @@
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
-											<th>Fecha</th>
+											<th>Fecha-Recepcion</th>
+											<th>Fecha-Aceptado</th>
 											<th>Solicitante</th>
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>
 											<th>Unidad</th> -->
+											<th>Unidad</th>
 											<th>Estado</th>
+											
 											
 											<!-- <th class="text-right">Acciones</th> -->
 
 										</tr>
 
 										<?php
+										
 											$i=0;
 											foreach($dato as $valor):
 											do{
@@ -37,7 +42,11 @@
 											<td><?php echo $valor[$i]['id_solicitudes'] ?></td>
 											<td><?php echo $valor[$i]['fecha']?></td>
 
+											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
+
 											<td><?php echo $valor[$i]['nombres']?></td>
+
+											<td><?php echo $valor[$i]['nombre_gasto']?></td>
 
 											<!-- <td>
 												Compra de Sillas<br>
@@ -55,6 +64,8 @@
 												<span class="label label-success"><?php echo $valor[$i]['estado']?></span>
 
 											</td>
+
+											
 											
 
 											<!-- <td class="text-right">
