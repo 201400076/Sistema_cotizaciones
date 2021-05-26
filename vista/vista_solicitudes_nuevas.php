@@ -1,5 +1,7 @@
 
 <?php
+$active = "active";
+
 	include_once("layouts/navegacion.php");
 	
 	
