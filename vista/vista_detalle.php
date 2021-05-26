@@ -23,6 +23,7 @@
 
 </head>
 <body>
+
 <?php
     require_once("../modelo/solicitudes_administracion.php");        
     $id_usuario=1;

@@ -43,6 +43,11 @@ $consulta1 = "SELECT r.usuario, r.rolAsignado FROM usuarioconrol r";
 
 <body class="fix-header card-no-border">
 
+<?php
+    $active = "active";
+    include_once("../vista/layouts/navegacion.php");
+?>
+
     <div class="preloader" style="display: none;">
         <svg class="circular" viewBox="25 25 50 50">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
@@ -50,68 +55,6 @@ $consulta1 = "SELECT r.usuario, r.rolAsignado FROM usuarioconrol r";
     </div>
 
     <div id="main-wrapper">
-
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">
-
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php">
-                        <!-- Logo icon -->
-                        <b>
-                            <!-- Light Logo icon -->
-                            <img src="../recursos/imagenes/icono.jpg" alt="homepage" class="light-logo" style="width:34px">
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span style="">
-
-                            <!-- Light Logo text -->
-                            <span class="text-white" style=""><b> Sistema de Cotizaciones </b></span>
-
-                        </span>
-                    </a>
-                </div><a class="navbar-brand" href="index.php">
-
-                </a>
-                <div class="navbar-collapse"><a class="navbar-brand" href="index.php">
-
-                    </a>
-                    <ul class="navbar-nav mr-auto mt-md-0 "><a class="navbar-brand" href="index.php">
-                            <!-- This is  -->
-                        </a>
-                        <li class="nav-item"><a class="navbar-brand" href="index.php"> </a><a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
-                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
-
-
-
-                    </ul>
-
-                    <ul class="navbar-nav my-lg-0">
-                    </ul>
-                </div>
-            </nav>
-        </header> <!-- ============================================================== -->
-
-        <aside class="left-sidebar" method="get">
-
-            <div class="scroll-sidebar">
-
-                <nav class="sidebar-nav active">
-                    <ul id="sidebarnav" class="in">
-                        <li class="">
-                            <a class="has-arrow  " href="#" aria-expanded="false"><i class="mdi mdi-barcode"></i><span class="hide-menu">Home</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="../ruta/ruta.php" id="nueva" name="nueva">Home</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-
-            </div>
-
-        </aside>
-
-
         <div class="page-wrapper" style="min-height: 600px;"> <!-- 352 -->
             <!-- ============================================================== -->
             <!-- Container fluid  -->
@@ -119,78 +62,72 @@ $consulta1 = "SELECT r.usuario, r.rolAsignado FROM usuarioconrol r";
             <!--  desde aqui el contenido ferrrrrrrrrrrr-->
 
             <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <section class="container">
-                <h2><span class="glyphicon glyphicon-edit"></span> Lista de Usuarios</h2>
-                <table>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Usuario</th>
-                        <th>Acciones</th>
-                    </tr>
-                    <?php
-$query = mysqli_query($conexion, $consulta);
-$result = mysqli_num_rows($query);
-if ($result > 0) {
-    while ($data = mysqli_fetch_array($query)) {
-        ?>
-                    <tr>
-                        <td><?php echo $data["id_usuarios"] ?></td>
-                        <td><?php echo $data["nombres"] ?></td>
-                        <td><?php echo $data["apellidos"] ?></td>
-                        <td><?php echo $data["usuario"] ?></td>
-                        <td>
-                            <a class="link_asignar" href="reasignar.php?user=<?php echo $data["usuario"] ?>">Asignar Rol</a>
-                        </td>
-                    </tr>
-                    <?php
-}
-}
-?>
-
-                </table>
-            </section>
-
-            <section class="container">
-                <h2><span class="glyphicon glyphicon-edit"></span> Lista Usuarios Con Rol</h2>
-                <table>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Rol</th>
-                    </tr>
-
-                    <?php 
-                        $query1 = mysqli_query($conexion, $consulta1);
-                        $result1 = mysqli_num_rows($query1);
-                        if($result1 > 0){
-                            while ($data1 = mysqli_fetch_array($query1)){
-                                ?>
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="container">
+                            <h2><span class="glyphicon glyphicon-edit"></span> Lista de Usuarios</h2>
+                            <table>
                                 <tr>
-                                    <td><?php echo $data1["usuario"] ?></td>
-                                    <td><?php echo $data1["rolAsignado"] ?></td>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Usuario</th>
+                                    <th>Acciones</th>
                                 </tr>
                                 <?php
-                            }
-                        } 
-                    ?>
+                                    $query = mysqli_query($conexion, $consulta);
+                                    $result = mysqli_num_rows($query);
+                                    if ($result > 0) {
+                                        while ($data = mysqli_fetch_array($query)) {
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $data["id_usuarios"] ?></td>
+                                                <td><?php echo $data["nombres"] ?></td>
+                                                <td><?php echo $data["apellidos"] ?></td>
+                                                <td><?php echo $data["usuario"] ?></td>
+                                                <td>
+                                                    <a class="link_asignar" href="reasignar.php?user=<?php echo $data["usuario"] ?>">Asignar Rol</a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    }
+                                ?>
 
-                    <tr>
+                            </table>
+                        </section>
+
+                        <section class="container">
+                            <h2><span class="glyphicon glyphicon-edit"></span> Lista Usuarios Con Rol</h2>
+                            <table>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Rol</th>
+                                </tr>
+
+                                <?php 
+                                    $query1 = mysqli_query($conexion, $consulta1);
+                                    $result1 = mysqli_num_rows($query1);
+                                    if($result1 > 0){
+                                        while ($data1 = mysqli_fetch_array($query1)){
+                                    ?>
+
+                                            <tr>
+                                                <td><?php echo $data1["usuario"] ?></td>
+                                                <td><?php echo $data1["rolAsignado"] ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    } 
+                                ?>
+                                    <tr>
                         
-                    </tr>
-
-
-                </table>
-            </section>
-
-
-
+                                    </tr>
+                            </table>
+                        </section>
+                    </div>
         </div>
     </div>
-</div>
 
             <footer class="footer">
                 © Sitio web desarrollado y gestionado por la grupo empresa <a target="_blank">PF S.R.L</a>
