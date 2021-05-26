@@ -23,11 +23,12 @@
 
 </head>
 <body>
+
 <?php
     require_once("../modelo/solicitudes_administracion.php");        
     $id_usuario=1;
     $id_pedido=81;
-    $id_solicitud=20;
+    $id_solicitud=49;
     $monto_solicitud=5000;
     $monto_unidad=200000;
 

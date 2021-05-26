@@ -29,14 +29,16 @@ $active = "active";
 											<th>Unidad</th> -->
 
 											<th>Solicitante</th>
+											<th>Unidad</th>
 											<th>Estado</th>
+											<th>Detalle</th>
 										
 											<!-- <th class="text-right">Acciones</th> -->
 
 										</tr>
 								
 										<?php
-									 
+									 	
 										$i=0;
 										foreach($dato as $valor):
 										do{
@@ -44,11 +46,12 @@ $active = "active";
 										
 										?>
 										<tr align="center">
-											<td><?php echo($valor[$i]['id_solicitudes'])?></td>
+											<td><?php echo $i+1?></td>
 											<td><?php echo($valor[$i]['fecha'])?></td>
+											
 
 											<td><?php echo($valor[$i]['nombres'])?></td>	
-
+											<td><?php echo($valor[$i]['nombre_gasto'])?></td>		
 											<!-- <td>
 												<?php echo($valor[0]['detalle'])?><br>
 												<div class="text-center">
@@ -65,6 +68,11 @@ $active = "active";
 
 											</td>
 											
+											
+											<td>
+									
+												<a class="btn btn-info" target="_blank" href="../vista/vista_detalle.php">Ver Detalle</a>
+											</td>
 
 											<!-- <td class="text-right">
 												<div class="btn-group dropleft">

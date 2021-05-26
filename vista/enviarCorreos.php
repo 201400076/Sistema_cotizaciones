@@ -6,21 +6,23 @@ require '../librerias/phpMailer/Exception.php';
 require '../librerias/phpMailer/PHPMailer.php';
 require '../librerias/phpMailer/SMTP.php';
 
-
-
-if(isset($_POST["enviar"])){
+if(!empty($_POST)){
     if(empty($_POST["marcar"])){
-        echo "<h1>No se ha marcado nada</h1>";
+        echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=0";</script>';
     }else{
         $aux = 0;
+        $remitente = $_POST["remitente"];
+        $asunto = $_POST["asunto"];
+        $descripcion = $_POST["descripcion"];
         foreach($_POST["marcar"] as $correo_marcado){
             $correo = trim($correo_marcado, '/');
-            enviarCorreos($correo);
+            enviarCorreos($remitente, $asunto, $descripcion, $correo);
+            echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=1";</script>';
         }
     }
 }
 
-function enviarCorreos($correo){
+function enviarCorreos($remitente, $asunto, $descripcion, $correo){
     $mail = new PHPMailer(true);
     $mail->SMTPOptions = array(
     'ssl' => array(
@@ -42,20 +44,20 @@ function enviarCorreos($correo){
         $mail->Port = 587;
     
         //Destino
-        $mail->setFrom('marcoescalera2017@gmail.com', 'Marco');    //Configurar el emisario(origen)
+        $mail->setFrom('marcoescalera2017@gmail.com', $remitente);    //Configurar el emisario(origen)
 
         $mail->addAddress($correo); //<--Enviar a este correo
 
         //Archivos adjuntos
-        $mail->addAttachment('../archivos/Dimesiones de silla ideal.pdf', 'archivoEjemplo.pdf');    //Optional name
+        $mail->addAttachment('../archivos/Solicitud_de_cotizacion_Cod25.pdf');    //Optional name
     
         //Contenido
         $mail->isHTML(true);
-        $mail->Subject = 'PRUEBA 7';
-        $mail->Body    = 'Este es el ejemplo #7 para probar el envio de correos a multiples destinos con archivo adjunto en este caso PDF';
+        $mail->Subject = $asunto;
+        $mail->Body    = $descripcion;
     
         $mail->send();
-        echo 'Correo enviado!';
+        //echo 'Correo enviado!';
     } catch (Exception $e) {
         echo "Hubo un error al enviar el mensaje: {$mail->ErrorInfo}";
     }
