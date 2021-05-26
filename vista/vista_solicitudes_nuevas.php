@@ -71,7 +71,7 @@ $active = "active";
 											
 											<td>
 									
-												<a class="btn btn-info" target="_blank" href="../vista/vista_detalle.php">Ver Detalle</a>
+												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php">Ver Detalle</a>
 											</td>
 
 											<!-- <td class="text-right">

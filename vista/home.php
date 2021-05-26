@@ -11,9 +11,7 @@ include_once("layouts/navegacion.php");
 ?>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
-			<h2><span class="glyphicon glyphicon-edit"></span> Home</h2>
-
+		<div class="col-md-12">			
 			<div class="unidadAdministrativa">
 				<h1></h1>
 				<hr>
