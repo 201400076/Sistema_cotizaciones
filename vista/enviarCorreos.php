@@ -6,7 +6,7 @@ require '../librerias/phpMailer/Exception.php';
 require '../librerias/phpMailer/PHPMailer.php';
 require '../librerias/phpMailer/SMTP.php';
 
-if(isset($_POST["enviar"])){
+if(!empty($_POST)){
     if(empty($_POST["marcar"])){
         echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=0";</script>';
     }else{
@@ -49,7 +49,7 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo){
         $mail->addAddress($correo); //<--Enviar a este correo
 
         //Archivos adjuntos
-        $mail->addAttachment('../archivos/Dimesiones de silla ideal.pdf', 'archivoEjemplo.pdf');    //Optional name
+        $mail->addAttachment('../archivos/Solicitud_de_cotizacion_Cod25.pdf');    //Optional name
     
         //Contenido
         $mail->isHTML(true);
@@ -57,7 +57,7 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo){
         $mail->Body    = $descripcion;
     
         $mail->send();
-        echo 'Correo enviado!';
+        //echo 'Correo enviado!';
     } catch (Exception $e) {
         echo "Hubo un error al enviar el mensaje: {$mail->ErrorInfo}";
     }

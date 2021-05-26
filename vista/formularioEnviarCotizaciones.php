@@ -33,10 +33,13 @@
                         <label for="remitente" style="width: 25%;">Remitente:</label>  
                         <input name="remitente" id="remitente" type="text" style="width: 50%;" required><br>
                     </div>
-                    <br>
                     <div>
                         <label for="asunto" style="width: 25%;">Asunto:</label>  
                         <input name="asunto" id="asunto" type="text" style="width: 50%;" required>
+                    </div>
+                    <div>
+                        <label for="archivo" style="width: 25%;">Archivo adjunto:</label>  
+                        <a style="width: 50%;" href="../archivos/Solicitud_de_cotizacion_Cod25.pdf">Solicitud_de_cotizacion_Cod25.pdf</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -44,7 +47,6 @@
                     <textarea name="descripcion" id="descripcion" style="width: 70%;"  cols="50%" rows="3" placeholder="Ingrese detalles..." required></textarea> 
                 </div>
             </div>
-        <br>
         <div>
             <h3 style="text-align: center;">Lista de Empresas</h3>
         </div>
@@ -69,21 +71,17 @@
                 } 
             ?>						 
             </tbody>
-        </table>
-        <br />				
+        </table>			
         <div class="text-center">
             <button type="submit" name="enviar" class="btn btn-success" value="Marcar empresa">
                 ENVIAR
             </button>
         </div>
         <script src="../controladores/validarEnvioCorreos.js"></script>
-
-
-        <?php
-        //require_once('../vista/enviarCorreos.php');
-        include_once("../vista/layouts/footer.php");
-        ?>
     </form>
 </div>
+<?php
+    include_once("../vista/layouts/footer.php");
+?>
 </body>
 </html>
