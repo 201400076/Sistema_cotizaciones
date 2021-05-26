@@ -4,16 +4,13 @@ function obtenerValores(){
     const $formulario = document.querySelector("#formulario"),
             $remitente = document.querySelector("#remitente"),
             $asunto = document.querySelector("#asunto"),
-            $descripcion = document.querySelector("#descripcion"),
-            $marcar = document.querySelector("#marcar[]");
+            $descripcion = document.querySelector("#descripcion");
 
         $formulario.onsubmit = evento => {
             evento.preventDefault();
             const remitente = $remitente.value,
                 asunto = $asunto.value,
-                descripcion = $descripcion.value,
-                marcar = $marcar.value;
-                alert(marcar[0]);
+                descripcion = $descripcion.value;
 
             aux = 0;
             if(esVacio(remitente) || !(verificarPatron(remitente,/^[a-zA-Z][a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s?]+$/))){
@@ -38,13 +35,12 @@ function obtenerValores(){
                 $("#descripcion").val(""); 
             }
             if(aux==0){
-                console.log(remitente);
-                console.log(asunto);
-                console.log(descripcion);
-                //$formulario.submit();
+                //console.log(remitente);
+                //console.log(asunto);
+                //console.log(descripcion);
+                $formulario.submit();
             }
         }
-        //console.log("se envio");
 }
 
 function esVacio(texto) {

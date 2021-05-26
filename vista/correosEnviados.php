@@ -10,6 +10,8 @@
 </head>
 <body>
     <?php
+        $active = "";
+        include_once("layouts/navegacion.php");
         $marcado = $_GET['marcado'];
     ?>
 
@@ -18,31 +20,34 @@
         if(id == 0){
             Swal.fire({
             title: 'Ooppss...',
-            text: 'Texto ingresado no valido, vuelva a intentarlo',
+            text: 'Debe seleccionar al menos una empresa',
             icon: 'warning',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            allowOutsideClick: false,
+            allowEnterKey: true
             }).then((result) =>{
-            if(result.isConfirmed){
-            window.location.href="../vista/formularioEnviarCotizaciones.php";
-            }
+                if(result.isConfirmed){
+                    window.history.back();
+                }
             })
         }else{
             Swal.fire({
             title: 'CORREOS ENVIADOS',
             text: 'Los correos fueron enviados exitosamente!',
             icon: 'success',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            allowOutsideClick: false,
+            allowEnterKey: true
             }).then((result) =>{
-            if(result.isConfirmed){
-            window.location.href="../vista/formularioEnviarCotizaciones.php";
-            }
+                if(result.isConfirmed){
+                    window.location.href="../vista/formularioEnviarCotizaciones.php";
+                }
             })
         }
-
     </script>
 </body>
 </html>
 
 <?php
-
+include_once("../vista/layouts/footer.php");
 ?>
