@@ -28,7 +28,7 @@
 <body>
 <?php
     $active = "active";
-    include_once("../vista/layouts/navegacion.php");
+    include_once("../vista/layouts/navegacionPendientes.php");
 ?>
 
     <div class="container" style="width: 650px;margin-top: 0;">

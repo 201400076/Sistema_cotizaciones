@@ -2,7 +2,7 @@
 <?php
 $active = "active";
 
-	include_once("layouts/navegacion.php");
+	include_once("layouts/navegacionPendientes.php");
 	//include("../controladores/solicitudesController.php");
 	
 	

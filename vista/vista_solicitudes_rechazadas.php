@@ -1,6 +1,6 @@
 <?php
 	$active = "";
-	include_once("layouts/navegacion.php");
+	include_once("layouts/navegacionPendientes.php");
 ?>
 <div class="container-fluid">
 
