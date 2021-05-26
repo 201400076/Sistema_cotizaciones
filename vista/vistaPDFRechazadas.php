@@ -28,9 +28,9 @@ function Header()
             $this->SetY(15);
             $this->Cell($ancho, 10,'NIT: 6407874001 ', 0, 0, 'R');
             $this->SetY(18);
-            $this->Cell($ancho, 10,'Vinto – Motecato, calle Bélgica y Noruega', 0, 0, 'R');    
+            $this->Cell($ancho, 10,utf8_decode('Vinto - Motecato, calle Bélgica y Noruega'), 0, 0, 'R');    
             $this->SetY(21);
-            $this->Cell($ancho, 10,' (+591) 76436540 – 44355215	', 0, 0, 'R');       
+            $this->Cell($ancho, 10,utf8_decode('(+591) 76436540 – 44355215'), 0, 0, 'R');       
 }         
 
 
@@ -43,8 +43,8 @@ function Body(){
     $this->AddPage($this->CurOrientation);
      
     $this->SetFont('helvetica', 'BU', 20); //Asignar la fuente, el estilo de la fuente (negrita) y el tamaño de la fuente
-    $this->SetXY(0, $y + $yy); //Ubicación según coordenadas X, Y. X=0 porque empezará desde el borde izquierdo de la página
-    $this->Cell(220, 10, "Informe solicitud rechazada", 0, 1, 'C');
+    $this->SetXY(45, 45); //Ubicación según coordenadas X, Y. X=0 porque empezará desde el borde izquierdo de la página
+    $this->Cell(120, 10, "Informe solicitud rechazada", 0, 1, 'C');
 
     $this->SetFont('Arial', '', 12);
     $this->setY(60);
@@ -61,6 +61,7 @@ function Body(){
     $this->setX(116);
     $this->Cell(50,10,'Fecha de revision:',0,0,'R');
 
+    $this->SetFont('Times','BI',14);
     $this->SetY(80);
     $this->Cell(190, 10, utf8_decode("Descripción"), 0, 1, 'C');
     $this->Cell(190, 50, utf8_decode(""), 1, 1, 'L');
@@ -87,14 +88,15 @@ $dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_ga
                                                 AND usuarios.id_usuarios=usuarioconrol.id_usuarios
                                                 AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
                                                 AND estado='rechazada'
-                                              order by fecha desc");
-$pdf = new PDF();                                            
+                                                order by fecha desc");
+
+                                       
 $i=0;
 foreach($dato as $valor):
-do{
-									
+//do{
+	$idRescate=$_GET['id'];							
     // Creación del objeto de la clase heredada
-    
+    $pdf = new PDF();
   
     $pdf->pagina=0;
     $pdf->AliasNbPages();
@@ -104,27 +106,35 @@ do{
     $pdf->SetFont('Times','BI',14);
     $pdf->setY(25);
     $pdf->setX(155);
-    $pdf->Cell(10,80,$valor[$i]['id_solicitudes'],0,0,'L');
+    $pdf->Cell(10,80,$valor[$idRescate]['id_solicitudes'],0,0,'L');
 
     $pdf->setY(45);
     $pdf->setX(170);
-    $pdf->Cell(10,50,$valor[$i]['fecha'],0,0,'L');
+    $pdf->Cell(10,50,$valor[$idRescate]['fecha'],0,0,'L');
 
     $pdf->setY(50);
     $pdf->setX(170);
-    $pdf->Cell(10,50,$valor[$i]['fecha_evaluacion'],0,0,'L');
+    $pdf->Cell(10,50,$valor[$idRescate]['fecha_evaluacion'],0,0,'L');
 
     $pdf->setY(40);
     $pdf->setX(40);
-    $pdf->Cell(10,50,$valor[$i]['nombres'],0,0,'L');
+    $pdf->Cell(10,50,$valor[$idRescate]['nombres'],0,0,'L');
 
-    $pdf->setY(70);
+
+    $pdf->SetFont('Times','I',14);
+    $pdf->setY(100);
+    $pdf->setX(15);
+    $txt=$valor[$idRescate]['detalle'];
+    $pdf->MultiCell(0,5,$txt,0,'L');
+
+    
+    $pdf->setY(170);
     $pdf->setX(40);
-    $pdf->Cell(10,50,$valor[$i]['detalle'],0,0,'L');
+    $pdf->Cell(10,50,$idRescate,0,0,'L');
   
-    $i++;
-}
-while($i<sizeof($valor));
+   $i++;
+//}
+//while($i<sizeof($valor));
 endforeach;	
 $pdf->Output();
 ?>

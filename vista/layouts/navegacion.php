@@ -155,7 +155,7 @@
 								<li><a href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li>
                                 
 <!-- ======= -->
-                               <!--  <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva">Solicitudes Nuevas</a></li> -->
+                                 <!-- <li ><a href="../vista/formularioRU.php" id="nueva" name="nueva">usuario</a></li>  -->
                                 <!-- <li><a href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
 								<li><a href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li> -->
 <!-- >>>>>>> 7af3d9df64eeef8eeb31cbb131604d9d55fe7036 -->

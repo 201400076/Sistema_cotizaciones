@@ -39,7 +39,7 @@ $active = "";
 										
 										?>
 										<tr align="center">
-											<td><?php echo $valor[$i]['id_solicitudes'] ?></td>
+											<td><?php echo $i+1?></td>
 											<td><?php echo $valor[$i]['fecha']?></td>
 
 											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>

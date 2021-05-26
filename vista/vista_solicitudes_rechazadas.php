@@ -16,7 +16,7 @@
 						<div id="resultados" class="col-sm-12 "></div>
 						<div class="outer_div" style="width:100%">
 							<div class="table-responsive">
-								<table class="table">
+								<table class="table" method="get">
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
@@ -43,7 +43,7 @@
 										?>
 
 										<tr align="center">
-											<td><?php echo $valor[$i]['id_solicitudes']?></td>
+											<td><?php echo $i+1?></td>
 											<td><?php echo $valor[$i]['fecha']?></td>
 											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
 
@@ -69,7 +69,7 @@
 
 											<td>
 									
-												<a class="btn btn-info" target="_blank" href="../vista/vistaPDFRechazadas.php">Ver Informe</a>
+												<a class="btn btn-info" target="_blank" href="../vista/vistaPDFRechazadas.php?id=<?php echo $i;?>">Ver Informe</a>
 											</td>
 											<!-- <td class="text-right">
 												<div class="btn-group dropleft">
