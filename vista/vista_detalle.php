@@ -75,8 +75,8 @@
 <?php
     require_once("../modelo/solicitudes_administracion.php");        
     $id_usuario=1;
-    $id_pedido=81;
-    $id_solicitud=25;
+    $id_pedido=107;
+    $id_solicitud=27;
     $monto_solicitud=5000;
     $monto_unidad=200000;
 
@@ -140,7 +140,7 @@
 <div class="botones">
     <button id="botonAceptar">Aceptar</button>
     <button id="botonRechazar">Rechazar</button>
-    <button id="botonCancelar">Cancelar</button>
+    <button id="botoCancelar" onClick="window.parent.location='../ruta/rutas.php?ruta=mostrar&con=nueva'" value="Cancelar">Cancelar</button>
 </div>
 
 <script>

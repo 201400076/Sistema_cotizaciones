@@ -8,10 +8,6 @@ function escuchar(){
     $('#botonRechazar').on('click', function(){
         rechazar();
     })
-    
-    $('#botonCancelar').on('click', function(){
-        redireccionA("../vista/vista_solicitudes_nuevas.php");
-    })
 }
 
 function aceptar() {
