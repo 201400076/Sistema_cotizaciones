@@ -24,6 +24,7 @@
             icon: 'warning',
             confirmButtonText: 'OK',
             allowOutsideClick: false,
+            closeOnClickOutside: false,
             allowEnterKey: true
             }).then((result) =>{
                 if(result.isConfirmed){
@@ -37,6 +38,7 @@
             icon: 'success',
             confirmButtonText: 'OK',
             allowOutsideClick: false,
+            closeOnClickOutside: false,
             allowEnterKey: true
             }).then((result) =>{
                 if(result.isConfirmed){
