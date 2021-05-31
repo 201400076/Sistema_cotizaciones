@@ -48,7 +48,6 @@
 
 </head>
 <body>
-<!--
 <body class="fix-header card-no-border">
    
     <div class="preloader" style="display: none;">
@@ -95,7 +94,7 @@
             </div>
          
         </aside>        
-        <div class="page-wrapper" style="min-height: 600px;"> -->
+        <div class="page-wrapper" style="min-height: 600px;">
     <h1>Solicitud de Pedido # <?php echo $nro?></h1>
     <h2><?php echo $_POST["fecha"]?></h2>
     <h2> Solicitado por: <?php echo $encargado?></h2>
@@ -166,7 +165,7 @@
                     echo "<script language='javascript'>
                     Swal.fire('agrego un item');
                     </script>";
-                    header("Location:solicitudes_vista");  
+                   // header("Location:solicitudes_vista");  
                 }else{                    
                     echo "<script language='javascript'>
                     Swal.fire('debe ingresar un detalle o un archivo');

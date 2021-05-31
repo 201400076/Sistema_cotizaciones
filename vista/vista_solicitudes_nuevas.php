@@ -1,13 +1,8 @@
-
 <?php
 $active = "active";
-
-	include_once("layouts/navegacion.php");
-	
-	
+	include_once("layouts/navegacion.php");		
 ?>	
 <div class="container-fluid">
-
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
@@ -66,11 +61,8 @@ $active = "active";
 											<td>
 												<span class="label label-warning"><?php echo($valor[$i]['estado'])?></span>
 
-											</td>
-											
-											
-											<td>
-									
+											</td>																						
+											<td>									
 												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php">Ver Detalle</a>
 											</td>
 
