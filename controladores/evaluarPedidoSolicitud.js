@@ -46,7 +46,8 @@ function rechazar() {
     inputPlaceholder: 'Ingrese los motivos por el cual se rechazo la solicitud de Pedido...',
     inputAttributes: {'aria-label': 'Type your message here'},
     showCancelButton: true,
-    confirmButtonText: 'OK',
+    confirmButtonText: 'GUARDAR',
+    cancelButtonText: 'CANCELAR',
     allowOutsideClick: false,
     closeOnClickOutside: false,
     allowEnterKey: true

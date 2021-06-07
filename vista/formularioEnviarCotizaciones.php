@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="descripcion" style="width: 25%;">Descripcion:</label> 
+                    <label for="descripcion" style="width: 25%;">Descripción:</label> 
                     <textarea name="descripcion" id="descripcion" style="width: 70%;"  cols="50%" rows="3" placeholder="Ingrese detalles..." required></textarea> 
                 </div>
             </div>
