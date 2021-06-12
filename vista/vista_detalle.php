@@ -77,23 +77,23 @@
     $id_usuario=1;
     $id_pedido=81;
     $id_solicitud=25;
-    $monto_solicitud=5000;
-    $monto_unidad=200000;
 
     require_once("../modelo/solicitudes_modelo.php");   
     $pedidos=new Solicitudes();
     $registros=$pedidos->getItemsPedido($id_usuario,$id_pedido,$id_solicitud);
     $just=$pedidos->getJustificacion($id_usuario,$id_pedido,$id_solicitud);
+    $encargado=$pedidos->getUsuario($id_usuario);
+    $unidad=null;
+    $fecha=$pedidos->fechaPedido($id_pedido);  
     $_POST["nro"]=1;
     
 ?>
 <form action="">    
     <div id="form-detalle">
-        <label>Solicitado por: Montecinos Gomez Juan Pablo</label><br>
-        <label>Unidad de gasto: Laboratorio de informatica y sistemas</label><br>
-        <label>Fecha de solicitud: 2021-04-20</label><br>
-        <label> Monto de la unidad administrativa: Bs. 200000.-</label><br>
-        <label> Monto del pedido: Bs. 5000.-</label>
+        <h2><b>Solicitado por: </b><?php echo $encargado?></h2>
+        <h2><b>Unidad de gasto:</b> Laboratorio de informatica y sistemas</h2>
+        <h2><b>Fecha de solicitud:</b> <?php echo $fecha?></h2>
+ 
         <div id="tabla">
             <table id="tablaItems">
                 <tr>
@@ -114,9 +114,16 @@
                         <td><?php echo $registro->cantidad?></td>
                         <td><?php echo $registro->unidad?></td>
                         <td><?php echo $registro->detalle?></td>
-                        <td><?php echo $registro->archivo?></td>    
-                        <td>
-                            <a target="_black" href="<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/proyectos/'.$registro->ruta ?>"type='button'>Ver...</a>
+                        <td><a target='_black' href='<?php echo '/proyectos/'.$registro->ruta ?>'type='button'><?php echo $registro->archivo?></a></td>    
+                        <td>      
+                            <?php
+                                if(empty($registro->archivo)){
+                                    echo '<a target="_black" href="/proyectos/.$registro->ruta"type="button">$registro->archivo</a>';
+                                }else{
+                                    echo '<a target="_black" href="/proyectos/.$registro->ruta"type="button">$registro->archivoss</a>';
+                                }
+                            ?>
+                            
                         </td>    
                 </tr>
                 <?php

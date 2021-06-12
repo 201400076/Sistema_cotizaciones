@@ -7,10 +7,21 @@ body{
     background-color:#017EBF ;
     color: white;
   }
+
+p{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
   h1{
       background-color:#F2F7F8; 
       text-align: center;
       color: black;
+  }
+  h2{
+    background-color:#F2F7F8; 
+    color: black;
   }
   
   #borrar{

@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php
-    require("../modelo/solicitudes_modelo.php"); 
-     $id_usuario=1;
-     $pedidos=new Solicitudes();
-     $registros=$pedidos->getItems($id_usuario);
-     $_POST["nro"]=1;
-     $_POST["fecha"]=date("Y-m-d");
-     $encargado=$pedidos->getUsuario($id_usuario);  
-     $nro=$pedidos->getPedido($id_usuario);
-?>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
@@ -38,13 +28,12 @@
     
     <meta http-equiv="Expires" content="0">
     <meta http-equiv="Last-Modified" content="0">
-    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <!--<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">-->
+    <!--<meta http-equiv="Pragma" content="no-cache">    -->
     <script src="../librerias/js/sweetalert2.all.min.js"></script>
     <script src="../librerias/js/jquery-3.6.0.js"></script>
     <title>solicitud de pedido</title>
-    <link rel="stylesheet" href="css/estilosSolicitud.css?v=<?php echo(rand()); ?>" />
+    <link rel="stylesheet" href="css/estilosSolicitud.css"/>
 
 </head>
 <body>
@@ -95,52 +84,15 @@
          
         </aside>        
         <div class="page-wrapper" style="min-height: 600px;">
-    <h1>Solicitud de Pedido # <?php echo $nro?></h1>
-    <h2><?php echo $_POST["fecha"]?></h2>
-    <h2> Solicitado por: <?php echo $encargado?></h2>
-    <h2></h2>
-    <form action="" method="post" enctype="multipart/form-data">
-        <div id="tabla">
-           <table id="tablaItems">
-                <tr>
-                    <th class="primeraFila" id="pNro">Nro</th>
-                    <th class="primeraFila" id="pCantidad">Cantidad</th>
-                    <th class="primeraFila" id="pUnidad">Unidad</th>
-                    <th class="primeraFila" id="pDetalle">Detalle</th>
-                    <th class="primeraFila" id="pArchivo">Archivo</th>              
-                    
-                </tr>
-                <?php
-                    foreach ($registros as $registro):
-                ?>
-                <tr>
-                        <td><?php
-                        echo $_POST['nro'];
-                        $_POST['nro']++;?></td>
-                        <td><?php echo $registro->cantida?></td>
-                        <td><?php echo $registro->unidad?></td>
-                        <td><?php echo $registro->detalle?></td>
-                        <td><?php echo $registro->archivo?></td>    
-                                             
-                </tr>
-                <?php
-                    endforeach
-                ?>
-                <td><input type="text" name='id' size='10' class='centrado' value="<?php echo $_POST['nro'];?>" readonly></td>
-                <td><input type="number" name='cantidad' size='10' class='centrado' min="1" max="1000000"></td>
-                <td><input type="text" name='unidad' size='10' class='centrado'></td>
-                <td><input type="text" name='detalle' size='10' class='centrado'></td>
-                <td><input type="file" name='archivo' id='archivo' value="adjuntar" accept=".pdf"></td>
-                <td><input type="submit" name='cr' class="cr" value='insertar' id="cr" onclick="validarCampos($_POST['cantidad'])"></td>
-            </table>
-        </div>
-        <div id="justificacion">
-            <textarea id="just" name="just" class="just" cols="133" rows="10" placeholder="Justificacion del pedido..."></textarea>
-        </div>
-        <input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
-    </form>   
-</body>
-<?php          
+        <?php      
+  require("../modelo/solicitudes_modelo.php"); 
+  $id_usuario=1;
+  $pedidos=new Solicitudes();
+  $registros=$pedidos->getItems($id_usuario);
+  $_POST["nro"]=1;
+  $_POST["fecha"]=date("Y-m-d");
+  $encargado=$pedidos->getUsuario($id_usuario);  
+  $nro=$pedidos->getPedido($id_usuario);    
     if(isset($_POST["cr"])){                   
         $cantidad=$_POST["cantidad"];
         $unidad=$_POST["unidad"];;
@@ -162,10 +114,15 @@
                         }
                     }
                     $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  
+                    $pedidos=null;
+                    $cantidad=null;
+                    $unidad=null;
+                    $detalle=null;
+                    $archivo=null;
                     echo "<script language='javascript'>
                     Swal.fire('agrego un item');
                     </script>";
-                   // header("Location:solicitudes_vista");  
+                   header("Location:solicitudes_vista.php");  
                 }else{                    
                     echo "<script language='javascript'>
                     Swal.fire('debe ingresar un detalle o un archivo');
@@ -200,5 +157,61 @@
     }
     
 ?>
-<!--<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>-->
+    <h1>Solicitud de Pedido # <?php echo $nro?></h1>
+    <h2><?php echo $_POST["fecha"]?></h2>
+    <h2> Solicitado por: <?php echo $encargado?></h2>
+    <h2></h2>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div id="tabla">
+           <table id="tablaItems">
+                <tr>
+                    <th class="primeraFila" id="pNro">Nro</th>
+                    <th class="primeraFila" id="pCantidad">Cantidad</th>
+                    <th class="primeraFila" id="pUnidad">Unidad</th>
+                    <th class="primeraFila" id="pDetalle">Detalle</th>
+                    <th class="primeraFila" id="pArchivo">Archivo</th>              
+                    
+                </tr>
+                <?php
+                    foreach ($registros as $registro):
+                ?>
+                <tr>
+                        <td><?php
+                        echo $_POST['nro'];
+                        $_POST['nro']++;?></td>
+                        <td><?php echo $registro->cantidad?></td>
+                        <td><?php echo $registro->unidad?></td>
+                        <td><?php echo $registro->detalle?></td>
+                        <td><?php echo $registro->archivo?></td>    
+                                             
+                </tr>
+                <?php
+                    endforeach
+                ?>
+                <td><input type="text" name='id' size='10' class='centrado' value="<?php echo $_POST['nro'];?>" readonly></td>
+                <td><input type="number" name='cantidad' size='10' class='centrado' min="1" max="1000000"></td>
+                <td><input type="text" name='unidad' size='10' class='centrado'></td>
+                <td><input type="text" name='detalle' size='10' class='centrado'></td>
+                <td><input type="file" name='archivo' id='archivo' value="adjuntar" accept=".pdf"></td>
+                <td><input type="submit" name='cr' class="cr" value='insertar' id="cr" onclick="validarCampos($_POST['cantidad'])"></td>
+            </table>
+        </div>
+        <div id="justificacion">
+            <textarea id="just" name="just" class="just" cols="133" rows="10" placeholder="Justificacion del pedido..."></textarea>
+        </div>
+        <input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
+    </form>                           
+       
+        </div>
+
+    </div>
+ 
+    <script src="../librerias/js/jquery.min.js"></script>
+    
+    <!--Menu sidebar -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js"></script>
+    <script src="../librerias/js/custom.min.js"></script>
+  
+</body>
 </html>

@@ -15,7 +15,7 @@
                 $row++;
             endforeach;                        
             return $row;
-            header("Location:solicitudes_vista");
+            //header("Location:solicitudes_vista");
         }
 
         public function getPedido($id){            
@@ -26,19 +26,19 @@
                 $row++;
             endforeach;                        
             return $row+1;
-            header("Location:solicitudes_vista");
+           // header("Location:solicitudes_vista");
         }
         public function getItems($id){
-            $consulta="SELECT id_pendientes,cantida, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios=" . $id;
+            $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios=" . $id;
             $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
             return $sql;
-            header("Location:solicitudes_vista.php");
+           // header("Location:solicitudes_vista.php");
         }
         public function addItems($idPedido,$cantidad,$unidad,$detalle,$archivo){                                            
             $sql = "INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo) VALUES (:idPedido,:cantidad,:unidad,:detalle,:archivo)";
             $resultado=$this->bd->prepare($sql);
             $resultado->execute(array(":idPedido"=>$idPedido, ":cantidad"=>$cantidad,":unidad"=>$unidad,":detalle"=>$detalle,":archivo"=>$archivo));                    
-            header("Location:solicitudes_vista");
+          //  header("Location:solicitudes_vista");
         }
         public function addPedido($fecha,$justificacion,$id_usuarios){                                            
             $sql = "INSERT INTO pedido(fecha,justificacion,id_usuarios) VALUES (:fecha,:justificacion,:id_usuarios)";
@@ -48,12 +48,12 @@
             $this->moveItems($dato,$this->getItems($id_usuarios));
             $this->removeItemsPendientes($id_usuarios);
             $this->addSolicitud($dato);              
-            header("Location:solicitudes_vista");          
+         //   header("Location:solicitudes_vista");          
         }
         public function addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta){                                            
-            $sql = "INSERT INTO items_pendientes(cantida,unidad,detalle,archivo,ruta,id_usuarios) VALUES (:cantida,:unidad,:detalle,:archivo,:ruta,:id_usuarios)";
+            $sql = "INSERT INTO items_pendientes(cantidad,unidad,detalle,archivo,ruta,id_usuarios) VALUES (:cantidad,:unidad,:detalle,:archivo,:ruta,:id_usuarios)";
             $resultado=$this->bd->prepare($sql);
-            $resultado->execute(array(":cantida"=>$cantidad,":unidad"=>$unidad,":detalle"=>$detalle,":archivo"=>$archivo,":ruta"=>$ruta,":id_usuarios"=>$id_usuario));                    
+            $resultado->execute(array(":cantidad"=>$cantidad,":unidad"=>$unidad,":detalle"=>$detalle,":archivo"=>$archivo,":ruta"=>$ruta,":id_usuarios"=>$id_usuario));                    
            
         }        
         public function ultimoPedido(){            
@@ -105,12 +105,20 @@
             endforeach;
             return $apellido." ".$dato;  
         }
+        public function fechaPedido($id_pedido){
+            $consulta="SELECT p.fecha FROM pedido p, solicitudes s WHERE p.id_pedido=s.id_pedido && p.id_pedido=".$id_pedido;
+            $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);      
 
+            foreach($sql as $s):
+                $dato=$s->fecha;                
+            endforeach;
+            return $dato;  
+        }
         public function getItemsPedido($id_usuario,$id_pedido,$id_solicitud){
             $consulta="SELECT i.cantidad, i.unidad, i.detalle, i.archivo, i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes=".$id_solicitud." && p.id_pedido=".$id_pedido;
             $sql=$this->bd->query($consulta)->fetchAll(PDO::FETCH_OBJ);
             return $sql;
-            header("Location:solicitudes_vista.php");                    
+          //  header("Location:solicitudes_vista.php");                    
         }
 
         public function getJustificacion($id_usuario,$id_pedido,$id_solicitud){
