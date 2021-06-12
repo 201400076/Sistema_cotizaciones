@@ -147,7 +147,7 @@
 <div class="botones">
     <button id="botonAceptar">Aceptar</button>
     <button id="botonRechazar">Rechazar</button>
-    <button id="botonCancelar">Cancelar</button>
+    <button id="botoCancelar" onClick="window.parent.location='../ruta/rutas.php?ruta=mostrar&con=nueva'" value="Cancelar">Cancelar</button>
 </div>
 
 <script>

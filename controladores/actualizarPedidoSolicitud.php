@@ -45,6 +45,6 @@
     }
     
     function redireccion(){
-        echo '<script language="javascript">window.location.href="../vista/vista_solicitudes_nuevas.php"</script>';
+        echo '<script language="javascript">window.location.href="../ruta/rutas.php?ruta=mostrar&con=nueva"</script>';
     }
 ?>

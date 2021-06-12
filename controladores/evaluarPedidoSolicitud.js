@@ -8,10 +8,6 @@ function escuchar(){
     $('#botonRechazar').on('click', function(){
         rechazar();
     })
-    
-    $('#botonCancelar').on('click', function(){
-        redireccionA("../vista/vista_solicitudes_nuevas.php");
-    })
 }
 
 function aceptar() {
@@ -24,7 +20,10 @@ function aceptar() {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'SI',
-        cancelButtonText: 'NO'
+        cancelButtonText: 'NO',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
         }).then((result) => {
             
             if (result.isConfirmed) {
@@ -47,7 +46,11 @@ function rechazar() {
     inputPlaceholder: 'Ingrese los motivos por el cual se rechazo la solicitud de Pedido...',
     inputAttributes: {'aria-label': 'Type your message here'},
     showCancelButton: true,
-    confirmButtonText: 'OK',
+    confirmButtonText: 'GUARDAR',
+    cancelButtonText: 'CANCELAR',
+    allowOutsideClick: false,
+    closeOnClickOutside: false,
+    allowEnterKey: true
     }).then((result) => {
         if (result.isConfirmed) {
             var det = Swal.getInput().value;
@@ -57,7 +60,10 @@ function rechazar() {
                     title: 'SOLICITUD RECHAZADA!',
                     text: 'La solicitud ha sido rechazada por los siguientes motivos:' + det,
                     icon: 'success',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    closeOnClickOutside: false,
+                    allowEnterKey: true
                 }).then((result) =>{
                     if(result.isConfirmed){
                         redireccionA("../controladores/actualizarPedidoSolicitud.php?detalle="+detalle+"&id="+id+"&fecha="+fechaAccion);
@@ -77,7 +83,10 @@ function mensajeConfirmacion(id,fechaAccion,est){
         title: 'SOLICITUD ACEPTADA!',
         text: 'La solicitud ha sido aceptada',
         icon: 'success',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
     }).then((result) =>{
         if(result.isConfirmed){
             redireccionA("../controladores/actualizarPedidoSolicitud.php?id="+id+"&fecha="+fechaAccion+"&e="+est);
@@ -90,7 +99,10 @@ function mensajeAviso(titulo,texto,icono) {
         title: titulo,
         text: texto,
         icon: icono,
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
     }).then((result) =>{
         if(result.isConfirmed){
             texto = quitarEspacios(texto);
@@ -104,7 +116,10 @@ function mensajeError(){
         title: 'Ooppss...',
         text: 'Texto ingresado no valido, vuelva a intentarlo',
         icon: 'warning',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
     }).then((result) =>{
         if(result.isConfirmed){
             redireccionA("../vista/vista_detalle.php");
