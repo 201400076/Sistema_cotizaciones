@@ -25,6 +25,7 @@ $active = "";
 											<th>Unidad</th> -->
 											<th>Unidad</th>
 											<th>Estado</th>
+											<th>Accion</th>
 											
 											
 											<!-- <th class="text-right">Acciones</th> -->
@@ -40,6 +41,7 @@ $active = "";
 										?>
 										<tr align="center">
 											<td><?php echo $i+1?></td>
+
 											<td><?php echo $valor[$i]['fecha']?></td>
 
 											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
@@ -65,7 +67,10 @@ $active = "";
 
 											</td>
 
-											
+											<td>
+									
+												<a class="btn btn-info" target="_top" href="../vista/formularioEnviarCotizaciones.php?idSolicitud=<?php echo $valor[$i]['id_solicitudes']?>">Cotizar</a>
+											</td>
 											
 
 											<!-- <td class="text-right">

@@ -74,16 +74,19 @@
     <div class="page-wrapper" style="min-height: 600px;">  
 <?php
     require_once("../modelo/solicitudes_administracion.php");        
-    $id_usuario=1;
-    $id_pedido=107;
-    $id_solicitud=27;
+    
+    
     $monto_solicitud=5000;
     $monto_unidad=200000;
 
     require_once("../modelo/solicitudes_modelo.php");   
     $pedidos=new Solicitudes();
-    $registros=$pedidos->getItemsPedido($id_usuario,$id_pedido,$id_solicitud);
-    $just=$pedidos->getJustificacion($id_usuario,$id_pedido,$id_solicitud);
+
+    $id_sol=$_GET['id_solicitud'];
+    $id_ped=$_GET['id_pedido'];
+    $id_usu=$_GET['id_usuario'];
+    $registros=$pedidos->getItemsPedido($id_usu,$id_ped,$id_sol);
+    $just=$pedidos->getJustificacion($id_usu,$id_ped,$id_sol);
     $_POST["nro"]=1;
     
 ?>
@@ -144,7 +147,9 @@
 </div>
 
 <script>
-    var id = '<?php echo($id_solicitud);?>';
+    var id = '<?php echo($id_sol);?>';
+    var id_pedido = '<?php echo($id_ped);?>';
+    var id_usuario = '<?php echo($id_usu);?>';
     var montoSolicitud = '<?php echo($monto_solicitud);?>';
     var montoUnidad = '<?php echo($monto_unidad);?>';
 </script>

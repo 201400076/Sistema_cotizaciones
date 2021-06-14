@@ -42,7 +42,7 @@
             allowEnterKey: true
             }).then((result) =>{
                 if(result.isConfirmed){
-                    window.location.href="../vista/formularioEnviarCotizaciones.php";
+                    window.location.href="../ruta/rutas.php?ruta=mostrar&con=aceptada";
                 }
             })
         }

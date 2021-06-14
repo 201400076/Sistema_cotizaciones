@@ -19,13 +19,16 @@
     $estadoConexion = $conn->getConn();
     $empresas = "SELECT * FROM empresas";
     $queryEmpresas=$estadoConexion->query($empresas);
+    
+    //Se debe recuperar el id de la Solicitud
+    $idSolicitud=$_GET["idSolicitud"];
 ?>
 <div class="container-fluid">
     <div>
         <h2 style="text-align:center;">Envio de cotizaciones a empresas</h2>
     </div>
     <br>
-    <form action="enviarCorreos.php" method="post" id="formulario">
+    <form action="enviarCorreos.php?idSolicitud=<?php echo $idSolicitud?>" method="post" id="formulario">
         <div class="container">
             <div class="row">
                 <div class="col-md-6" >
@@ -39,7 +42,7 @@
                     </div>
                     <div>
                         <label for="archivo" style="width: 25%;">Archivo adjunto:</label>  
-                        <a style="width: 50%;" href="../archivos/Solicitud_de_cotizacion_Cod25.pdf">Solicitud_de_cotizacion_Cod25.pdf</a>
+                        <a style="width: 50%;" href="../archivos/cotizacionesIniciales/solicitudCotizacion<?php echo $idSolicitud ?>.pdf">Solicitud_de_cotizacion.pdf</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -77,6 +80,9 @@
                 ENVIAR
             </button>
         </div>
+        <script>
+            var idSolicitud = '<?php echo($idSolicitud);?>';
+        </script>
         <script src="../controladores/validarEnvioCorreos.js"></script>
     </form>
 </div>
