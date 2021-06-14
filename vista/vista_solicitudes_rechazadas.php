@@ -26,7 +26,7 @@
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>
 											<th>Unidad</th> -->
-											<th>unidad</th>
+											<th>Unidad</th>
 											<th>Estado</th>
 											<th>Informe</th>
 

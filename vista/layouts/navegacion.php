@@ -150,7 +150,7 @@
                                     class="hide-menu">Solicitudes</span></a>
                             <ul aria-expanded="false" class="collapse">
 <!-- <<<<<<< HEAD -->
-                                <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva">Pendientes</a></li>
+                                <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" >Pendientes</a></li>
                                 <li><a href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
 								<li><a href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li>
                                 
