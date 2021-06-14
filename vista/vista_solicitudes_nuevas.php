@@ -1,14 +1,12 @@
-
 <?php
 $active = "active";
 
-	include_once("layouts/navegacion.php");
+	include_once("layouts/navegacionPendientes.php");
 	
 	
 	
 ?>	
 <div class="container-fluid">
-
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
@@ -72,7 +70,7 @@ $active = "active";
 											
 											<td>
 									
-												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php">Ver Detalle</a>
+												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>&id_pedido=<?php echo($valor[$i]['id_pedido'])?>&id_usuario=<?php echo($valor[$i]['id_usuarios'])?>">Ver Detalle</a>
 											</td>
 
 											<!-- <td class="text-right">

@@ -1,205 +1,202 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
-    require("../modelo/solicitudes_modelo.php"); 
-     $id_usuario=1;
-     $pedidos=new Solicitudes();
-     $registros=$pedidos->getItems($id_usuario);
-     $_POST["nro"]=1;
-     $_POST["fecha"]=date("Y-m-d");
-     $encargado=$pedidos->getUsuario($id_usuario);  
-     $nro=$pedidos->getPedido($id_usuario);
+    include_once '../modelo/conexionPablo.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $id_pendientes=1;
+    $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios='$id_pendientes'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    
+    $consulta="SELECT max(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_pendientes'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    $nro=$data1['0']['max(pedido.id_pedido)']+1;
+
+    $consulta="SELECT nombres,apellidos FROM usuarios WHERE usuarios.id_usuarios='$id_pendientes'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];
 ?>
-<head>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-  
-    <title>Panel de control - Cotizador Web</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="#" />  
+    <title>Tutorial DataTables</title>
+      
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../librerias/css/bootstrap.min.css">
+    <!-- CSS personalizado --> 
+    <link rel="stylesheet" href="css/estilosSolicitud.css">  
+      
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/javascript" href="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="../librerias/datatables/datatables.min.css"/>
+    <!--datables estilo bootstrap 4 CSS-->  
+    <link rel="stylesheet"  type="text/css" href="../librerias/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">       
+  </head>
     
-    <!-- Custom CSS -->
-    <link href="../librerias/css/styles.css" rel="stylesheet">
-    <!-- You can change the theme colors from here -->
-    <link href="../librerias/css/blue.css" id="theme" rel="stylesheet">
-    <link rel="icon" href="assets/images/cart_icon2.png">
-    <!--alerts CSS -->
- 
-    <link href="../librerias/css/topbar.css">
-    <link rel="stylesheet" href="../librerias/css/miestilo.css">
-    <link rel="stylesheet" href="../librerias/css/miestilogasto.css">
-    
-    <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Last-Modified" content="0">
-    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <script src="../librerias/js/sweetalert2.all.min.js"></script>
-    <script src="../librerias/js/jquery-3.6.0.js"></script>
-    <title>solicitud de pedido</title>
-    <link rel="stylesheet" href="css/estilosSolicitud.css?v=<?php echo(rand()); ?>" />
-
-</head>
-<body>
-<!--
-<body class="fix-header card-no-border">
-   
-    <div class="preloader" style="display: none;">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
-        </svg>
-    </div>
-  
-    <div id="main-wrapper">
-       
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">
-               
-                <div class="navbar-header">
-                    <a class="navbar-brand">                        
-                        <b>                        
-                            <img src="../recursos/imagenes/icono.jpg" alt="homepage" class="light-logo" style="width:34px">
-                        </b>                        
-                        <span style="">                            
-                            <span class="text-white" style=""><b> Sistema de Cotizaciones </b></span>
-
-                        </span>
-                    </a>
-                </div>              
-            </nav>
-        </header>
-        <aside class="left-sidebar" method="get">        
-            <div class="scroll-sidebar">             
-                <nav class="sidebar-nav active">
-                    <ul id="sidebarnav" class="in">                     
-                        <li class="active">                            
-                            <ul aria-expanded="false" class="collapse">
-                                <li ><a href="../ruta/ruta.php" id="nueva" name="nueva">Home</a></li>
-                            </ul>
-                        </li>
-                        <li class="active">                           
-                            <ul aria-expanded="false" class="collapse">
-                                <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva">Solicitudes Nuevas</a></li>                            
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                
+  <body class="fix-header card-no-border"> 
+  <nav id="header" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            <a style="color=white">
+            <img src="../recursos/imagenes/icono.jpg"  class="mr-2">Sistema de Cotizaciones
+            </a>  
             </div>
-         
-        </aside>        
-        <div class="page-wrapper" style="min-height: 600px;"> -->
-    <h1>Solicitud de Pedido # <?php echo $nro?></h1>
-    <h2><?php echo $_POST["fecha"]?></h2>
-    <h2> Solicitado por: <?php echo $encargado?></h2>
-    <h2></h2>
-    <form action="" method="post" enctype="multipart/form-data">
-        <div id="tabla">
-           <table id="tablaItems">
-                <tr>
-                    <th class="primeraFila" id="pNro">Nro</th>
-                    <th class="primeraFila" id="pCantidad">Cantidad</th>
-                    <th class="primeraFila" id="pUnidad">Unidad</th>
-                    <th class="primeraFila" id="pDetalle">Detalle</th>
-                    <th class="primeraFila" id="pArchivo">Archivo</th>              
-                    
-                </tr>
-                <?php
-                    foreach ($registros as $registro):
-                ?>
-                <tr>
-                        <td><?php
-                        echo $_POST['nro'];
-                        $_POST['nro']++;?></td>
-                        <td><?php echo $registro->cantida?></td>
-                        <td><?php echo $registro->unidad?></td>
-                        <td><?php echo $registro->detalle?></td>
-                        <td><?php echo $registro->archivo?></td>    
-                                             
-                </tr>
-                <?php
-                    endforeach
-                ?>
-                <td><input type="text" name='id' size='10' class='centrado' value="<?php echo $_POST['nro'];?>" readonly></td>
-                <td><input type="number" name='cantidad' size='10' class='centrado' min="1" max="1000000"></td>
-                <td><input type="text" name='unidad' size='10' class='centrado'></td>
-                <td><input type="text" name='detalle' size='10' class='centrado'></td>
-                <td><input type="file" name='archivo' id='archivo' value="adjuntar" accept=".pdf"></td>
-                <td><input type="submit" name='cr' class="cr" value='insertar' id="cr" onclick="validarCampos($_POST['cantidad'])"></td>
-            </table>
+        </div>                   
+        <div class="row">
+            <div class="col">
+                <label for="">Home</label>
+            </div>
+        </div> 
+    </div>      
+   </nav>   
+    <section>
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Solicitud de Pedido # <?php echo $nro?></h2>
+            </div>
+            <div class="col-lg-12">
+                <h2>Solicitado por:  <?php echo $nombre?></h2>
+            </div>
+            <div class="col-lg-12">
+                <h2>Fecha:  <?php echo date('y-m-d')?></h2>
+            </div>
         </div>
-        <div id="justificacion">
-            <textarea id="just" name="just" class="just" cols="133" rows="10" placeholder="Justificacion del pedido..."></textarea>
+    </section>
+      
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">            
+            <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal">nuevo item</button>    
+            </div>    
+        </div>    
+    </div>    
+    <br>  
+    <div class="container">
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">        
+                        <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+                        <thead class="text-center">
+                            <tr>
+                                <th>id_pendientes</th>
+                                <th>cantidad</th>
+                                <th>unidad</th>                                
+                                <th>detalle</th>  
+                                <th>archivo</th>  
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php                            
+                            foreach($data as $dat) {                                                        
+                            ?>                            
+                            <tr>
+                                <td><?php echo $dat['id_pendientes'] ?></td>
+                                <td><?php echo $dat['cantidad'] ?></td>
+                                <td><?php echo $dat['unidad'] ?></td>
+                                <td><?php echo $dat['detalle'] ?></td>
+                                <td><?php echo $dat['archivo'] ?></td>    
+                                <td></td>
+                            </tr>
+                            <?php
+                                }
+                            ?>                                
+                        </tbody>        
+                       </table>                    
+                    </div>
+                </div>
+        </div>  
+        <div class="container">
+            <div class="form-group" style="width:100%">    
+                <div class="col-12">
+                    <button type="button" id="btnPedido" class="btn btn-dark text-center btn-block mt-2 mb-2 btnPedido" data-toggle="modalJust">Enviar y guardar</button>
+                </div>
+            </div>
         </div>
-        <input type="submit" id="enviarSolicitud" name="enviarSolicitud" value="Enviar y guardar">
-    </form>   
-</body>
-<?php          
-    if(isset($_POST["cr"])){                   
-        $cantidad=$_POST["cantidad"];
-        $unidad=$_POST["unidad"];;
-        $detalle=$_POST["detalle"];;
-        $archivo=$_FILES["archivo"]["name"];
-        $peso=$_FILES["archivo"]["size"];
-        $ruta="C:\wamp64\www\proyectos";
-        $carpeta="../archivos/";
-        if(!empty($cantidad) && $cantidad>0){
-            if(!empty($unidad) && ((strlen($unidad)>1 && (strlen($unidad<=10))))){
-                $checkArchivo=!empty($archivo);
-                $checkDetalle=!empty($detalle) && strlen($detalle)>1 && strlen($detalle<=200);
-                if($checkArchivo || $checkDetalle){
-                    if(file_exists($carpeta) || @mkdir($carpeta)){
-                        $orgien=$_FILES["archivo"]["tmp_name"];
-                        $destino=$carpeta.$_FILES["archivo"]["name"];
-                        if(@move_uploaded_file($orgien,$destino)){
-                            $ruta="archivos/".$_FILES["archivo"]["name"];
-                        }
-                    }
-                    $pedidos->addItemsPendientes($id_usuario,$cantidad,$unidad,$detalle,$archivo,$ruta);  
-                    echo "<script language='javascript'>
-                    Swal.fire('agrego un item');
-                    </script>";
-                    header("Location:solicitudes_vista");  
-                }else{                    
-                    echo "<script language='javascript'>
-                    Swal.fire('debe ingresar un detalle o un archivo');
-                    </script>";        
-                }
-            }else{
-                echo "<script language='javascript'>
-                Swal.fire('Debe introducir una unidad validad');
-                </script>";
-            }           
-        } else{
-            echo "<script language='javascript'>
-                Swal.fire('Debe introducir una cantidad valida!');
-                </script>";
-        }    
-    }
-    if(isset($_POST["enviarSolicitud"])){
-        $fecha=$_POST["fecha"];
-        $justificacion=$_POST["just"];
-        $tamPedido=$pedidos->getTamPedido($id_usuario);
-        if($tamPedido>0){
-            echo "<script language='javascript'>
-                    Swal.fire('Su pedido fue eviado exitosamente!');
-                    </script>"; 
-            $pedidos->addPedido($fecha,$justificacion,$id_usuario);                       
-        }else{
-            echo "<script language='javascript'>
-                    Swal.fire('Debe ingresar al menos un item!');
-                    </script>";
-        }
-        
-    }
+    </div>    
+      
+<!--Modal para CRUD-->
+<div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <form id="formPersonas">    
+            <div class="modal-body">
+                <div class="form-group">
+                <label for="cantidad" class="col-form-label">cantidad:</label>
+                <input type="number" class="form-control" id="cantidad">
+                </div>
+                <div class="form-group">
+                <label for="unidad" class="col-form-label">unidad:</label>
+                <input type="text" class="form-control" id="unidad">
+                </div>                
+                <div class="form-group">
+                <label for="detalle" class="col-form-label">detalle:</label>
+                <textarea  class="form-control"  id="detalle" cols="20" rows="5"></textarea>                
+                </div>   
+                <div class="form-group">
+                <label for="unidad" class="col-form-label">archivo:</label>
+                <input type="file" class="form-control" id="archivo">
+                </div>           
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="btnGuardar" class="btn btn-dark">insertar</button>
+            </div>
+        </form>    
+        </div>
+    </div>
+</div>  
+
+<div class="modal fade" id="modalCRUDJust" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class=" text-center modal-title1" id="exampleModalLabel">Enviar Solicitud de Pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <form id="formPersonas">    
+            <div class="modal-body">            
+                <div class="form-group">
+                <label for="Justificacion" class="col-form-label">Justificacion:</label>
+                <textarea  class="form-control"  id="Justificacion" cols="20" rows="5" placeholder="Puede agregar una justificacion..."></textarea>                
+                </div>                         
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-dark">Guardar</button>
+            </div>
+        </form>    
+        </div>
+    </div>
+</div>  
+      
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../librerias/popper/popper.min.js"></script>
+    <script src="../librerias/bootstrap/js/bootstrap.min.js"></script>
+      
+    <!-- datatables JS -->
+    <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
+     
+    <script type="text/javascript" src="../controladores/controladorSolicitudPedido.js"></script>  
     
-?>
-<!--<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>-->
+    
+  </body>
 </html>

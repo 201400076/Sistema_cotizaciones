@@ -61,6 +61,21 @@ class SolicitudesController{
 
     }
 
+    static function mostrar_cotizando($condicion){
+
+        $solicitud =new Solicitud();
+		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto","pedido.id_pedido=solicitudes.id_pedido
+                                                            AND usuarios.id_usuarios=pedido.id_usuarios
+                                                            AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+                                                            AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
+                                                            AND estado='cotizando'
+                                                            order by fecha desc");
+       $active="active";
+       // echo json_encode($dato);
+        require_once("../vista/vista_solicitudes_enCotizacion.php");
+
+    }
+
     static function mostrar_PDF($condicion){
 
 
