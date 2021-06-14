@@ -1,16 +1,16 @@
-<?php
-    class Conectar{
-        public static function conexion(){
-            try{
-                $opciones= [PDO::ATTR_CASE=> PDO::CASE_LOWER,PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,PDO::ATTR_ORACLE_NULLS=>PDO::NULL_EMPTY_STRING, PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ];
-                $conexion=new PDO('mysql:host=localhost;dbname=sistema_de_cotizaciones',"root","",$opciones);
-                $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-                $conexion->exec("SET CHARACTER SET UTF8");
-            }catch(Exception $e){
-                die("error") . $e->getMessage();
-                echo "error !!" . $e->getLine();
-            }
+<?php 
+class Conexion{	  
+    public static function Conectar() {        
+        define('servidor', 'localhost');
+        define('nombre_bd', 'sistema_de_cotizaciones');
+        define('usuario', 'root');
+        define('password', '');					        
+        $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');			
+        try{
+            $conexion = new PDO("mysql:host=".servidor."; dbname=".nombre_bd, usuario, password, $opciones);			
             return $conexion;
+        }catch (Exception $e){
+            die("El error de Conexión es: ". $e->getMessage());
         }
     }
-?>
+}
