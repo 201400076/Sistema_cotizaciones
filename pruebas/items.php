@@ -1,21 +1,15 @@
-<?php
-    class Items{
-        private $cantidad;
-        private $unidad;
-        private $detalle;
-        private $archivo;
-        private $ruta;
-
-        public function __construct($cant,$unid,$det,$arc,$rut){
-            $this->cantidad=$cant;
-            $this->unidad=$unid;
-        }
-
-        public function getCantidad(){
-            return $this->cantidad;
-        }
-        public function getUnidad(){
-            return $this->unidad;
-        }
-    }
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../pruebas/funciones.js"></script>
+</head>
+<body>
+    <input type="text" id="nombre">
+    <button onclick="proceso()">enviar</button>
+</body>
+</html>
