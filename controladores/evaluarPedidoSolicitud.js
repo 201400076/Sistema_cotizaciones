@@ -1,16 +1,20 @@
-$('#botonAceptar').on('click', function(){
-    aceptar();
-}) 
-    
-$('#botonRechazar').on('click', function(){
-    rechazar();
-})
+evaluar();
+
+function evaluar(){
+    $('#botonAceptar').on('click', function(){
+        aceptar();
+    }) 
+        
+    $('#botonRechazar').on('click', function(){
+        rechazar();
+    })
+}
 
 function aceptar() {
     fechaAccion = fecha();
     Swal.fire({
-        title: 'Esta seguro de aceptar esta Solicitud? #'+id+'/'+montoSolicitud+'/'+montoUnidad+'/'+id_pedido+'/'+id_usuario,
-        text: fechaAccion,
+        title: 'Esta seguro de aceptar la Solicitud de Cotizacion #'+id+'? ',
+        text: "En fecha: "+fechaAccion,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -23,11 +27,12 @@ function aceptar() {
         }).then((result) => {
             
             if (result.isConfirmed) {
-                if(esPosibleAutorizar()){
+                mensajeConfirmacion(id,fechaAccion,1);
+                /*if(esPosibleAutorizar()){
                     mensajeConfirmacion(id,fechaAccion,1);
                 }else{
                     mensajeAviso("Solicitud de pedido RECHAZADA!","El monto de la presente solicitud sobrepasa el limite establecido por la Institucion",'warning');
-                }
+                }*/
             }else{
                 redireccionA("../vista/vista_detalle.php?id_solicitud="+id+"&id_pedido="+id_pedido+"&id_usuario="+id_usuario);
             }
@@ -54,7 +59,7 @@ function rechazar() {
             if(verificar(det) && verificarPatron(det, /^[a-zA-Z][a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s?\.?\,?]+/)){
                 Swal.fire({
                     title: 'SOLICITUD RECHAZADA!',
-                    text: 'La solicitud ha sido rechazada por los siguientes motivos:' + det,
+                    text: 'La solicitud ha sido rechazada por los siguientes motivos: ' + det,
                     icon: 'success',
                     confirmButtonText: 'OK',
                     allowOutsideClick: false,

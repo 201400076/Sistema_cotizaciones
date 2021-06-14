@@ -1,13 +1,9 @@
 <?php
 $active = "active";
-<<<<<<< HEAD
-	include_once("layouts/navegacion.php");		
-=======
 
 	include_once("layouts/navegacionPendientes.php");
 	
 	
->>>>>>> a09cce2e98ba7ace1a92b2c42c47f33709492774
 ?>	
 <div class="container-fluid">
 	<div class="row">
@@ -68,18 +64,12 @@ $active = "active";
 											<td>
 												<span class="label label-warning"><?php echo($valor[$i]['estado'])?></span>
 
-<<<<<<< HEAD
-											</td>																						
-											<td>									
-												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php">Ver Detalle</a>
-=======
 											</td>
 											
 											
 											<td>
 									
 												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>&id_pedido=<?php echo($valor[$i]['id_pedido'])?>&id_usuario=<?php echo($valor[$i]['id_usuarios'])?>">Ver Detalle</a>
->>>>>>> a09cce2e98ba7ace1a92b2c42c47f33709492774
 											</td>
 
 											<!-- <td class="text-right">

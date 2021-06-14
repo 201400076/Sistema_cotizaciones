@@ -23,6 +23,7 @@ $active = "";
 											<th>Departamento</th>
 											<th>Unidad</th> -->
 											<th>Unidad</th>
+											<th># Solicitud</th>
 											<th>Estado</th>
 											
 											
@@ -60,6 +61,7 @@ $active = "";
 											</td>
 											
 											<td>MEMI</td> -->
+											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 
 											<td>
 												<span class="label label-info"><?php echo $valor[$i]['estado']?></span>
