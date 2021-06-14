@@ -1,19 +1,15 @@
-escuchar();
-
-function escuchar(){
-    $('#botonAceptar').on('click', function(){
-        aceptar();
-    }) 
+$('#botonAceptar').on('click', function(){
+    aceptar();
+}) 
     
-    $('#botonRechazar').on('click', function(){
-        rechazar();
-    })
-}
+$('#botonRechazar').on('click', function(){
+    rechazar();
+})
 
 function aceptar() {
     fechaAccion = fecha();
     Swal.fire({
-        title: 'Esta seguro de aceptar esta Solicitud? #'+id+'/'+montoSolicitud+'/'+montoUnidad,
+        title: 'Esta seguro de aceptar esta Solicitud? #'+id+'/'+montoSolicitud+'/'+montoUnidad+'/'+id_pedido+'/'+id_usuario,
         text: fechaAccion,
         icon: 'question',
         showCancelButton: true,
@@ -33,7 +29,7 @@ function aceptar() {
                     mensajeAviso("Solicitud de pedido RECHAZADA!","El monto de la presente solicitud sobrepasa el limite establecido por la Institucion",'warning');
                 }
             }else{
-                redireccionA("../vista/vista_detalle.php");
+                redireccionA("../vista/vista_detalle.php?id_solicitud="+id+"&id_pedido="+id_pedido+"&id_usuario="+id_usuario);
             }
     })
 }
@@ -73,7 +69,7 @@ function rechazar() {
                 mensajeError();
             }
         }else{
-            redireccionA("../vista/vista_detalle.php");
+            redireccionA("../vista/vista_detalle.php?id_solicitud="+id+"&id_pedido="+id_pedido+"&id_usuario="+id_usuario);
         }
     })
 }
@@ -122,7 +118,7 @@ function mensajeError(){
         allowEnterKey: true
     }).then((result) =>{
         if(result.isConfirmed){
-            redireccionA("../vista/vista_detalle.php");
+            redireccionA("../vista/vista_detalle.php?id_solicitud="+id+"&id_pedido="+id_pedido+"&id_usuario="+id_usuario);
         }
     })
 }
