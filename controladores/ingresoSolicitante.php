@@ -14,8 +14,9 @@ $fila=null;
 $exite=false;
 
 foreach($data as $d){
-    if($usuario==$d['user_cotizador'] && password_verify($password,$d['password_cotizador'])){
-        $exite=true;
+    //if($usuario==$d['user_cotizador'] && password_verify($password,$d['password_cotizador'])){
+    if($usuario==$d['user_cotizador'] && $password==$d['password_cotizador']){
+    $exite=true;
         $fila=$d;        
         break;
     }

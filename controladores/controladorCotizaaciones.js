@@ -1,7 +1,7 @@
 $(document).ready(function(){
     tablaPersonas = $("#tablaPersonas").DataTable({
        "columnDefs":[{
-        "targets": -1,
+        "targets": -2,
         "data":null,
         "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success cotizar' >Cotizar</button><button class='btn btn-info cotizado' >Cotizado</button></div></div>"  
        }],
@@ -94,19 +94,17 @@ $(document).on("click", ".btnGuardarJust", function(){
 
 var fila; //capturar la fila para editar o borrar el registro    
 
-//botón BORRAR
+//botón cotizar
 $(document).on("click", ".cotizar", function(){    
 
     $("#formPersonas").trigger("reset");
     $(".modal-header").css("background-color", "#28a745");
     $(".modal-header").css("color", "white");
-    $(".modal-title").text("Nueva Persona");  
-    $(".cantidad").text(parseInt($(this).closest("tr").find('td:eq(0)').text()));      
+    $(".modal-title").text("Cotizacion de item  "+parseInt($(this).closest("tr").find('td:eq(0)').text()));   
+    $("#cantidad").val(parseInt($(this).closest("tr").find('td:eq(1)').text()));     
     $("#modalCRUD").modal("show");  
 
-
-    cantidad = parseInt($(this).closest("tr").find('td:eq(0)').text()); 
-    console.log(cantidad);
+    id=parseInt($(this).closest("tr").find('td:eq(0)').text());
 });
 
 $(document).on("click", ".cotizado", function(){    
@@ -114,8 +112,10 @@ $(document).on("click", ".cotizado", function(){
     $("#formPersonas").trigger("reset");
     $(".modal-header1").css("background-color", "#17a2b8");
     $(".modal-header1").css("color", "white");
-    $(".modal-header1").css("text", "center");         
-    $("#modalCRUDJust").modal("show");  
+    $(".modal-title1").text("asasd");
+    $(".modal-header1").css("text", "center");   
+    id=parseInt($(this).closest("tr").find('td:eq(0)').text())      
+    $("#modalCRUDJust"+id).modal("show");  
 
     cantidad = parseInt($(this).closest("tr").find('td:eq(0)').text()); 
     console.log(cantidad);
@@ -171,47 +171,40 @@ $('input[type="file"]').on('change', function(){
     }
   });
 
-$("#formPersonas").submit(function(e){
+  $("#formPersonas").submit(function(e){    
     e.preventDefault();    
-    cantidad = $.trim($("#cantidad").val());
-    unidad = $.trim($("#unidad").val());    
-    detalle = $.trim($("#detalle").val());      
-    if(cantidad!='' && cantidad>=1 && cantidad<=1000000){
-        if(unidad!='' && unidad.length>=1 && unidad.length<=10){
-            if(archivo!=0 || detalle!=0){
-                if(detalle.length<=200){
-                    $.ajax({
-                        url: "../modelo/solicitudes_modelo.php",
-                        type: "POST",
-                        dataType: "json",
-                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes, opcion:opcion,ruta:ruta, archivo:archivo},
-                        success: function(data){                          
-                            id_pendientes = data[0].id_pendientes;            
-                            cantidad = data[0].cantidad;
-                            unidad = data[0].unidad;
-                            detalle = data[0].detalle;
-                            archivo = data[0].archivo;
-                            if(opcion == 1){
-                                tablaPersonas.row.add([id_pendientes,cantidad,unidad,detalle,archivo]).draw();
-                            }
-                            else{
-                                tablaPersonas.row(fila).data([id_pendientes,cantidad,unidad,detalle,archivo]).draw();
-                            }            
-                        }        
-                    });
-                    $("#modalCRUD").modal("hide");    
-                }else{
-                    alert("Error!!\nDebe introducir detelle maximo de 200 caracteres");
-                }                                        
-            }else{
-                alert("Error!!\nDebe introducir el detalle o un archivo");
+    marca = $.trim($("#marca").val());
+    modelo = $.trim($("#modelo").val());    
+    descripcion = $.trim($("#descripcion").val());      
+    unit = $.trim($("#unit").val());      
+    total = $.trim($("#total").val());         
+    if(marca!='' && marca.length>=1 && marca.length<=20){
+        if(modelo!='' && modelo.length<=50 && modelo.length>=1){
+            if(unit!=''){
+                $.ajax({        
+                    url:"../modelo/cotizacionItem.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: {marca:marca,modelo:modelo,descripcion:descripcion,unit:unit,total:total,id:id},
+                    success: function(fila){  
+                        console.log(fila);                        
+                        if(fila==null){                                
+                            alert("No se pudo ingresar la cotizacion!");
+                        }else{
+                            alert("Se agrego una nueva cotizacion del item: "+fila[0]['id_items']);
+                        }
+                    }              
+                });
+                $("#modalCRUD").modal("hide");
+            }else{        
+                alert("Debe ingresar un precio unitario");
             }
-        }else{
-            alert("Error!!\nDebe introducir una unidad entre 1 y 10 caracteres");
+        }else{        
+            alert("La Modelo debe ser un texto entre 1 y 50 caracteres");
         }
-    }else{
-        alert("Error!!\nDebe introducir una cantidad entre 1 y 1000000");
-    }
+    }else{        
+        alert("La marca debe ser un texto entre 1 y 20 caracteres");
+    } 
 });    
     
 });
