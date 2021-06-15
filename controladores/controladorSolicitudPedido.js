@@ -74,8 +74,8 @@ $(document).on("click", ".btnGuardarJust", function(){
                 success: function(data){                         
                 }        
             });
-            $("#modalCRUDJust").modal("hide");   
-            window.location.replace("http://localhost/proyectos/vista/solicitudes_vista.php"); 
+            $("#modalCRUDJust").modal("hide");  
+            window.location.href="../vista/solicitudes_vista.php";             
         }
     }else{
         $.ajax({
@@ -87,7 +87,7 @@ $(document).on("click", ".btnGuardarJust", function(){
             }        
         });
         $("#modalCRUDJust").modal("hide");     
-        window.location.replace("http://localhost/proyectos/vista/solicitudes_vista.php");        
+        window.location.href="../vista/solicitudes_vista.php";                     
     }
 });
 
