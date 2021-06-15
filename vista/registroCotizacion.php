@@ -1,89 +1,208 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->    
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    
-    <!-- Custom CSS -->
-    <link href="../librerias/css/styles.css" rel="stylesheet">
-    <!-- You can change the theme colors from here -->
-    <link href="../librerias/css/blue.css" id="theme" rel="stylesheet">
-    <link rel="icon" href="assets/images/cart_icon2.png">
-    <!--alerts CSS -->
- 
-    <link href="../librerias/css/topbar.css">
-    <link rel="stylesheet" href="../librerias/css/miestilo.css">
-    <link rel="stylesheet" href="../librerias/css/miestilogasto.css">
-    
-    <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Last-Modified" content="0">
-    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <script src="../librerias/js/sweetalert2.all.min.js"></script>
-    <script src="../librerias/js/jquery-3.6.0.js"></script>
-    <title>solicitud de pedido</title>
-    <link rel="stylesheet" href="css/estilosSolicitud.css?v=<?php echo(rand()); ?>" />
-</head>
-<body class="fix-header card-no-border">   
-    <div class="preloader" style="display: none;">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
-        </svg>
-    </div>
-    <div id="main-wrapper">
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">    
-                <div class="navbar-header">
-                    <a class="navbar-brand">                        
-                        <b><img src="../recursos/imagenes/icono.jpg" alt="homepage" class="light-logo" style="width:34px"></b>                        
-                        <span style="">                            
-                            <span class="text-white" style=""><b> Sistema de Cotizaciones </b></span>
-                        </span>
-                    </a>
-                </div>              
-            </nav>
-        </header>
-        <aside class="left-sidebar" method="get">        
-            <div class="scroll-sidebar">             
-                <nav class="sidebar-nav active">
-                    <ul id="sidebarnav" class="in">                     
-                        <li class="active">                            
-                            <ul aria-expanded="false" class="collapse">
-                                <li ><a href="../ruta/ruta.php" id="nueva" name="nueva">Home</a></li>
-                            </ul>
-                        </li>
-                        <li class="active">                           
-                            <ul aria-expanded="false" class="collapse">
-                                <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva">Solicitudes Nuevas</a></li>                            
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>                
-            </div>         
-        </aside>        
-    <div class="page-wrapper" style="min-height: 600px;">  
 <?php
-    $usuario=$_GET['usuario'];
+    $id=$_GET['usuario'];
+    include_once '../modelo/conexionPablo.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $id_pendientes=1;
+    $consulta="SELECT i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<form action="">    
-    <div id="form-detalle">
-    <h1>Solicitud de Cotizacion <?php echo $_GET['usuario']?></h1>
-    <h1>Expresado en bolivianos</h1>        
-        <label>Unidad de administrativa: Laboratorio de informatica y sistemas</label><br>
-        <label>Fecha de solicitud: 2021-04-20</label><br>        
-                
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" href="#" />  
+<title>Tutorial DataTables</title>
+  
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../librerias/css/bootstrap.min.css">
+<!-- CSS personalizado --> 
+<link rel="stylesheet" href="css/estilosSolicitud.css">  
+  
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/javascript" href="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+<!--datables CSS básico-->
+<link rel="stylesheet" type="text/css" href="../librerias/datatables/datatables.min.css"/>
+<!--datables estilo bootstrap 4 CSS-->  
+<link rel="stylesheet"  type="text/css" href="../librerias/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">       
+</head>
+
+<body class="fix-header card-no-border"> 
+<nav id="header" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-4">
+<div class="container">
+    <div class="row">
+        <div class="col">
+        <a style="color=white">
+        <img src="../recursos/imagenes/icono.jpg"  class="mr-2">Sistema de Cotizaciones
+        </a>  
+        </div>
+    </div>                   
+    <div class="row">
+        <div class="col">
+            <label for="">Home</label>
+        </div>
+    </div> 
+</div>      
+</nav>   
+  
+
+<br>  
+<div class="container">
+    <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">        
+                    <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+                    <thead class="text-center">
+                        <tr>                
+                            <th>cantidad</th>
+                            <th>unidad</th>                                
+                            <th>detalle</th>  
+                            <th>archivo</th>  
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php                            
+                        foreach($data as $dat) {                                                        
+                        ?>                            
+                        <tr>                            
+                            <td><?php echo $dat['cantidad'] ?></td>
+                            <td><?php echo $dat['unidad'] ?></td>
+                            <td><?php echo $dat['detalle'] ?></td>
+                            <td>
+                                <a target='_black' href="/proyectos/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
+                            </td>    
+                            <td></td>
+                        </tr>
+                        <?php
+                            }
+                        ?>                                
+                    </tbody>        
+                   </table>                    
+                </div>
+            </div>
+    </div>  
+    <div class="container">
+        <div class="form-group" style="width:100%">    
+            <div class="col-12">
+                <button type="button" id="btnPedido" class="btn btn-dark text-center btn-block mt-2 mb-2 btnPedido" data-toggle="modalJust">Enviar y guardar</button>
+            </div>
+        </div>
     </div>
-</form>
+</div>    
+  
+<!--Modal para CRUD-->
+<div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <form id="formPersonas">    
+        <div class="modal-body">
+            <div class="form-group">
+            <label for="cantidad" class="col-form-label">cantidad:</label>
+            <p  class="form-control cantidad" id="cantidad"></p>
+            
+            </div>
+            <div class="form-group">
+            <label for="unit" class="col-form-label">Precio Unitario:</label>
+            <input type="number" class="form-control" id="unit">
+            </div>                
+            <div class="form-group">
+            <label for="total" class="col-form-label">Precio Total:</label>
+            <input type="text" class="form-control" id="total">             
+            </div>                         
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+            <button type="submit" id="btnGuardar" class="btn btn-dark">insertar</button>
+        </div>
+    </form>    
+    </div>
+</div>
+</div>  
+
+<div class="modal fade" id="modalCRUDJust" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header1">
+            <h5 class=" text-center modal-title1" id="exampleModalLabel">Cotizaciones</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <form id="formPersonas">    
+        <div class="modal-body">            
+        <div class="container">
+    <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">        
+                    <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+                    <thead class="text-center">
+                        <tr>                
+                            <th>cantidad</th>
+                            <th>unidad</th>                                
+                            <th>detalle</th>  
+                            <th>archivo</th>  
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php                            
+                        foreach($data as $dat) {                                                        
+                        ?>                            
+                        <tr>                            
+                            <td><?php echo $dat['cantidad'] ?></td>
+                            <td><?php echo $dat['unidad'] ?></td>
+                            <td><?php echo $dat['detalle'] ?></td>
+                            <td>
+                                <a target='_black' href="/proyectos/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
+                            </td>    
+                            <td></td>
+                        </tr>
+                        <?php
+                            }
+                        ?>                                
+                    </tbody>        
+                   </table>                    
+                </div>
+            </div>
+    </div>  
+    <div class="container">
+        <div class="form-group" style="width:100%">    
+            <div class="col-12">
+                <button type="button" id="btnPedido" class="btn btn-dark text-center btn-block mt-2 mb-2 btnPedido" data-toggle="modalJust">Enviar y guardar</button>
+            </div>
+        </div>
+    </div>
+</div>                           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-dark">Guardar</button>
+        </div>
+    </form>    
+    </div>
+</div>
+</div>  
+  
+<!-- jQuery, Popper.js, Bootstrap JS -->
+<script src="../librerias/jquery/jquery-3.3.1.min.js"></script>
+<script src="../librerias/popper/popper.min.js"></script>
+<script src="../librerias/bootstrap/js/bootstrap.min.js"></script>
+  
+<!-- datatables JS -->
+<script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
+ 
+<script type="text/javascript" src="../controladores/controladorCotizaaciones.js"></script>  
+
+
 </body>
 </html>

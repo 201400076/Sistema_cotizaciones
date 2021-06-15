@@ -3,7 +3,7 @@ $(document).ready(function(){
        "columnDefs":[{
         "targets": -1,
         "data":null,
-        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-danger btnBorrar' >Borrar</button></div></div>"  
+        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success cotizar' >Cotizar</button><button class='btn btn-info cotizado' >Cotizado</button></div></div>"  
        }],
         
         //Para cambiar el lenguaje a español
@@ -95,22 +95,30 @@ $(document).on("click", ".btnGuardarJust", function(){
 var fila; //capturar la fila para editar o borrar el registro    
 
 //botón BORRAR
-$(document).on("click", ".btnBorrar", function(){    
-    fila = $(this);
-    id_pendientes = parseInt($(this).closest("tr").find('td:eq(0)').text());
-    opcion = 3 //borrar
-    var respuesta = confirm("¿Esta seguro de eliminar el item?");
-    if(respuesta){
-        $.ajax({
-            url: "../modelo/solicitudes_modelo.php",
-            type: "POST",
-            dataType: "json",
-            data: {opcion:opcion, id_pendientes:id_pendientes},
-            success: function(){
-                tablaPersonas.row(fila.parents('tr')).remove().draw();
-            }
-        });
-    }   
+$(document).on("click", ".cotizar", function(){    
+
+    $("#formPersonas").trigger("reset");
+    $(".modal-header").css("background-color", "#28a745");
+    $(".modal-header").css("color", "white");
+    $(".modal-title").text("Nueva Persona");  
+    $(".cantidad").text(parseInt($(this).closest("tr").find('td:eq(0)').text()));      
+    $("#modalCRUD").modal("show");  
+
+
+    cantidad = parseInt($(this).closest("tr").find('td:eq(0)').text()); 
+    console.log(cantidad);
+});
+
+$(document).on("click", ".cotizado", function(){    
+
+    $("#formPersonas").trigger("reset");
+    $(".modal-header1").css("background-color", "#17a2b8");
+    $(".modal-header1").css("color", "white");
+    $(".modal-header1").css("text", "center");         
+    $("#modalCRUDJust").modal("show");  
+
+    cantidad = parseInt($(this).closest("tr").find('td:eq(0)').text()); 
+    console.log(cantidad);
 });
 
 //botón Enviar pedido
