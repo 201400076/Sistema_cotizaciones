@@ -4,12 +4,12 @@
 //$dir="../ruta/rutas.php?ruta=mostrar&con=nueva";
 //header('Location:'. $dir);
 
-echo "<script> 
+/* echo "<script> 
 var str=decodeURIComponent('../ruta/rutas.php?ruta=mostrar&con=nueva');
 
 window.location=str;
 
-</script>"; 
+</script>";  */
 
 //echo "<meta http-equiv='refresh' content=1'; url=http://localhost/Sistema_cotizaciones/ruta/rutas.php?ruta=mostrar&con=nueva'>";
 

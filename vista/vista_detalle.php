@@ -1,8 +1,8 @@
 <?php
     require_once("../modelo/solicitudes_administracion.php");        
-    $id_usuario=1;
-    $id_pedido=114;
-    $id_solicitud=2;
+    $id_usuario=$_GET['id_usuario'];
+    $id_pedido=$_GET['id_pedido'];
+    $id_solicitud=$_GET['id_solicitud'];
     
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
