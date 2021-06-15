@@ -92,23 +92,35 @@
                                         <h5 class=" text-center modal-title1" id="exampleModalLabel">Cotizaciones</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                                         </button>
-                                    </div>
-                                <form id="formPersonas">    
-                                    <div class="modal-body">            
-                                    <div class="container">
-                                <div class="row">                                
-                                        <div class="col-lg-12">
-                                           <p><?php echo $dat['id_items'] ?></p>
-                                        </div>
-                                </div>  
-                                
-                                <div class="container">
-                                    <div class="form-group" style="width:100%">    
-                                        <div class="col-12">
-                                            <button type="button" id="btnPedido" class="btn btn-dark text-center btn-block mt-2 mb-2 btnPedido" data-toggle="modalJust">Enviar y guardar</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </div>    
+                                    <?php   
+                                        $id_items= $dat['id_items'];                                                                                                                    
+                                        $consulta="SELECT id_item_cotizacion, marca, modelo, descripcion, precio_unitario, precio_parcial, id_items FROM cotizacion_items c WHERE c.id_items='$id_items'";
+                                        $resultado = $conexion->prepare($consulta);
+                                        $resultado->execute();
+                                        $cotizacion=$resultado->fetchAll(PDO::FETCH_ASSOC);
+                                        $_POST['marca']=$cotizacion[0]['marca'];                                        
+                                    ?>          
+
+                                    <?php foreach($cotizacion as $c){?>
+                                        <div class="container">
+                                            <div class="row">                                
+                                                <div class="col-sm">
+                                                    <p><?php echo $c['marca']?></p>                                                                                                                                                                                               
+                                                </div>
+                                                <div class="col-sm">
+                                                    <p><?php echo $c['modelo']?></p>                                                                                                                                                                                               
+                                                </div>
+                                                <div class="col-sm">
+                                                    <p><?php echo $c['descripcion']?></p>                                                                                                                                                                                               
+                                                </div>
+                                                <div class="col-sm">
+                                                    <p><?php echo $c['precio_unitario']?></p>                                                                                                                                                                                               
+                                                </div>
+                                            </div>
+                                        </div>                           
+                                    <?php }?>
+                                </div>                           
                             </div>                           
                         </div>
                         <?php
