@@ -1,13 +1,13 @@
-evaluar();
+document.getElementById("botonAceptar").onclick = function(){
+    aceptar();
+}
 
-function evaluar(){
-    $('#botonAceptar').on('click', function(){
-        aceptar();
-    }) 
-        
-    $('#botonRechazar').on('click', function(){
-        rechazar();
-    })
+document.getElementById("botonRechazar").onclick = function(){
+    rechazar();
+}
+
+document.getElementById("botonCancelar").onclick = function(){
+    redireccionA('../ruta/rutas.php?ruta=mostrar&con=nueva')
 }
 
 function aceptar() {

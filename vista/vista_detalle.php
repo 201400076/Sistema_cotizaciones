@@ -172,28 +172,24 @@
 
 
 <!-- MARCO  -->
-    <?php
-        if(isset($_POST["ej"])){
-            
-        }
-    ?>
 
 <div class="row">
     <div class="col-lg-12 botones">
-        <button class="btn-success" id="botonAceptar" onclick="aceptar()">Aceptar</button>
+        <button class="btn-success" id="botonAceptar">Aceptar</button>
         <button class="btn-danger" id="botonRechazar">Rechazar</button>
-        <button class="btn-dark" id="botoCancelar" onClick="window.parent.location='../ruta/rutas.php?ruta=mostrar&con=nueva'" value="Cancelar">Cancelar</button>
+        <button class="btn-dark" id="botonCancelar" value="Cancelar">Cancelar</button>
     </div>
 </div>
 
 <script>
-    var id = '<?php echo($id_sol);?>';
-    var id_pedido = '<?php echo($id_ped);?>';
-    var id_usuario = '<?php echo($id_usu);?>';
-    var montoSolicitud = '<?php echo($monto_solicitud);?>';
-    var montoUnidad = '<?php echo($monto_unidad);?>';
+    var id = '<?php echo $_GET['id_solicitud']?>';
+    var id_pedido = '<?php echo $_GET['id_pedido']?>';
+    var id_usuario = '<?php echo $_GET['id_usuario']?>';
+
 </script>
 <script src="../controladores/evaluarPedidoSolicitud.js"></script>
+
+
 
 <!--
     <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>-->
