@@ -13,7 +13,7 @@ document.getElementById("botonCancelar").onclick = function(){
 function aceptar() {
     fechaAccion = fecha();
     Swal.fire({
-        title: 'Esta seguro de aceptar la Solicitud de Cotizacion #'+id+'? ',
+        title: 'Esta seguro de aceptar la Solicitud de Pedido #'+id+'? ',
         text: "En fecha: "+fechaAccion,
         icon: 'question',
         showCancelButton: true,
