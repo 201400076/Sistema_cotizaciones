@@ -180,7 +180,7 @@
 
 <div class="row">
     <div class="col-lg-12 botones">
-        <button class="btn-success" id="botonAceptar">Aceptar</button>
+        <button class="btn-success" id="botonAceptar" onclick="aceptar()">Aceptar</button>
         <button class="btn-danger" id="botonRechazar">Rechazar</button>
         <button class="btn-dark" id="botoCancelar" onClick="window.parent.location='../ruta/rutas.php?ruta=mostrar&con=nueva'" value="Cancelar">Cancelar</button>
     </div>
@@ -195,7 +195,8 @@
 </script>
 <script src="../controladores/evaluarPedidoSolicitud.js"></script>
 
-<script src="../librerias/jquery/jquery-3.3.1.min.js"></script>
+<!--
+    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>-->
     <script src="../librerias/popper/popper.min.js"></script>
     <script src="../librerias/bootstrap/js/bootstrap.min.js"></script>
       
