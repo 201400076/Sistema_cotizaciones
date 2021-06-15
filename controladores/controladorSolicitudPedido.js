@@ -35,17 +35,60 @@ $(document).ready(function() {
         archivo = '';
         ruta = '';
     });
+<<<<<<< HEAD
     //boton enviar pedido
     $("#btnPedido").click(function() {
         console.log(99);
         opcion = 5;
         nro = 54;
+=======
+    console.log(nro);
+    $("#formPersonas").trigger("reset");
+    $(".modal-header").css("background-color", "#28a745");
+    $(".modal-header").css("color", "white");
+    $(".modal-title").text("Nueva Persona");            
+    $("#modalCRUDJust").modal("show");       
+    opcion=4; 
+    justificacion='';
+});  
+    
+
+$(document).on("click", ".btnGuardarJust", function(){  
+    console.log(justificacion);
+    justificacion = $.trim($("#Justificacion").val());
+    if(justificacion==''){
+        var respuesta = confirm("¿Está seguro que desea agregar el pedido si ninguna justificacion?");
+        if(respuesta){           
+            $.ajax({
+                url: "../modelo/solicitudes_modelo.php",
+                type: "POST",
+                dataType: "json",
+                data: {opcion:opcion, justificacion:justificacion},
+                success: function(data){                         
+                }        
+            });
+            $("#modalCRUDJust").modal("hide");  
+            window.location.href="../vista/solicitudes_vista.php";             
+        }
+    }else{
+>>>>>>> 7aa0e0530be5363e7fcbc75ee2d5f34ee7390d8f
         $.ajax({
             url: "../modelo/solicitudes_modelo.php",
             type: "POST",
             dataType: "json",
+<<<<<<< HEAD
             data: { opcion: opcion },
             success: function(nro) {
+=======
+            data: {opcion:opcion, justificacion:justificacion},
+            success: function(data){                       
+            }        
+        });
+        $("#modalCRUDJust").modal("hide");     
+        window.location.href="../vista/solicitudes_vista.php";                     
+    }
+});
+>>>>>>> 7aa0e0530be5363e7fcbc75ee2d5f34ee7390d8f
 
             }
         });
