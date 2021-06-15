@@ -9,7 +9,7 @@ class PDF extends FPDF
 function Header()
 {
     // Logo
-    $this->Image('../recursos/imagenes/logo.png',10,8,33);
+    $this->Image('../recursos/imagenes/umss.png',8,1,53);
     // Arial bold 15
   /*   $this->SetFont('Arial','B',15);
     // Movernos a la derecha
@@ -30,7 +30,7 @@ function Header()
             $this->SetY(18);
             $this->Cell($ancho, 10,utf8_decode('Vinto - Motecato, calle Bélgica y Noruega'), 0, 0, 'R');    
             $this->SetY(21);
-            $this->Cell($ancho, 10,utf8_decode('(+591) 76436540 – 44355215'), 0, 0, 'R');       
+            $this->Cell($ancho, 10,utf8_decode('(+591) 76436540 - 44355215'), 0, 0, 'R');       
 }         
 
 
@@ -128,9 +128,9 @@ foreach($dato as $valor):
     $pdf->MultiCell(0,5,$txt,0,'L');
 
     
-    $pdf->setY(170);
+    /* $pdf->setY(170);
     $pdf->setX(40);
-    $pdf->Cell(10,50,$idRescate,0,0,'L');
+    $pdf->Cell(10,50,$idRescate,0,0,'L'); */
   
    $i++;
 //}

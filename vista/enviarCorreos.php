@@ -80,7 +80,7 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
             $user = generarUsername();
         }
 
-        registraUsuarioTemporal($user, $pass, $idCorreoActual, 0);
+        registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud);
 
         //Archivos adjuntos
         $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion".$idSolicitud.".pdf";
@@ -124,12 +124,12 @@ function generarPassword(){
     return $password;
 }
 
-function registraUsuarioTemporal($user, $password, $idEmpresa, $estado){
+function registraUsuarioTemporal($user, $password, $idEmpresa, $estado, $idSolicitud){
     global $estadoconexion;
     $pass = hashPassword($password);
     //echo $idEmpresa;
-    $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador) VALUES(?,?,?,?)");
-    $stmt->bind_param("ssii", $user, $pass, $idEmpresa, $estado);
+    $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes) VALUES(?,?,?,?,?)");
+    $stmt->bind_param("ssiii", $user, $pass, $idEmpresa, $estado, $idSolicitud);
 
     if($stmt->execute()){
         return $estadoconexion->insert_id;

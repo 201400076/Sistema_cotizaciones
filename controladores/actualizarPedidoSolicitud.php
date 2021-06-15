@@ -1,5 +1,8 @@
 <?php
     require '../configuraciones/conexion.php';
+    //archivo pdf
+    require '../librerias/fpdf/fpdf.php';
+
     $conn = new Conexion();
     $estadoconexion = $conn->getConn();
 
@@ -20,6 +23,9 @@
             }else{
                 $estado='aceptada';
                 $detalle=(NULL);
+
+                //archivo pdf
+                generarArchivoPDF($id_solicitud);
             }
             
             $stmt->bind_param("sss",$estado,$fecha,$detalle);
@@ -42,6 +48,19 @@
             }
         }
         return false;   
+    }
+
+    //funcion temporal
+    function generarArchivoPDF($id_solicitud){
+        $detalle = 'Archivo de Cotizacion Nro: '.$id_solicitud;
+        $nombre = 'solicitudCotizacion'.$id_solicitud.'.pdf';
+        $ruta = '../archivos/cotizacionesIniciales/'.$nombre;
+        
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',24);
+        $pdf->Cell(30, 10, $detalle);
+        $pdf->Output($ruta,'F');
     }
     
     function redireccion(){
