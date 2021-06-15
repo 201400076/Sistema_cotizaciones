@@ -117,6 +117,7 @@ $active = "active";
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
+											<th>id</th>
 											<th>Fecha</th>
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>
@@ -141,6 +142,7 @@ $active = "active";
 										?>
 										<tr align="center">
 											<td><?php echo $i+1?></td>
+											<td><?php echo($valor[$i]['id_solicitudes'])?></td>
 											<td><?php echo($valor[$i]['fecha'])?></td>
 											
 
