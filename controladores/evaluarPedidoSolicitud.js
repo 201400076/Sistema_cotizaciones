@@ -59,7 +59,7 @@ function rechazar() {
             if(verificar(det) && verificarPatron(det, /^[a-zA-Z][a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s?\.?\,?]+/)){
                 Swal.fire({
                     title: 'SOLICITUD RECHAZADA!',
-                    text: 'La solicitud ha sido rechazada',
+                    text: 'La solicitud #'+id+' ha sido rechazada',
                     icon: 'success',
                     confirmButtonText: 'OK',
                     allowOutsideClick: false,
