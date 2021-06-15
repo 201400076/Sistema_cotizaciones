@@ -25,7 +25,7 @@
 ?>
 <div class="container-fluid">
     <div>
-        <h2 style="text-align:center;">Envio de cotizaciones a empresas</h2>
+        <h2 style="text-align:center;">Envio de Cotizaciones a Empresas</h2>
     </div>
     <br>
     <form action="enviarCorreos.php?idSolicitud=<?php echo $idSolicitud?>" method="post" id="formulario">
@@ -42,7 +42,7 @@
                     </div>
                     <div>
                         <label for="archivo" style="width: 25%;">Archivo adjunto:</label>  
-                        <a style="width: 50%;" href="../archivos/cotizacionesIniciales/solicitudCotizacion<?php echo $idSolicitud ?>.pdf">Solicitud_de_cotizacion.pdf</a>
+                        <a style="width: 50%;" href="../archivos/cotizacionesIniciales/solicitudCotizacion<?php echo $idSolicitud ?>.pdf" target="_blank">Solicitud_de_cotizacion.pdf</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -78,6 +78,9 @@
         <div class="text-center">
             <button type="submit" name="enviar" class="btn btn-success" value="Marcar empresa">
                 ENVIAR
+            </button>
+            <button name="enviar" class="btn btn-danger" value="Cancelar" onclick="location.href = '../ruta/rutas.php?ruta=mostrar&con=aceptada';">
+                CANCELAR
             </button>
         </div>
         <script>

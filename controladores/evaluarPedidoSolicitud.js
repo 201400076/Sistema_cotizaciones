@@ -43,8 +43,8 @@ function rechazar() {
     fechaAccion = fecha();
     Swal.fire({
     input: 'textarea',
-    inputLabel: 'Justificacion de Rechazo de la Solicitud #:'+id,
-    inputPlaceholder: 'Ingrese los motivos por el cual se rechazo la solicitud de Pedido...',
+    inputLabel: 'Justificacion de Rechazo de la Solicitud #'+id,
+    inputPlaceholder: 'Ingrese aqui el justificativo...',
     inputAttributes: {'aria-label': 'Type your message here'},
     showCancelButton: true,
     confirmButtonText: 'GUARDAR',
@@ -59,7 +59,7 @@ function rechazar() {
             if(verificar(det) && verificarPatron(det, /^[a-zA-Z][a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s?\.?\,?]+/)){
                 Swal.fire({
                     title: 'SOLICITUD RECHAZADA!',
-                    text: 'La solicitud ha sido rechazada por los siguientes motivos: ' + det,
+                    text: 'La solicitud ha sido rechazada',
                     icon: 'success',
                     confirmButtonText: 'OK',
                     allowOutsideClick: false,

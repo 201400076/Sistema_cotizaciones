@@ -174,10 +174,11 @@
 <!-- MARCO  -->
 
 <div class="row">
-    <div class="col-lg-12 botones">
-        <button class="btn-success" id="botonAceptar">Aceptar</button>
-        <button class="btn-danger" id="botonRechazar">Rechazar</button>
-        <button class="btn-dark" id="botonCancelar" value="Cancelar">Cancelar</button>
+    <div class="col-lg-12" style="text-align: center;">
+        <br>
+        <button class="btn btn-success" id="botonAceptar">ACEPTAR</button>
+        <button class="btn btn-danger" id="botonRechazar">RECHAZAR</button>
+        <button class="btn btn-secondary" id="botonCancelar" value="Cancelar">CANCELAR</button>
     </div>
 </div>
 
