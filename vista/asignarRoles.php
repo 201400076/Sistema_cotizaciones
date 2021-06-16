@@ -9,6 +9,8 @@ $conexion = mysqli_connect($db_host, $db_usuario, $db_contra, $db_nombre);
 $consulta = "SELECT u.id_usuarios, u.nombres, u.apellidos, u.usuario FROM usuarios u";
 
 $consulta1 = "SELECT r.usuario, r.rolAsignado FROM usuarioconrol r";
+ 
+
 ?>
 
 <html lang="en"><head>

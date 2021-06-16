@@ -6,10 +6,19 @@
 
     $conexion = mysqli_connect($db_host, $db_usuario, $db_contra, $db_nombre);
     //$consulta = "SELECT u.id_usuarios, u.nombres, u.apellidos, u.usuario, r.nombreRol FROM roles r INNER JOIN usuarios u ON r.id_usuario = u.id_usuarios";
+
+    //$query = "SELECT id_unidad, nombre_unidad FROM unidad_administrativa";
+    //$resultado = mysqli_query($query);
+
+    $query = "SELECT id_unidad, nombre_unidad FROM unidad_administrativa ORDER BY nombre_unidad";
+	$resultado=mysqli_query($query);
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -19,6 +28,7 @@
     <!-- Favicon icon -->
 
     <title>Panel de control - Cotizador Web</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -130,6 +140,16 @@
                         <option value="Usuario Administrador">Usuario Administrador</option>
                         <option value="Usuario Unidad de Gasto">Usuario Unidad de Gasto</option>
                         <option value="Usuario Unidad Administrativa">Usuario Unidad Administrativa</option>
+                    </select>
+                    <label for="rol">Unidad</label>
+                    <select name="rolUnidad" id="rolUnidad">
+                        <option value="Unidad">Seleccionar Unidad</option>
+                        <?php while($row = $resultado->fetch_assoc()) { ?>
+                        
+                            <option value="<?php echo $row['id_unidad']; ?>"><?php echo $row ['nombre_unidad']; ?></option>
+
+                        <?php } ?>
+
                     </select>
                     <input type="submit" value="Asignar Rol" class="btn_save">
                 </form>
