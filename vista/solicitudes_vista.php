@@ -3,22 +3,23 @@
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
     $id_pendientes=1;
-    $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios='$id_pendientes'";
-    $resultado = $conexion->prepare($consulta);
-    $resultado->execute();
-    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
-    
     $consulta="SELECT max(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_pendientes'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
     $nro=$data1['0']['max(pedido.id_pedido)']+1;
-
+    
     $consulta="SELECT nombres,apellidos FROM usuarios WHERE usuarios.id_usuarios='$id_pendientes'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
     $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];
+
+    $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios='$id_pendientes'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    
 ?>
 
 <!doctype html>
@@ -77,7 +78,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">            
-            <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal">nuevo item</button>    
+            <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal">NUEVO ITEM</button>    
             </div>    
         </div>    
     </div>    
@@ -120,7 +121,7 @@
         <div class="container">
             <div class="form-group" style="width:100%">    
                 <div class="col-12">
-                    <button type="button" id="btnPedido" class="btn btn-dark text-center btn-block mt-2 mb-2 btnPedido" data-toggle="modalJust">Enviar y guardar</button>
+                    <button type="button" id="btnPedido" class="btn btn-dark text-center btn-block mt-2 mb-2 btnPedido" data-toggle="modalJust">ENVIAR Y GUARDAR</button>
                 </div>
             </div>
         </div>
@@ -138,16 +139,16 @@
         <form id="formPersonas">    
             <div class="modal-body">
                 <div class="form-group">
-                <label for="cantidad" class="col-form-label">cantidad:</label>
-                <input type="number" class="form-control" id="cantidad">
+                <label for="cantidad" class="col-form-label">CANTIDAD:</label>
+                <input type="number" class="form-control" id="cantidad" placeholder="CANTIDAD*">
                 </div>
                 <div class="form-group">
-                <label for="unidad" class="col-form-label">unidad:</label>
-                <input type="text" class="form-control" id="unidad">
+                <label for="unidad" class="col-form-label">UNIDAD:</label>
+                <input type="text" class="form-control" id="unidad" placeholder="UNIDAD*">
                 </div>                
                 <div class="form-group">
-                <label for="detalle" class="col-form-label">detalle:</label>
-                <textarea  class="form-control"  id="detalle" cols="20" rows="5"></textarea>                
+                <label for="detalle" class="col-form-label">DETALLE:</label>
+                <textarea  class="form-control"  id="detalle" cols="20" rows="5" placeholder="Detalle de item..."></textarea>                
                 </div>   
                 <div class="form-group">
                 <label for="unidad" class="col-form-label">archivo:</label>
@@ -155,8 +156,8 @@
                 </div>           
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="submit" id="btnGuardar" class="btn btn-dark">insertar</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                <button type="submit" id="btnGuardar" class="btn btn-dark">INSERTAR</button>
             </div>
         </form>    
         </div>
@@ -179,8 +180,8 @@
                 </div>                         
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-dark">Guardar</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                <button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-dark">GUARDAR</button>
             </div>
         </form>    
         </div>
@@ -194,7 +195,9 @@
       
     <!-- datatables JS -->
     <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
-     
+     <script>
+        var id_usu=<?php echo $id_pendientes?>
+     </script>
     <script type="text/javascript" src="../controladores/controladorSolicitudPedido.js"></script>  
     
     

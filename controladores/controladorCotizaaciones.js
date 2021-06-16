@@ -1,9 +1,9 @@
 $(document).ready(function(){
     tablaPersonas = $("#tablaPersonas").DataTable({
        "columnDefs":[{
-        "targets": -2,
+        "targets": -1,
         "data":null,
-        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success cotizar' >Cotizar</button><button class='btn btn-info cotizado' >Cotizado</button></div></div>"  
+        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success cotizar' >COTIZAR</button><button class='btn btn-info cotizado' >COTIZADO</button></div></div>"  
        }],
         
         //Para cambiar el lenguaje a español
@@ -60,35 +60,24 @@ $("#btnPedido").click(function(){
 });  
     
 
-$(document).on("click", ".btnGuardarJust", function(){  
-    console.log(justificacion);
-    justificacion = $.trim($("#Justificacion").val());
-    if(justificacion==''){
-        var respuesta = confirm("¿Está seguro que desea agregar el pedido si ninguna justificacion?");
-        if(respuesta){           
-            $.ajax({
-                url: "../modelo/solicitudes_modelo.php",
-                type: "POST",
-                dataType: "json",
-                data: {opcion:opcion, justificacion:justificacion},
-                success: function(data){                         
-                }        
-            });
-            $("#modalCRUDJust").modal("hide");   
-            window.location.replace("http://localhost/proyectos/vista/solicitudes_vista"); 
-        }
-    }else{
-        $.ajax({
-            url: "../modelo/solicitudes_modelo.php",
-            type: "POST",
-            dataType: "json",
-            data: {opcion:opcion, justificacion:justificacion},
-            success: function(data){                       
-            }        
-        });
-        $("#modalCRUDJust").modal("hide");     
-        window.location.replace("http://localhost/proyectos/vista/solicitudes_vista");        
-    }
+$(document).on("click", ".btnEnviar", function(){  
+    
+
+    $.ajax({        
+        url:"../modelo/actualizarCotizacionEmpresa.php",
+        type: "POST",
+        dataType: "json",
+        data: {id_solicitud:id_solicitud,nombre_usu:nombre_usu},
+        success: function(fila){  
+            console.log(fila);                        
+            if(fila==null){                                
+                alert("Error no puedo registrar la cotizacion");
+            }else{                
+                alert("Se agrego correctamente tu cotizacion");
+            }
+        }              
+    });
+    window.location.href="../vista/empresasSolicitantes.php";                     
 });
 
 
@@ -100,7 +89,7 @@ $(document).on("click", ".cotizar", function(){
     $("#formPersonas").trigger("reset");
     $(".modal-header").css("background-color", "#28a745");
     $(".modal-header").css("color", "white");
-    $(".modal-title").text("Cotizacion de item  "+parseInt($(this).closest("tr").find('td:eq(0)').text()));   
+    $(".modal-title").text("COTIZACION DE ITEM "+parseInt($(this).closest("tr").find('td:eq(0)').text()));   
     $("#cantidad").val(parseInt($(this).closest("tr").find('td:eq(1)').text()));     
     $("#modalCRUD").modal("show");  
 
@@ -112,7 +101,7 @@ $(document).on("click", ".cotizado", function(){
     $("#formPersonas").trigger("reset");
     $(".modal-header1").css("background-color", "#17a2b8");
     $(".modal-header1").css("color", "white");
-    $(".modal-title1").text("asasd");
+    $(".modal-title1").text("COTIZACION");
     $(".modal-header1").css("text", "center");   
     id=parseInt($(this).closest("tr").find('td:eq(0)').text())      
     $("#modalCRUDJust"+id).modal("show");  
@@ -196,6 +185,7 @@ $('input[type="file"]').on('change', function(){
                     }              
                 });
                 $("#modalCRUD").modal("hide");
+                window.location.href="../vista/registroCotizacion.php?usuario="+id_solicitud+"&nombre="+nombre_usu;
             }else{        
                 alert("Debe ingresar un precio unitario");
             }

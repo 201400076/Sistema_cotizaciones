@@ -1,9 +1,10 @@
 $(document).ready(function(){
     tablaPersonas = $("#tablaPersonas").DataTable({
+        "destroy":true,
        "columnDefs":[{
         "targets": -1,
         "data":null,
-        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-danger btnBorrar' >Borrar</button></div></div>"  
+        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-danger btnBorrar' >BORRAR</button></div></div>"  
        }],
         
         //Para cambiar el lenguaje a español
@@ -28,7 +29,7 @@ $("#btnNuevo").click(function(){
     $("#formPersonas").trigger("reset");
     $(".modal-header").css("background-color", "#28a745");
     $(".modal-header").css("color", "white");
-    $(".modal-title").text("Nueva Persona");            
+    $(".modal-title").text("NUEVO ITEM");            
     $("#modalCRUD").modal("show");        
     id_pendientes=null;
     opcion = 1; //alta
@@ -36,31 +37,35 @@ $("#btnNuevo").click(function(){
     ruta='';
 });   
 //boton enviar pedido
-$("#btnPedido").click(function(){
-    console.log(99);
-    opcion=5;
-    nro=54;
-    $.ajax({
-        url: "../modelo/solicitudes_modelo.php",
+$("#btnPedido").click(function(){   
+    console.log("hola");
+    console.log(id_usu);    
+    $.ajax({        
+        url:"../controladores/tablaVacia.php",
         type: "POST",
         dataType: "json",
-        data: {opcion:opcion},
-        success: function(nro){                         
-            
+        data: {id_usu:id_usu},
+        success: function(fila){                          
+            if(fila!=null){  
+                if(!fila){
+                    $("#formPersonas").trigger("reset");
+                    $(".modal-header").css("background-color", "#28a745");
+                    $(".modal-header").css("color", "white");
+                    $(".modal-title").text("Nueva Persona");            
+                    $("#modalCRUDJust").modal("show");       
+                    opcion=4; 
+                    justificacion='';                    
+                }else{
+                    alert("Debe ingresar almenos 1 item antes de enviar");                
+                }                              
+            }else{                
+            }
         }        
-    });
-    console.log(nro);
-    $("#formPersonas").trigger("reset");
-    $(".modal-header").css("background-color", "#28a745");
-    $(".modal-header").css("color", "white");
-    $(".modal-title").text("Nueva Persona");            
-    $("#modalCRUDJust").modal("show");       
-    opcion=4; 
-    justificacion='';
+    });   
 });  
     
 
-$(document).on("click", ".btnGuardarJust", function(){  
+$(document).on("click", ".btnGuardarJust", function(){    
     console.log(justificacion);
     justificacion = $.trim($("#Justificacion").val());
     if(justificacion==''){
@@ -69,6 +74,7 @@ $(document).on("click", ".btnGuardarJust", function(){
             $.ajax({
                 url: "../modelo/solicitudes_modelo.php",
                 type: "POST",
+                cache:false,
                 dataType: "json",
                 data: {opcion:opcion, justificacion:justificacion},
                 success: function(data){                         
@@ -83,7 +89,7 @@ $(document).on("click", ".btnGuardarJust", function(){
             type: "POST",
             dataType: "json",
             data: {opcion:opcion, justificacion:justificacion},
-            success: function(data){                       
+            success: function(data){                   
             }        
         });
         $("#modalCRUDJust").modal("hide");     
@@ -127,8 +133,7 @@ $('input[type="file"]').on('change', function(){
     if ($( this ).val() != '') {
       if(ext == "pdf"){
         //alert("La extensión es: " + ext);
-        if($(this)[0].files[0].size > 5242880){
-          console.log("El documento excede el tamaño máximo");
+        if($(this)[0].files[0].size > 5242880){          
           $('#modal-title').text('¡Precaución!');
           $('#modal-msg').html("Se solicita un archivo no mayor a 5MB. Por favor verifica.");
           $("#modal-gral").modal();           
@@ -137,8 +142,7 @@ $('input[type="file"]').on('change', function(){
             var miArchivo=$(this)[0].files[0]
             var datosForm=new FormData;
             datosForm.append("archivo",miArchivo);
-            var destino="subir.php";
-            console.log(miArchivo);
+            var destino="subir.php";            
 
             $.ajax({
                 type:'POST',
