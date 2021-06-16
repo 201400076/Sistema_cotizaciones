@@ -12,7 +12,7 @@
 <body>
 <?php
     $active = "";
-    include_once("layouts/navegacion.php");
+    include_once("layouts/navegacionPendientes.php");
 
     require_once('../configuraciones/conexion.php');
     $conn = new Conexion();
