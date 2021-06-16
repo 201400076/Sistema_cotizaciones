@@ -117,7 +117,7 @@ $active = "active";
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
-											<th>id</th>
+											<th>Id</th>
 											<th>Fecha</th>
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>

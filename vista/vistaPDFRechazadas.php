@@ -88,7 +88,7 @@ $dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_ga
                                                 AND usuarios.id_usuarios=usuarioconrol.id_usuarios
                                                 AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
                                                 AND estado='rechazada'
-                                                order by fecha desc");
+                                                order by fecha_evaluacion desc");
 
                                        
 $i=0;

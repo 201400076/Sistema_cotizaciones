@@ -17,14 +17,15 @@ class PDF extends FPDF{
             $this->Cell($ancho + $horizontal, 10,'Fecha: '.date('d/m/Y'), 0, 0, 'R');
             $this->SetY(18);
             $this->Cell($ancho + $horizontal, 10,'Hora: '.date('H:i:s'), 0, 0, 'R');            
-        } else {            
+        } 
+         else {            
             $this->SetY(12); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
             $this->Cell($ancho, 10,'Usuario: http://tucafejava.blogspot.com', 0, 0, 'R');
             $this->SetY(15);
             $this->Cell($ancho, 10,'Fecha: '.date('d/m/Y'), 0, 0, 'R');
             $this->SetY(18);
             $this->Cell($ancho, 10,'Hora: '.date('H:i:s'), 0, 0, 'R');            
-        }        
+        }     
     }
      
     function Body() {
@@ -75,7 +76,7 @@ class PDF extends FPDF{
             $n++;            
         }
          
-        $y = $this->GetY();
+        /* $y = $this->GetY();
         $this->SetXY(10, $y);
         $this->Cell(190, 10, utf8_decode("Alineación a la derecha con 'R'"), 0, 1, 'R');
         $y = $this->GetY();
@@ -95,7 +96,7 @@ class PDF extends FPDF{
         $this->AddPage('P');
          
         $this->pagina = 1;
-        $this->AddPage('L');
+        $this->AddPage('L'); */
          
     }
      

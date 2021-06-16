@@ -40,7 +40,7 @@ class SolicitudesController{
                                                             AND usuarios.id_usuarios=usuarioconrol.id_usuarios
                                                             AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
                                                             AND estado='aceptada'
-                                                            order by fecha desc");
+                                                            order by fecha_evaluacion desc");
        $active="active";
        // echo json_encode($dato);
         require_once("../vista/vista_solicitudes_aceptadas.php");
@@ -54,7 +54,7 @@ class SolicitudesController{
                                                         AND usuarios.id_usuarios=usuarioconrol.id_usuarios
                                                         AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
                                                         AND estado='rechazada'
-                                                        order by fecha desc");
+                                                        order by fecha_evaluacion desc");
        $active="active";
        // echo json_encode($dato);
         require_once("../vista/vista_solicitudes_rechazadas.php");

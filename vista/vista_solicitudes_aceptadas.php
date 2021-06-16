@@ -17,6 +17,7 @@ $active = "";
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
+											<th>Id</th>
 											<th>Fecha-Recepcion</th>
 											<th>Fecha-Aceptado</th>
 											<th>Solicitante</th>
@@ -41,6 +42,8 @@ $active = "";
 										?>
 										<tr align="center">
 											<td><?php echo $i+1?></td>
+
+											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 
 											<td><?php echo $valor[$i]['fecha']?></td>
 

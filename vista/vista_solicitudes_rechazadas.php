@@ -20,6 +20,7 @@
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
+											<th>Id</th>
 											<th>Fecha-Recepcion</th>
 											<th>Fecha-Rechazo</th>
 											<th>Solicitante</th>
@@ -44,6 +45,7 @@
 
 										<tr align="center">
 											<td><?php echo $i+1?></td>
+											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 											<td><?php echo $valor[$i]['fecha']?></td>
 											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
 
