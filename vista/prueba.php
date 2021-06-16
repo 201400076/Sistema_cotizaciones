@@ -90,3 +90,17 @@ include_once("layouts/navegacion.php");
     </div>
 </div>
 </div>
+
+<?php
+    if($id_rol==1){
+        $consulta = "SELECT * FROM unidad_gasto";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    }elseif($id_rol==2){
+        $consulta = "SELECT * FROM unidad_administrativa";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    }
+?>
