@@ -148,7 +148,7 @@
                         
                         
                         <li >
-                            <a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva" style="color:skyblue; font-weight: bold">Pendientes</a>
+                            <a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva" style="color:skyblue; font-weight: bold">Solicitudes Pendientes</a>
                         </li>
 
                         <li>
@@ -157,8 +157,13 @@
                         <li>
                             <a href="../ruta/rutas.php?ruta=mostrar&con=rechazada" id="solicituRechazada" name="solicituRechazada" style="color:skyblue; font-weight: bold;">Solicitudes Rechazadas</a>
                         </li>
+
                         <li>
-                        <a href="../vista/empresasSolicitantes.php" id="cotizacion" name="cotizacion" style="color:skyblue; font-weight: bold;">Cotizacion</a>
+                            <a href="../ruta/rutas.php?ruta=mostrar&con=cotizando" id="solicituCotizando" name="solicituCotizando" style="color:skyblue; font-weight: bold;">Solicitudes en Cotizacion</a>
+                        </li>
+
+                        <li>
+                        <a href="../vista/empresasSolicitantes.php" id="cotizacion" name="cotizacion" style="color:skyblue; font-weight: bold;">Registrar Cotizacion</a>
                         </li>
 
                    

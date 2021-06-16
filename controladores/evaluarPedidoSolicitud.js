@@ -1,40 +1,40 @@
-escuchar();
+document.getElementById("botonAceptar").onclick = function(){
+    aceptar();
+}
 
-function escuchar(){
-    $('#botonAceptar').on('click', function(){
-        aceptar();
-    }) 
-    
-    $('#botonRechazar').on('click', function(){
-        rechazar();
-    })
-    
-    $('#botonCancelar').on('click', function(){
-        redireccionA("../vista/vista_solicitudes_nuevas.php");
-    })
+document.getElementById("botonRechazar").onclick = function(){
+    rechazar();
+}
+
+document.getElementById("botonCancelar").onclick = function(){
+    redireccionA('../ruta/rutas.php?ruta=mostrar&con=nueva')
 }
 
 function aceptar() {
     fechaAccion = fecha();
     Swal.fire({
-        title: 'Esta seguro de aceptar esta Solicitud? #'+id+'/'+montoSolicitud+'/'+montoUnidad,
-        text: fechaAccion,
+        title: 'Esta seguro de aceptar la Solicitud de Pedido #'+id+'? ',
+        text: "En fecha: "+fechaAccion,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'SI',
-        cancelButtonText: 'NO'
+        cancelButtonText: 'NO',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
         }).then((result) => {
             
             if (result.isConfirmed) {
-                if(esPosibleAutorizar()){
+                mensajeConfirmacion(id,fechaAccion,1);
+                /*if(esPosibleAutorizar()){
                     mensajeConfirmacion(id,fechaAccion,1);
                 }else{
                     mensajeAviso("Solicitud de pedido RECHAZADA!","El monto de la presente solicitud sobrepasa el limite establecido por la Institucion",'warning');
-                }
+                }*/
             }else{
-                redireccionA("../vista/vista_detalle.php");
+                redireccionA("../vista/vista_detalle.php?id_solicitud="+id+"&id_pedido="+id_pedido+"&id_usuario="+id_usuario);
             }
     })
 }
@@ -43,11 +43,15 @@ function rechazar() {
     fechaAccion = fecha();
     Swal.fire({
     input: 'textarea',
-    inputLabel: 'Justificacion de Rechazo de la Solicitud #:'+id,
-    inputPlaceholder: 'Ingrese los motivos por el cual se rechazo la solicitud de Pedido...',
+    inputLabel: 'Justificacion de Rechazo de la Solicitud #'+id,
+    inputPlaceholder: 'Ingrese aqui el justificativo...',
     inputAttributes: {'aria-label': 'Type your message here'},
     showCancelButton: true,
-    confirmButtonText: 'OK',
+    confirmButtonText: 'GUARDAR',
+    cancelButtonText: 'CANCELAR',
+    allowOutsideClick: false,
+    closeOnClickOutside: false,
+    allowEnterKey: true
     }).then((result) => {
         if (result.isConfirmed) {
             var det = Swal.getInput().value;
@@ -55,9 +59,12 @@ function rechazar() {
             if(verificar(det) && verificarPatron(det, /^[a-zA-Z][a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s?\.?\,?]+/)){
                 Swal.fire({
                     title: 'SOLICITUD RECHAZADA!',
-                    text: 'La solicitud ha sido rechazada por los siguientes motivos:' + det,
+                    text: 'La solicitud #'+id+' ha sido rechazada',
                     icon: 'success',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    closeOnClickOutside: false,
+                    allowEnterKey: true
                 }).then((result) =>{
                     if(result.isConfirmed){
                         redireccionA("../controladores/actualizarPedidoSolicitud.php?detalle="+detalle+"&id="+id+"&fecha="+fechaAccion);
@@ -67,7 +74,7 @@ function rechazar() {
                 mensajeError();
             }
         }else{
-            redireccionA("../vista/vista_detalle.php");
+            redireccionA("../vista/vista_detalle.php?id_solicitud="+id+"&id_pedido="+id_pedido+"&id_usuario="+id_usuario);
         }
     })
 }
@@ -77,7 +84,10 @@ function mensajeConfirmacion(id,fechaAccion,est){
         title: 'SOLICITUD ACEPTADA!',
         text: 'La solicitud ha sido aceptada',
         icon: 'success',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
     }).then((result) =>{
         if(result.isConfirmed){
             redireccionA("../controladores/actualizarPedidoSolicitud.php?id="+id+"&fecha="+fechaAccion+"&e="+est);
@@ -90,7 +100,10 @@ function mensajeAviso(titulo,texto,icono) {
         title: titulo,
         text: texto,
         icon: icono,
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
     }).then((result) =>{
         if(result.isConfirmed){
             texto = quitarEspacios(texto);
@@ -104,10 +117,13 @@ function mensajeError(){
         title: 'Ooppss...',
         text: 'Texto ingresado no valido, vuelva a intentarlo',
         icon: 'warning',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+        closeOnClickOutside: false,
+        allowEnterKey: true
     }).then((result) =>{
         if(result.isConfirmed){
-            redireccionA("../vista/vista_detalle.php");
+            redireccionA("../vista/vista_detalle.php?id_solicitud="+id+"&id_pedido="+id_pedido+"&id_usuario="+id_usuario);
         }
     })
 }

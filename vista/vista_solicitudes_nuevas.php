@@ -1,14 +1,107 @@
-
 <?php
+
+//header("Location:../ruta/rutas.php?ruta=mostrar&con=nueva");
+//$dir="../ruta/rutas.php?ruta=mostrar&con=nueva";
+//header('Location:'. $dir);
+
+/* echo "<script> 
+var str=decodeURIComponent('../ruta/rutas.php?ruta=mostrar&con=nueva');
+
+window.location=str;
+
+</script>";  */
+
+//echo "<meta http-equiv='refresh' content=1'; url=http://localhost/Sistema_cotizaciones/ruta/rutas.php?ruta=mostrar&con=nueva'>";
+
+
+/* echo"<script language='JavaScript'>
+  var pagina='../ruta/rutas.php?ruta=mostrar&con=nueva'
+  var timer=0;
+  var valor=1;
+  function redireccionar() {
+	  location.href=pagina
+  }
+  
+
+  
+  tiempo(valor);
+  
+  
+  function tiempo(val){
+	  var aux=val;
+	  for(var i=1;i<10;i++){
+	  timer=setInterval('redireccionar()', 3000*i);
+	  if(valor==1){
+		  clearInterval(timer);
+	  }
+	  aux=2;
+	  }
+  }
+  
+</script>"; */
+
+
+
+
+
+/* echo"<script language='JavaScript'>
+var c=0;
+(function(){
+  var contador=false;
+  var pagina='../ruta/rutas.php?ruta=mostrar&con=nueva'
+  var intervalo=0;
+  var time=0;
+  var redireccionar=function(){
+	  
+		  location.href=pagina;
+	  
+  
+  };
+
+  function random(min, max) {
+	  return Math.floor((Math.random() * (max - min + 1)) + min);
+  }
+
+  if(c===0){
+	  c++;
+
+	  time=500*random(1,3);
+	  
+	   intervalo=setInterval(redireccionar,time);
+	  
+	  
+  }
+  if(contador){
+	  intervalo=setInterval(redireccionar,10000);
+  }
+
+  
+}())
+clearInterval(intervalo);
+</script>"; 
+*/
+
+
+
+
+
+/* echo"<script>
+  setTimeout(function () {
+  // Redirigir con JavaScript
+  window.location.href= '../ruta/rutas.php?ruta=mostrar&con=nueva';
+}50000);
+</script>"; */
+
+
+//header("http://localhost/Sistema_cotizaciones/ruta/rutas.php?ruta=mostrar&con=nueva");
 $active = "active";
 
 	include_once("layouts/navegacionPendientes.php");
-	//include("../controladores/solicitudesController.php");
+	
 	
 	
 ?>	
 <div class="container-fluid">
-
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
@@ -24,6 +117,7 @@ $active = "active";
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
+											<th>id</th>
 											<th>Fecha</th>
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>
@@ -48,6 +142,7 @@ $active = "active";
 										?>
 										<tr align="center">
 											<td><?php echo $i+1?></td>
+											<td><?php echo($valor[$i]['id_solicitudes'])?></td>
 											<td><?php echo($valor[$i]['fecha'])?></td>
 											
 
@@ -72,7 +167,7 @@ $active = "active";
 											
 											<td>
 									
-												<a class="btn btn-info" target="_blank" href="../vista/vista_detalle.php">Ver Detalle</a>
+												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>&id_pedido=<?php echo($valor[$i]['id_pedido'])?>&id_usuario=<?php echo($valor[$i]['id_usuarios'])?>">Ver Detalle</a>
 											</td>
 
 											<!-- <td class="text-right">
@@ -122,6 +217,7 @@ $active = "active";
 	</div>
 </div>
 <?php
+
 include_once("layouts/footer.php");
 
 ?>

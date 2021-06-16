@@ -15,29 +15,41 @@ function obtenerValores(){
             aux = 0;
             if(esVacio(remitente) || !(verificarPatron(remitente,/^[a-zA-Z][a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s?]+$/))){
                 aux++;
-                Swal.fire('remitente','Datos ingresados no validos','warning');
+                Swal.fire('Remitente','Datos ingresados no validos','warning');
                 $("#remitente").val("");
                 $("#asunto").val(asunto);
                 $("#descripcion").val(descripcion);    
             }
             if(esVacio(asunto) || !(verificarPatron(asunto,/^[a-zA-Z][a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s?]+$/))){
                 aux++;
-                Swal.fire('asunto','Datos ingresados no validos','warning');
+                Swal.fire('Asunto','Datos ingresados no validos','warning');
                 $("#remitente").val(remitente);
                 $("#asunto").val("");
                 $("#descripcion").val(descripcion); 
             }
             if(esVacio(descripcion) || !(verificarPatron(descripcion,/^[a-zA-Z][a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s?\.?\,?]+$/))){
                 aux++;
-                Swal.fire('descripcion','Datos ingresados no validos','warning');
+                Swal.fire('Descripcion','Datos ingresados no validos','warning');
                 $("#remitente").val(remitente);
                 $("#asunto").val(asunto);
                 $("#descripcion").val(""); 
             }
             if(aux==0){
-                //console.log(remitente);
-                //console.log(asunto);
-                //console.log(descripcion);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 6000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+                Toast.fire({
+                    icon: 'info',
+                    title: 'ENVIANDO Correos... Por favor espere unos segundos'
+                })
                 $formulario.submit();
             }
         }

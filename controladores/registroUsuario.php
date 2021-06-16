@@ -20,11 +20,11 @@
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($nombres, "/^[a-zA-Z-ñáéíóú, ]*$/")){
-            $error = "* Nombre no Valido";
+            $error = "* Nombre(s) no Valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($apellidos, "/^[a-zA-Z-ñáéíóú, ]*$/")){
-            $error = "* Apellido no Valido";
+            $error = "* Apellido(s) no Valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($correo, "/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/")){
@@ -32,7 +32,7 @@
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(usuarioExiste($usuario)){
-            $error = "* El nombre de usuario ".$usuario. " ya existe";
+            $error = "* El nombre de usuario '".$usuario. "' ya existe";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($usuario, "/^[a-zA-Z]((\.|_|-)?[a-zA-Z0-9]+){5}$/D")){
