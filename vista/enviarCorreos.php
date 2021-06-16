@@ -83,7 +83,7 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud);
 
         //Archivos adjuntos
-        $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion".$idSolicitud.".pdf";
+        $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion.pdf";
 
         $mail->addAttachment($rutaArchivo);    //Optional name
         $mail->addAttachment("../archivos/cotizacionesIniciales/detallesItems.pdf");
