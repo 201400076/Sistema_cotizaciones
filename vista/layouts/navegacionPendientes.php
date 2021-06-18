@@ -166,6 +166,10 @@
                         <a href="../vista/empresasSolicitantes.php" id="cotizacion" name="cotizacion" style="color:skyblue; font-weight: bold;">Registrar Cotizacion</a>
                         </li>
 
+                        <li>
+                        <a href="../vista/seguimientoSolicitudes.php" id="cotizacion" name="cotizacion" style="color:skyblue; font-weight: bold;">Busqueda Solicitudes</a>
+                        </li>
+
                    
 <!-- 
                         <li>

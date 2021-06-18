@@ -4,12 +4,11 @@
 ?>
 <div class="container-fluid">
 
-
+<h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES RECHAZADAS</strong></h2>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="card-title">Solicitudes Rechazadas</h4>
 					
 					<div class="row">
 
