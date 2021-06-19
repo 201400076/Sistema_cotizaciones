@@ -88,11 +88,11 @@
         <div class="row">
                 <div class="col-lg-12">
                     <div class="table-responsive">        
-                        <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+                        <table id="tablaPersonas" class="table table-striped table-bordered table-condensed table-hover table-sm" style="width:100%">
                         <thead class="text-center">
                             <tr>
                                 <th># SOLICITUD</th>
-                                <th>FECHA</th>
+                                <!-- <th>FECHA</th> -->
                                 <th>TIPO DE SOLICITUD</th>
                                 <th>ESTADO</th>
                                 <th>ACCION</th>                                                              
@@ -130,7 +130,7 @@
                         while($registroSolicitudes=$querySolicitudes->fetch_array(MYSQLI_BOTH)){
                             echo "<tr>
                                     <td>".$registroSolicitudes['id_solicitudes']."</td>
-                                    <td>".$registroSolicitudes['fecha_evaluacion']."</td>
+                                    <!-- <td>".$registroSolicitudes['fecha_evaluacion']."</td> -->
                                     <td>Solicitud de Pedido</td>
                                     <td>".$registroSolicitudes['estado']."</td>
                                     <td><a class='btn btn-info' target='_top' href=".direccionar('pedido',$registroSolicitudes['estado']).">REVISAR</a></td>
@@ -139,7 +139,7 @@
                         while($registroCotizaciones=$queryCotizaciones->fetch_array(MYSQLI_BOTH)){
                             echo "<tr>
                                     <td>".$registroCotizaciones['id_solicitudes']."</td>
-                                    <td>".$registroCotizaciones['fecha_evaluacion']."</td>
+                                    <!-- <td>".$registroCotizaciones['fecha_evaluacion']."</td> -->
                                     <td>Solicitud de Cotizacion</td>
                                     <td>".$registroCotizaciones['estado_cotizacion']."</td>
                                     <td><a class='btn btn-info' target='_top' href=".direccionar('cotizacion',$registroCotizaciones['estado_cotizacion']).">REVISAR</a></td>

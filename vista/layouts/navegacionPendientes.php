@@ -148,18 +148,26 @@
                         
                         
                         <li >
-                            <a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva" style="color:skyblue; font-weight: bold">Solicitudes Pendientes</a>
+                            <a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva" style="color:skyblue; font-weight: bold">Sol Pendientes</a>
                         </li>
 
                         <li>
-                            <a href="../ruta/rutas.php?ruta=mostrar&con=aceptada" id="solicituAceptada" name="solicituAceptada" style="color:skyblue; font-weight: bold">Solicitudes Aceptadas</a>
+                            <a href="../ruta/rutas.php?ruta=mostrar&con=aceptada" id="solicituAceptada" name="solicituAceptada" style="color:skyblue; font-weight: bold">Sol Aceptadas</a>
                         </li>
                         <li>
-                            <a href="../ruta/rutas.php?ruta=mostrar&con=rechazada" id="solicituRechazada" name="solicituRechazada" style="color:skyblue; font-weight: bold;">Solicitudes Rechazadas</a>
+                            <a href="../ruta/rutas.php?ruta=mostrar&con=rechazada" id="solicituRechazada" name="solicituRechazada" style="color:skyblue; font-weight: bold;">Sol Rechazadas</a>
                         </li>
 
                         <li>
-                            <a href="../ruta/rutas.php?ruta=mostrar&con=cotizando" id="solicituCotizando" name="solicituCotizando" style="color:skyblue; font-weight: bold;">Solicitudes en Cotizacion</a>
+                            <a href="../ruta/rutas.php?ruta=mostrar&con=cotizando" id="solicituCotizando" name="solicituCotizando" style="color:blue; font-weight: bold;">En Cotizacion</a>
+                        </li>
+
+                        <li>
+                            <a href="../vista/vista_cotizaciones_aceptadas.php" id="cotizacionAceptada" name="cotizacionAceptada" style="color:blue; font-weight: bold;">Cot Aceptadas</a>
+                        </li>
+
+                        <li>
+                            <a href="../vista/vista_cotizaciones_rechazadas.php" id="cotizacionRechazada" name="cotizacionRechazada" style="color:blue; font-weight: bold;">Cot Rechazadas</a>
                         </li>
 
                         <li>
