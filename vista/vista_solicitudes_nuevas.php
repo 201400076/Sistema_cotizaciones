@@ -102,11 +102,11 @@ $active = "active";
 	
 ?>	
 <div class="container-fluid">
+<h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES PENDIENTES</strong></h2>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="card-title">Solicitudes Pendientes</h4>
 					
 					<div class="row">
 
@@ -117,7 +117,7 @@ $active = "active";
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
-											<th>id</th>
+											<th>Id</th>
 											<th>Fecha</th>
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>

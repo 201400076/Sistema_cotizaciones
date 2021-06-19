@@ -4,11 +4,11 @@ $active = "";
 
 ?>
 <div class="container-fluid">
+<h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES ACEPTADAS</strong></h2>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="card-title">Solicitudes Aceptadas</h4>
 					<div class="row">
 						<div id="resultados" class="col-sm-12 "></div>
 						<div class="outer_div" style="width:100%">
@@ -17,6 +17,7 @@ $active = "";
 									<tbody>
 										<tr align="center"class="warning">
 											<th>#</th>
+											<th>Id</th>
 											<th>Fecha-Recepcion</th>
 											<th>Fecha-Aceptado</th>
 											<th>Solicitante</th>
@@ -41,6 +42,8 @@ $active = "";
 										?>
 										<tr align="center">
 											<td><?php echo $i+1?></td>
+
+											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 
 											<td><?php echo $valor[$i]['fecha']?></td>
 
