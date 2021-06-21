@@ -42,7 +42,7 @@
             allowEnterKey: true
             }).then((result) =>{
                 if(result.isConfirmed){
-                    window.location.href="../ruta/rutas.php?ruta=mostrar&con=aceptada";
+                    window.location.href="../ruta/rutas.php?ruta=mostrar&con=cotizando";
                 }
             })
         }

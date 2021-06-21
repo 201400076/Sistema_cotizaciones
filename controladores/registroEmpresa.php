@@ -8,56 +8,60 @@
 
     if(!empty($_POST)){
 
-        $nombres = $_POST['nombres'];
-        $apellidos = $_POST['apellidos'];
+        $nombre = $_POST['nombre'];
         $correo = $_POST['correo'];
-        $usuario = $_POST['usuario'];
-        $password = $_POST['password'];
-        $password_con = $_POST['password_con'];
+        $nit = $_POST['nit'];
+        $telefono = $_POST['telefono'];
+        $direccion = $_POST['direccion'];
+        $rubro = $_POST['rubro'];
 
-        if(empty($nombres) || empty($apellidos) || empty($correo) || empty($usuario) || empty($password) || empty($password_con)){
+        //echo "Nombre: /".$nombre."/".strlen(trim($nombre))."/Correo: ".$correo." /Nit: ".$nit." /Telefono: ".$telefono." /Direccion: ".$direccion." /Rubro: ".$rubro;
+        
+        
+        if(empty($nombre) || empty($correo) || empty($nit) || empty($telefono) || empty($direccion) || empty($rubro)){
             $error = "* Todos los campos son obligatorios";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
-        }else if(!validarPatron($nombres, "/^[a-zA-Z-ñáéíóú, ]*$/")){
-            $error = "* Nombre(s) no Valido";
-            echo "<p class='error'>".$error."</p>";
-            $errors[] = $error;
-        }else if(!validarPatron($apellidos, "/^[a-zA-Z-ñáéíóú, ]*$/")){
-            $error = "* Apellido(s) no Valido";
+
+        }else if(!validarPatron($nombre, "/^[a-zA-Z]([a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s]+){5}$/")){ 
+            $error = "* Nombre no Valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($correo, "/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/")){
             $error = "* Correo no Valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
-        }else if(usuarioExiste($usuario)){
-            $error = "* El nombre de usuario '".$usuario. "' ya existe";
+        }else if(!validarPatron($nit, "/^[1-9]([0-9]{5,15})$/")){
+            $error = "* NIT no Valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
-        }else if(!validarPatron($usuario, "/^[a-zA-Z]((\.|_|-)?[a-zA-Z0-9]+){5}$/D")){
-            $error = "* Usuario no Valido";
+        }else if(!validarPatron($telefono, "/^[23467]([0-9]{6,8})$/")){
+            $error = "* Telefono no Valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
-        }else if(!validarPatron($password, "/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/")){
-            $error = "* Contraseña no Valida";
+        }else if(!validarPatron($direccion, "/^[a-zA-Z]([a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s#?]+){5}$/")){ 
+            $error = "* Direccion no Valida";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
-        }else if (!validarPassword($password, $password_con)){
-            $error = "* Las contraseñas no coinciden";
+        }else if(!validarPatron($rubro, "/^[a-zA-Z]([a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s]+){5}$/")){ 
+            $error = "* Rubro no Valido";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(correoExiste($correo)){
+            $error = "* El correo ya fue registrado por otra empresa";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }
 
+        echo '<script src="../librerias/js/sweetalert2.all.min.js"></script><script src="../librerias/js/jquery-3.6.0.js"></script>';
+        
         if(count($errors) == 0){ //no errores
-            $pass_hash = hashPassword($password);
-
-            $registro = registraUsuario($nombres, $apellidos, $correo, $usuario, $pass_hash);
+            $registro = registraEmpresa($nombre, $correo, $nit, $telefono, $direccion, $rubro);
             if($registro > 0){
-                echo '<script src="../librerias/js/sweetalert2.all.min.js"></script><script src="../librerias/js/jquery-3.6.0.js"></script>';
+
                 echo '<script language="javascript">Swal.fire({
-                    title: "USUARIO REGISTRADO!",
-                    text: "El Usuario ha sido registrado con exito",
+                    title: "EMPRESA REGISTRADA!",
+                    text: "La Empresa ha sido registrada con exito",
                     icon: "success",
                     confirmButtonText: "OK",
                     allowOutsideClick: false,
@@ -98,14 +102,6 @@
         }
     }
 
-    function validarPassword($password1, $password2) {
-        if(strcmp($password1, $password2) !== 0){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
     function minMax($min, $max, $valor){
         if(strlen(trim($valor)) < $min){
             return true;
@@ -116,11 +112,24 @@
         }
     }
 
-    function usuarioExiste($usuario){
+    function registraEmpresa($nombre, $correo, $nit, $telefono, $direccion, $rubro){
         global $estadoconexion;
 
-        $stmt = $estadoconexion->prepare("SELECT id_usuarios FROM usuarios WHERE usuario = ? LIMIT 1");
-        $stmt->bind_param("s", $usuario);
+        $stmt = $estadoconexion->prepare("INSERT INTO empresas (nombre_empresa, correo_empresa, rubro, nit, telefono, direccion) VALUES(?,?,?,?,?,?)");
+        $stmt->bind_param("sssiss", $nombre, $correo, $rubro, $nit, $telefono, $direccion);
+
+        if($stmt->execute()){
+            return $estadoconexion->insert_id;
+        }else{
+            return 0;
+        }
+    }
+
+    function correoExiste($correo){
+        global $estadoconexion;
+
+        $stmt = $estadoconexion->prepare("SELECT correo_empresa FROM empresas WHERE correo_empresa = ? LIMIT 1");
+        $stmt->bind_param("s", $correo);
         $stmt->execute();
         $stmt->store_result();
         $num = $stmt->num_rows;
@@ -130,24 +139,6 @@
             return true;
         }else{
             return false;
-        }
-    }
-
-    function hashPassword($pass){
-        $hash = password_hash($pass, PASSWORD_DEFAULT);
-        return $hash;
-    }
-
-    function registraUsuario($nom, $apell, $corr, $usu, $pass){
-        global $estadoconexion;
-
-        $stmt = $estadoconexion->prepare("INSERT INTO usuarios (nombres, apellidos, correo, usuario, password) VALUES(?,?,?,?,?)");
-        $stmt->bind_param("sssss", $nom, $apell, $corr, $usu, $pass);
-
-        if($stmt->execute()){
-            return $estadoconexion->insert_id;
-        }else{
-            return 0;
         }
     }
 
@@ -161,5 +152,4 @@
             echo "</div>";
         }
     }
-
 ?>
