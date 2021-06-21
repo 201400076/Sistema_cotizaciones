@@ -87,7 +87,16 @@
                     <label for="rubro">Rubro:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="rubro" name="rubro" value="<?php echo isset($_POST['rubro']) ? $_POST['rubro'] : '';?>" required>
+                    <input list="rubro" name="rubro" style="width: 100%;padding: 12px;border-radius: 10px;" value="<?php echo isset($_POST['rubro']) ? $_POST['rubro']:'';?>" placeholder="Elija el rubro de su empresa" required>
+
+                    <datalist id="rubro" >
+                        <option value="Ferreteria">
+                        <option value="Imprenta">
+                        <option value="Electronica">
+                        <option value="Telecomunicaciones">
+                        <option value="Venta de Comida">
+                    </datalist>
+                    <!--<input type="text" id="rubro" name="rubro" value="<?php //echo isset($_POST['rubro']) ? $_POST['rubro'] : '';?>" required>-->
                 </div>
             </div>
 
