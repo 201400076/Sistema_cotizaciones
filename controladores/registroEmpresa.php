@@ -14,9 +14,6 @@
         $telefono = $_POST['telefono'];
         $direccion = $_POST['direccion'];
         $rubro = $_POST['rubro'];
-
-        //echo "Nombre: /".$nombre."/".strlen(trim($nombre))."/Correo: ".$correo." /Nit: ".$nit." /Telefono: ".$telefono." /Direccion: ".$direccion." /Rubro: ".$rubro;
-        
         
         if(empty($nombre) || empty($correo) || empty($nit) || empty($telefono) || empty($direccion) || empty($rubro)){
             $error = "* Todos los campos son obligatorios";

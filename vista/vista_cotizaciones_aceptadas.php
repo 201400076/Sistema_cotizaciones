@@ -41,48 +41,16 @@ $active = "";
 											<th># Cotizaciones</th>
 											<th>Estado</th>
 											<th>Accion</th>
-											
-											
-											<!-- <th class="text-right">Acciones</th> -->
-
 										</tr>
 
 										<?php
-                                            function direccionar($tipo, $estado){
-                                                $res = '';
-                                                if($tipo == 'pedido'){
-                                                    if($estado == 'aceptada'){
-                                                        $res = '../ruta/rutas.php?ruta=mostrar&con=aceptada';
-                                                    }else if($estado == 'rechazada'){
-                                                        $res = '../ruta/rutas.php?ruta=mostrar&con=rechazada';
-                                                    }else if($estado == 'pendiente'){
-                                                        $res ='../ruta/rutas.php?ruta=mostrar&con=nueva';
-                                                    }  
-                                                }else if($tipo == 'cotizacion'){
-                                                    if($estado == 'aceptada'){
-                                                        //$res = '../ruta/rutas.php?ruta=mostrar&con=aceptada';
-                                                    }else if($estado == 'rechazada'){
-                                                        //$res = '../ruta/rutas.php?ruta=mostrar&con=rechazada';
-                                                    }else if($estado == 'cotizando'){
-                                                        $res = '../ruta/rutas.php?ruta=mostrar&con=cotizando';
-                                                    }
-                                                }  
-                                                return $res;    
-                                            }
-
-                                            function obtenerUnidad($solicitud){
-                                                //$unidadGasto = "SELECT S.nombre_gasto FROM solicitudes As S, pedido As P, usuarioconrol As U, unidad_gasto UG WHERE ".$solicitud."=S.id_solicitudes AND S.id_solicitudes" 
-                                                //$querySolicitudes=$estadoConexion->query($solicitudes);
-                                            }
-
                                             while($registroCotizaciones=$queryCotizaciones->fetch_array(MYSQLI_BOTH)){
                                                 echo "<tr>
                                                         <td>".$registroCotizaciones['id_solicitud_cotizacion']."</td>
                                                         <td>".$registroCotizaciones['id_solicitudes']."</td>
                                                         <td>".$registroCotizaciones['nombre_gasto']."</td>";
                                                         $idSol = $registroCotizaciones['id_solicitudes'];
-                                                echo    "<td>".$registroCotizaciones['nombre_gasto']."</td>
-                                                        <td>".$registroCotizaciones['fecha_evaluacion']."</td>
+                                                echo    "<td>".$registroCotizaciones['fecha_evaluacion']."</td>
                                                         <td>".$registroCotizaciones['cantidad_cotizaciones']."</td>
 														<td><span class='label label-success'>".$registroCotizaciones['estado_cotizacion']."</span></td>
                                                         <td><a class='btn btn-info' target='_blank' href='../vista/informeCotizaciones.php?id=$idSol&tipo=a'>Ver Informe</a></td>
