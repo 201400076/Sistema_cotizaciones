@@ -18,11 +18,12 @@ $active = "";
 										<tr align="center"class="warning">
 											<th>#</th>
 											<th>Id</th>
-											<th>Fecha-Recepcion</th>
-											<th>Fecha-Aceptado</th>
+											<th>Fecha-Licitacion</th>
+											<!-- <th>Fecha-Aceptado</th> -->
 											<th>Solicitante</th>
 											<th>Unidad</th>
 											<th>Estado</th>
+											<th># Cotizaciones</th>
 											<th>Accion</th>
 
 										</tr>
@@ -39,23 +40,21 @@ $active = "";
 
 											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 
-											<td><?php echo $valor[$i]['fecha']?></td>
+											<td><?php echo $valor[$i]['fecha_licitacion']?></td>
 
-											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
+											<!--<td><?php //echo $valor[$i]['fecha_evaluacion']?></td>-->
 
 											<td><?php echo $valor[$i]['nombres']?></td>
 
 											<td><?php echo $valor[$i]['nombre_gasto']?></td>
 
-											<td>
-												<span class="label label-info"><?php echo $valor[$i]['estado']?></span>
+											<td><span class="label label-info"><?php echo $valor[$i]['estado_cotizacion']?></span></td>
 
-											</td>
+											<td><?php echo $valor[$i]['cantidad_cotizaciones']?></td>
 
 											<td>
-									
-												<!-- <a class="btn btn-info" target="_top" href="../vista/vista_detalle.php?id_solicitud=<?php //echo($valor[$i]['id_solicitudes'])?>&id_pedido=<?php //echo($valor[$i]['id_pedido'])?>&id_usuario=<?php echo($valor[$i]['id_usuarios'])?>">Ver Detalle</a> -->
-												<a class="btn btn-info" target="_top">EVALUAR</a>
+												<a class="btn btn-info" target="_top" href="../vista/vista_tablasComparativas.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>">Ver Cotizaciones</a>
+												<!-- <a class="btn btn-info" target="_top">EVALUAR</a> -->
 											</td>
 
 										</tr>

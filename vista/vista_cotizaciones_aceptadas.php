@@ -5,8 +5,15 @@ $active = "";
     require_once('../configuraciones/conexion.php');
     $conn = new Conexion();
     $estadoConexion = $conn->getConn();
-    $cotizaciones = "SELECT * FROM solicitudes_cotizaciones WHERE estado_cotizacion='aceptada'";
-    $queryCotizaciones=$estadoConexion->query($cotizaciones);
+    //$cotizaciones = "SELECT * FROM solicitudes_cotizaciones WHERE solicitudes_cotizaciones.estado_cotizacion='aceptada'";
+    $cotizaciones = " SELECT * FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
+																															AND pedido.id_pedido=solicitudes.id_pedido
+																															AND usuarios.id_usuarios=pedido.id_usuarios
+																															AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+																															AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
+																															AND solicitudes_cotizaciones.estado_cotizacion='aceptada'
+																															order by solicitudes_cotizaciones.fecha_evaluacion desc";
+	$queryCotizaciones=$estadoConexion->query($cotizaciones);
 ?>
 <style>
     td{
@@ -29,53 +36,24 @@ $active = "";
 											<!-- <th>#</th> -->
 											<th>Id Cotizacion</th>
                                             <th>Id Solicitud</th>
-                                            <th>Estado</th>
+                                            <th>Unidad</th>
 											<th>Fecha-Evaluacion</th>
-											<th>Detalle</th>
 											<th># Cotizaciones</th>
-											
-											
-											<!-- <th class="text-right">Acciones</th> -->
-
+											<th>Estado</th>
+											<th>Accion</th>
 										</tr>
 
 										<?php
-                                            function direccionar($tipo, $estado){
-                                                $res = '';
-                                                if($tipo == 'pedido'){
-                                                    if($estado == 'aceptada'){
-                                                        $res = '../ruta/rutas.php?ruta=mostrar&con=aceptada';
-                                                    }else if($estado == 'rechazada'){
-                                                        $res = '../ruta/rutas.php?ruta=mostrar&con=rechazada';
-                                                    }else if($estado == 'pendiente'){
-                                                        $res ='../ruta/rutas.php?ruta=mostrar&con=nueva';
-                                                    }  
-                                                }else if($tipo == 'cotizacion'){
-                                                    if($estado == 'aceptada'){
-                                                        //$res = '../ruta/rutas.php?ruta=mostrar&con=aceptada';
-                                                    }else if($estado == 'rechazada'){
-                                                        //$res = '../ruta/rutas.php?ruta=mostrar&con=rechazada';
-                                                    }else if($estado == 'cotizando'){
-                                                        $res = '../ruta/rutas.php?ruta=mostrar&con=cotizando';
-                                                    }
-                                                }  
-                                                return $res;    
-                                            }
-
-                                            function obtenerUnidad($solicitud){
-                                                //$unidadGasto = "SELECT S.nombre_gasto FROM solicitudes As S, pedido As P, usuarioconrol As U, unidad_gasto UG WHERE ".$solicitud."=S.id_solicitudes AND S.id_solicitudes" 
-                                                //$querySolicitudes=$estadoConexion->query($solicitudes);
-                                            }
-
                                             while($registroCotizaciones=$queryCotizaciones->fetch_array(MYSQLI_BOTH)){
                                                 echo "<tr>
                                                         <td>".$registroCotizaciones['id_solicitud_cotizacion']."</td>
                                                         <td>".$registroCotizaciones['id_solicitudes']."</td>
-                                                        <td>".$registroCotizaciones['estado_cotizacion']."</td>
-                                                        <td>".$registroCotizaciones['fecha_evaluacion']."</td>
-                                                        <td>".$registroCotizaciones['detalle']."</td>
+                                                        <td>".$registroCotizaciones['nombre_gasto']."</td>";
+                                                        $idSol = $registroCotizaciones['id_solicitudes'];
+                                                echo    "<td>".$registroCotizaciones['fecha_evaluacion']."</td>
                                                         <td>".$registroCotizaciones['cantidad_cotizaciones']."</td>
-                                                        <td><a class='btn btn-info' target='_top' href=".direccionar('cotizacion',$registroCotizaciones['estado_cotizacion']).">Ver Informe</a></td>
+														<td><span class='label label-success'>".$registroCotizaciones['estado_cotizacion']."</span></td>
+                                                        <td><a class='btn btn-info' target='_blank' href='../vista/informeCotizaciones.php?id=$idSol&tipo=a'>Ver Informe</a></td>
                                                     </tr>";
                                             } 
                                             ?>

@@ -112,19 +112,14 @@
                                 }  
                             }else if($tipo == 'cotizacion'){
                                 if($estado == 'aceptada'){
-                                    //$res = '../ruta/rutas.php?ruta=mostrar&con=aceptada';
+                                    $res = '../vista/vista_cotizaciones_aceptadas.php';
                                 }else if($estado == 'rechazada'){
-                                    //$res = '../ruta/rutas.php?ruta=mostrar&con=rechazada';
+                                    $res = '../vista/vista_cotizaciones_rechazadas.php';
                                 }else if($estado == 'cotizando'){
                                     $res = '../ruta/rutas.php?ruta=mostrar&con=cotizando';
                                 }
                             }  
                             return $res;    
-                        }
-
-                        function obtenerUnidad($solicitud){
-                            //$unidadGasto = "SELECT S.nombre_gasto FROM solicitudes As S, pedido As P, usuarioconrol As U, unidad_gasto UG WHERE ".$solicitud."=S.id_solicitudes AND S.id_solicitudes" 
-                            //$querySolicitudes=$estadoConexion->query($solicitudes);
                         }
 
                         while($registroSolicitudes=$querySolicitudes->fetch_array(MYSQLI_BOTH)){

@@ -44,7 +44,7 @@ include_once("layouts/navegacion.php");
 					<div class="col-md-12">
 						<div class="text-center">
 							<button type="submit" class="btn btn-info">
-								Actualizar
+							ASIGNAR
 							</button>
 						</div>
 					</div>

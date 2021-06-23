@@ -64,12 +64,14 @@ class SolicitudesController{
     static function mostrar_cotizando($condicion){
 
         $solicitud =new Solicitud();
-		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto","pedido.id_pedido=solicitudes.id_pedido
+		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones","solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
+                                                            AND pedido.id_pedido=solicitudes.id_pedido
                                                             AND usuarios.id_usuarios=pedido.id_usuarios
                                                             AND usuarios.id_usuarios=usuarioconrol.id_usuarios
                                                             AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
-                                                            AND estado='cotizando'
-                                                            order by fecha desc");
+                                                            AND solicitudes_cotizaciones.estado_cotizacion='cotizando'
+                                                            order by solicitudes_cotizaciones.fecha_licitacion desc");
+                                                        
        $active="active";
        // echo json_encode($dato);
         require_once("../vista/vista_solicitudes_enCotizacion.php");
