@@ -30,13 +30,29 @@
             
             $stmt->bind_param("sss",$estado,$fecha,$detalle);
                 if ($stmt->execute()) {
+                    registrarSolicitudCotizacion($id_solicitud, $fecha, $codigoEstado);
                     redireccion();
                 } else {
                     echo 0;
             }
+            //registrarCotizacion($id_solicitud, $fecha, $codigoEstado);
         //}else{
             //echo("no cumple el patron");
         //}
+    }
+
+    function registrarSolicitudCotizacion($idSolicitud, $fechaInicio, $dias){
+        $fechaFin = date("Y-m-d",strtotime($fechaInicio."+ ".$dias." days")); 
+        //echo $fechaFin;
+        global $estadoconexion;
+        $estado = 'cotizando';
+            $stmt = $estadoconexion->prepare("INSERT INTO solicitudes_cotizaciones (id_solicitudes, fecha_ini_licitacion, fecha_fin_licitacion, estado_cotizacion) VALUES(?,?,?,?)");
+            $stmt->bind_param("isss", $idSolicitud, $fechaInicio, $fechaFin, $estado);
+            if($stmt->execute()){
+                return $estadoconexion->insert_id;
+            }else{
+                return 0;
+            }
     }
 
     function validarPatron($str, $patron){

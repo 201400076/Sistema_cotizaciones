@@ -55,6 +55,16 @@
             background-color: #055B91;
             color: white;
         }
+
+        [input=date]:invalid+span:after {
+            content: '✖';
+            padding-left: 5px;
+        }
+
+        [input=date]:valid+span:after {
+            content: '✓';
+            padding-left: 5px;
+        }
     </style>  
 
 </head>
@@ -98,7 +108,7 @@
                     <textarea name="descripcion" id="descripcion" style="width: 70%;"  cols="50%" rows="3" placeholder="Escriba el cuerpo del correo..." required></textarea> 
                 </div>
             </div>
-
+            <hr>
         <div class="row">
             <div class="col-lg-12">
                 <h3 style="text-align: center;">Lista de Empresas</h3>
@@ -141,7 +151,8 @@
     </div>    
 
     <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>  
-    </form>
+    </form>                      
+
     <div class="row">
         <div class="col-lg-12" style="text-align: center;">
             <button type="submit" name="enviar" class="btn btn-success" value="Marcar empresa">
