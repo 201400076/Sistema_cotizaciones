@@ -3,7 +3,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require '../configuraciones/conexion.php';
-
 require '../librerias/phpMailer/Exception.php';
 require '../librerias/phpMailer/PHPMailer.php';
 require '../librerias/phpMailer/SMTP.php';
@@ -12,7 +11,6 @@ $conn = new Conexion();
 $estadoconexion = $conn->getConn();
 
 if(!empty($_POST)){
-    //Se necesita el id de la solicitud
     $idSolicitud = $_GET["idSolicitud"];
 
     if(empty($_POST["marcar"])){
@@ -23,13 +21,8 @@ if(!empty($_POST)){
         $descripcion = $_POST["descripcion"];
         $listaCorreos = obtenerCorreos();
         $listaIds = obtenerIds();
-        /*foreach($listaCorreos as $elemento){
-            echo $elemento;
-        }
-        foreach($listaIds as $elementos){
-            echo $elementos;
-        }*/
         modificarEstado($idSolicitud);
+        $registro = registrarCotizacion($idSolicitud);
         foreach($_POST["marcar"] as $correo_marcado){
             $correo = trim($correo_marcado, '/');
             $idCorreoActual = obtenerIdEmpresa($correo, $listaCorreos, $listaIds);
@@ -41,10 +34,23 @@ if(!empty($_POST)){
 
 function modificarEstado($idSolicitud){
     global $estadoconexion;
-            $stmt = $estadoconexion->prepare("UPDATE solicitudes SET estado=? WHERE id_solicitudes=".$idSolicitud);
-            $estado = 'cotizando';
-            $stmt->bind_param("s",$estado);
-            $stmt->execute();
+        $stmt = $estadoconexion->prepare("UPDATE solicitudes SET estado=? WHERE id_solicitudes=".$idSolicitud);
+        $estado = 'cotizando';
+        $stmt->bind_param("s",$estado);
+        $stmt->execute();
+}
+
+function registrarCotizacion($idSolicitud){
+    global $estadoconexion;
+    $fecha = date("Y-m-d");
+    $estado = 'cotizando';
+        $stmt = $estadoconexion->prepare("INSERT INTO solicitudes_cotizaciones (id_solicitudes, fecha_licitacion, estado_cotizacion) VALUES(?,?,?)");
+        $stmt->bind_param("iss", $idSolicitud, $fecha, $estado);
+        if($stmt->execute()){
+            return $estadoconexion->insert_id;
+        }else{
+            return 0;
+        }
 }
 
 function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActual,$idSolicitud){
@@ -71,7 +77,6 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         //Destino
         $mail->setFrom('marcoescalera2017@gmail.com', $remitente);    //Configurar el emisario(origen)
 
-            
         $mail->addAddress($correo); //<--Enviar a este correo
         $user = generarUsername();
         $pass = generarPassword();
@@ -83,7 +88,7 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud);
 
         //Archivos adjuntos
-        $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion".$idSolicitud.".pdf";
+        $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion.pdf";
 
         $mail->addAttachment($rutaArchivo);    //Optional name
         $mail->addAttachment("../archivos/cotizacionesIniciales/detallesItems.pdf");
@@ -128,10 +133,8 @@ function generarPassword(){
 function registraUsuarioTemporal($user, $password, $idEmpresa, $estado, $idSolicitud){
     global $estadoconexion;
     $pass = hashPassword($password);
-    //echo $idEmpresa;
     $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes) VALUES(?,?,?,?,?)");
     $stmt->bind_param("ssiii", $user, $pass, $idEmpresa, $estado, $idSolicitud);
-
     if($stmt->execute()){
         return $estadoconexion->insert_id;
     }else{
@@ -142,13 +145,10 @@ function registraUsuarioTemporal($user, $password, $idEmpresa, $estado, $idSolic
 function obtenerIds(){
     global $estadoconexion;
     $resultado = $estadoconexion->query("SELECT id_empresa FROM empresas");
-    //$resultado1 = $estadoconexion->prepare("SELECT correo_empresa FROM empresas");
     if (!$resultado) {
         echo 'No se pudo ejecutar la consulta: ' . $estadoconexion->mysql_error();
         exit;
     }
-    //$fila=$resultado->fetch_array(MYSQLI_BOTH);
-    //$fila = $estadoconexion->fetch_row($resultado);
     $fila = array();
     $i=0;
     foreach($resultado as $elemento){
@@ -165,8 +165,6 @@ function obtenerCorreos(){
         echo 'No se pudo ejecutar la consulta: ' . $estadoconexion->mysql_error();
         exit;
     }
-    //$fila=$resultado1->fetch_array(MYSQLI_BOTH);
-    //$fila = $estadoconexion->fetch_row($resultado);
     $fila = [];
     $i=0;
     foreach($resultado1 as $elemento){
