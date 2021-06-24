@@ -27,6 +27,7 @@ $active = "";
 											<th>Unidad</th>
 											<th>Estado</th>
 											<th>Accion</th>
+											<th>Cotizacion Pdf</th>
 											
 											
 											<!-- <th class="text-right">Acciones</th> -->
@@ -73,6 +74,12 @@ $active = "";
 											<td>
 									
 												<a class="btn btn-info" target="_top" href="../vista/formularioEnviarCotizaciones.php?idSolicitud=<?php echo $valor[$i]['id_solicitudes']?>">Cotizar</a>
+											</td>
+
+											<td>
+												<a style="padding: 0; margin-top: 0;" target="_blank" href="../archivos/cotizacionesIniciales/solicitudCotizacion<?php echo $valor[$i]['id_solicitudes']?>.pdf">
+													<input style="padding: 0; margin-top: 0;" type="image" src="../recursos/imagenes/iconoImprimir.png" name="imprimir" alt="imprimir" width="40px"/>
+												</a>
 											</td>
 											
 
