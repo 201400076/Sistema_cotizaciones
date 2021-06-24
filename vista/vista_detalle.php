@@ -350,15 +350,6 @@
     </div>
 </div>
 
-
-<div>
-    <label for="fecInicio" style="width: 100%">Fecha Inicio Cotizaciones     : <strong style="font-size: 20px; color: black;"><?php echo " ' ".$fechaActual." ' "?></strong></label>  
-</div>
-<div>
-    <label for="fechaFin">Fecha limite Cotizaciones    : </label>
-    <input type="date" id="fechaFin" name="fechaFin" min="<?php echo $fechaActual;?>" max="<?php echo $fechaLimite;?>" pattern="[0-2]{4}-[0-9]{2}-[0-9]{2}" required>
-</div>
-
 <script>
     var id = '<?php echo $_GET['id_solicitud']?>';
     var id_pedido = '<?php echo $_GET['id_pedido']?>';
