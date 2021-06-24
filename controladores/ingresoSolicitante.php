@@ -5,8 +5,7 @@ $password =(isset($_POST['password'])) ? $_POST['password'] : '';
 include_once '../modelo/conexionPablo.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
-$consulta = "SELECT * FROM usuario_cotizador";
-//$consulta = "SELECT id, nombre, pais, edad FROM personas ORDER BY id DESC LIMIT 1";
+$consulta = "SELECT * FROM usuarioconrol r, usuarios u WHERE r.id_usuarios=u.id_usuarios";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
@@ -14,10 +13,12 @@ $fila=null;
 $exite=false;
 
 foreach($data as $d){
-    if($usuario==$d['user_cotizador'] && password_verify($password,$d['password_cotizador'])){
-    //if($usuario==$d['user_cotizador'] && $password==$d['password_cotizador']){
+    //if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
+    if($usuario==$d['usuario'] && $password==$d['password']){
     $exite=true;
         $fila=$d;        
+        session_start();
+        $_SESSION["usuario"]=$d['id_usuarios'];
         break;
     }
 }

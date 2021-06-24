@@ -1,8 +1,8 @@
-$('#ingresar').on('click', function(){
+$('#ingresar').on('click', function(){    
     usuario = $("#usuario").val();
     password = $("#password").val();  
     $.ajax({        
-        url:"../controladores/ingresoSolicitante.php",
+        url:"controladores/ingresoSolicitante.php",
         type: "POST",
         dataType: "json",
         data: {usuario:usuario, password:password},
@@ -10,10 +10,11 @@ $('#ingresar').on('click', function(){
             if(fila!=null){  
                 console.log(fila);
                 console.log(!fila['estado_cotizador']);
-                if(fila['estado_cotizador']){
-                    redireccionA("../vista/registroCotizacion.php?usuario="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']);
-                }else{
-                    alert("La empresa ya registro su cotizacion");
+                if(fila['id_unidad']!=null){
+                    alert("unidad de administrativa");
+                    //redireccionA("vista/registroCotizacion.php?usuario="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']);
+                }else if(fila['id_gasto']!=null){
+                    redireccionA("vista/solicitudes_vista.php");                    
                 }                              
             }else{
                 alert("Se debe ingresar los datos que se le proporcionó en el correo electrónico");
