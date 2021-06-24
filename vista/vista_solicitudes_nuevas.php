@@ -1,5 +1,5 @@
 <?php
-
+//https://trello.com/b/OePiF9xp/proyecto-cotizaiones
 //header("Location:../ruta/rutas.php?ruta=mostrar&con=nueva");
 //$dir="../ruta/rutas.php?ruta=mostrar&con=nueva";
 //header('Location:'. $dir);
