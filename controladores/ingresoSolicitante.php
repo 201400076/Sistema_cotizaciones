@@ -16,9 +16,13 @@ foreach($data as $d){
     //if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
     if($usuario==$d['usuario'] && $password==$d['password']){
     $exite=true;
-        $fila=$d;        
+        $fila=$d;   
         session_start();
-        $_SESSION["usuario"]=$d['id_usuarios'];
+        if($d['id_gasto']!=null){
+            $_SESSION["usuario"]=$d['id_usuarios'];
+        }elseif($d['id_unidad']!=null){
+            $_SESSION["administrador"]=$d['id_usuarios'];
+        }
         break;
     }
 }

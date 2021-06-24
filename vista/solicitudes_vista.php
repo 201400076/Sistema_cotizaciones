@@ -160,8 +160,7 @@
      <script>
         var id_usu=<?php echo $id_pendientes?>
      </script>
-    <script type="text/javascript" src="../controladores/controladorSolicitudPedido.js"></script>  
-    
+        <script type="text/javascript" src="../controladores/controladorSolicitudPedido.js"></script>  
     </div>
 
 </div>

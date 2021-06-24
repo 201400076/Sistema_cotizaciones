@@ -119,5 +119,8 @@ $pdf = new PDF();
 $pdf->pagina = 0;
 $pdf->AliasNbPages(); //Permitir el conteo de la cantidad de páginas existentes {nb}
 $pdf->Body(); //Llamada a la función Body para generar el PDF
+$pdf->setX(10);
+$pdf->setX(50);
+$pdf->Cell(1,50,utf8_decode('Solicitud N°:'),1,0,'R');
 $pdf->Output('ReporteEjemplo_TuCafeJava_'.date("d_m_Y_H_i_s"), 'I'); //El primer parámetro es para colocar el nombre del archivo al momento de ser descargado y el segundo parámetro es para abrir el archivo en el navegador con la opción para poder ser descargado
 ?>

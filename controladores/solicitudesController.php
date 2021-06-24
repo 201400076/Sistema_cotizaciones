@@ -70,7 +70,7 @@ class SolicitudesController{
                                                             AND usuarios.id_usuarios=usuarioconrol.id_usuarios
                                                             AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
                                                             AND solicitudes_cotizaciones.estado_cotizacion='cotizando'
-                                                            order by solicitudes_cotizaciones.fecha_licitacion desc");
+                                                            order by solicitudes_cotizaciones.fecha_ini_licitacion desc");
                                                         
        $active="active";
        // echo json_encode($dato);

@@ -18,7 +18,8 @@ $active = "";
 										<tr align="center"class="warning">
 											<th>#</th>
 											<th>Id</th>
-											<th>Fecha-Licitacion</th>
+											<th>Fecha Inicio Lic</th>
+											<th>Fecha Fin Lic</th>
 											<!-- <th>Fecha-Aceptado</th> -->
 											<th>Solicitante</th>
 											<th>Unidad</th>
@@ -40,7 +41,9 @@ $active = "";
 
 											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 
-											<td><?php echo $valor[$i]['fecha_licitacion']?></td>
+											<td><?php echo $valor[$i]['fecha_ini_licitacion']?></td>
+
+											<td><?php echo $valor[$i]['fecha_fin_licitacion']?></td>
 
 											<!--<td><?php //echo $valor[$i]['fecha_evaluacion']?></td>-->
 

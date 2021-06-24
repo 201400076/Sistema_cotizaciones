@@ -27,7 +27,9 @@ function aceptar() {
         }).then((result) => {
             
             if (result.isConfirmed) {
-                mensajeConfirmacion(id,fechaAccion,1);
+                //mensajeConfirmacion(id,fechaAccion,1);
+                registrarFecha(fechaAccion);
+                
                 /*if(esPosibleAutorizar()){
                     mensajeConfirmacion(id,fechaAccion,1);
                 }else{
@@ -67,7 +69,7 @@ function rechazar() {
                     allowEnterKey: true
                 }).then((result) =>{
                     if(result.isConfirmed){
-                        redireccionA("../controladores/actualizarPedidoSolicitud.php?detalle="+detalle+"&id="+id+"&fecha="+fechaAccion);
+                        redireccionA("../controladores/actualizarPedidoSolicitud.php?detalle="+detalle+"&id="+id+"&fecha="+fechaAccion+"&e=0");
                     }
                 })
             }else{
@@ -79,21 +81,56 @@ function rechazar() {
     })
 }
 
-function mensajeConfirmacion(id,fechaAccion,est){
-    Swal.fire({
-        title: 'SOLICITUD ACEPTADA!',
-        text: 'La solicitud ha sido aceptada',
-        icon: 'success',
-        confirmButtonText: 'OK',
-        allowOutsideClick: false,
-        closeOnClickOutside: false,
-        allowEnterKey: true
-    }).then((result) =>{
-        if(result.isConfirmed){
-            redireccionA("../controladores/actualizarPedidoSolicitud.php?id="+id+"&fecha="+fechaAccion+"&e="+est);
+function registrarFecha(fech){
+    var fechaSumada = '789';
+    (async () => {
+
+        const ipAPI = '//api.ipify.org?format=json'
+        
+        //const inputValue = fetch(ipAPI)
+        //  .then(response => response.json())
+        //  .then(data => data.ip)
+        
+        const { value: fechaFin } = await Swal.fire({
+            title: 'Establecer periodo de Cotizacion',
+            input: 'number',
+            inputLabel: "Ingrese el numero de dias para enviar y recepcionar cotizaciones\n min: 1 - max: 30",
+            //inputValue: inputValue,
+            showCancelButton: true,
+            allowOutsideClick: false,
+            closeOnClickOutside: false,
+            allowEnterKey: true,
+            inputValidator: (value) => {
+            if (!value || value==0 || value>30) {
+                return 'Debes ingresar un numero dentro del rango!'
+            }
+          }
+        })
+        if (fechaFin) {
+            Swal.fire({
+                title: 'SOLICITUD ACEPTADA!',
+                text: 'Fecha de Licitacion de Cotizaciones: '+fech+"\n"+`Periodo de Cotizacion: ${fechaFin} dias.`,
+                icon: 'success',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                closeOnClickOutside: false,
+                allowEnterKey: true
+            }).then((result) =>{
+                if(result.isConfirmed){
+                    redireccionA("../controladores/actualizarPedidoSolicitud.php?id="+id+"&fecha="+fech+"&e="+fechaFin+"&detalle=0");
+                }
+            })
+            
+            //Swal.fire('Fecha Inicio : '+fech+`\nPeriodo de Cotizacion: ${fechaFin} dias`)
         }
-    })
+        
+    })()
 }
+
+function sumarDias(fecha, dias){
+    fecha.setDate(fecha.getDate() + dias);
+    return fecha;
+  }
 
 function mensajeAviso(titulo,texto,icono) {
     Swal.fire({

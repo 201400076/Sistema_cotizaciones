@@ -10,9 +10,9 @@ $('#ingresar').on('click', function(){
             if(fila!=null){  
                 console.log(fila);
                 console.log(!fila['estado_cotizador']);
-                if(fila['id_unidad']!=null){
-                    alert("unidad de administrativa");
+                if(fila['id_unidad']!=null){                    
                     //redireccionA("vista/registroCotizacion.php?usuario="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']);
+                    redireccionA("vista/empresasSolicitantes.php");                    
                 }else if(fila['id_gasto']!=null){
                     redireccionA("vista/solicitudes_vista.php");                    
                 }                              

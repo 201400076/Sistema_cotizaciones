@@ -84,8 +84,8 @@ function rechazar() {
 
 function mensajeConfirmacion(id,fechaAccion,est){
     Swal.fire({
-        title: 'SOLICITUD ACEPTADA!',
-        text: 'La solicitud ha sido aceptada',
+        title: 'COTIZACION ACEPTADA!',
+        text: 'La solicitud de cotizacion ha sido autorizada',
         icon: 'success',
         confirmButtonText: 'OK',
         allowOutsideClick: false,

@@ -12,6 +12,8 @@ $estadoconexion = $conn->getConn();
 
 if(!empty($_POST)){
     $idSolicitud = $_GET["idSolicitud"];
+    //$fechaInicio = $_GET["fechaI"];
+    //$fechaFin = $_GET["fechaF"];
 
     if(empty($_POST["marcar"])){
         echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=0";</script>';
@@ -21,8 +23,7 @@ if(!empty($_POST)){
         $descripcion = $_POST["descripcion"];
         $listaCorreos = obtenerCorreos();
         $listaIds = obtenerIds();
-        modificarEstado($idSolicitud);
-        $registro = registrarCotizacion($idSolicitud);
+        //$registro = registrarCotizacion($idSolicitud, $fechaInicio, $fechaFin);
         foreach($_POST["marcar"] as $correo_marcado){
             $correo = trim($correo_marcado, '/');
             $idCorreoActual = obtenerIdEmpresa($correo, $listaCorreos, $listaIds);
@@ -30,27 +31,6 @@ if(!empty($_POST)){
         }
         echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=1";</script>';
     }
-}
-
-function modificarEstado($idSolicitud){
-    global $estadoconexion;
-        $stmt = $estadoconexion->prepare("UPDATE solicitudes SET estado=? WHERE id_solicitudes=".$idSolicitud);
-        $estado = 'cotizando';
-        $stmt->bind_param("s",$estado);
-        $stmt->execute();
-}
-
-function registrarCotizacion($idSolicitud){
-    global $estadoconexion;
-    $fecha = date("Y-m-d");
-    $estado = 'cotizando';
-        $stmt = $estadoconexion->prepare("INSERT INTO solicitudes_cotizaciones (id_solicitudes, fecha_licitacion, estado_cotizacion) VALUES(?,?,?)");
-        $stmt->bind_param("iss", $idSolicitud, $fecha, $estado);
-        if($stmt->execute()){
-            return $estadoconexion->insert_id;
-        }else{
-            return 0;
-        }
 }
 
 function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActual,$idSolicitud){

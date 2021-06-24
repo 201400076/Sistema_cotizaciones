@@ -8,10 +8,11 @@
     <meta name="generator" content="Hugo 0.83.1">
     <title>Headers · Bootstrap v5.0</title>
     <!-- Bootstrap core CSS -->
-    <link href="librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="vista/css/headers.css" rel="stylesheet">
-    <script src="librerias/bootstrap/jjs/bootstrap.bundle.min.js"></script>      
+    <link href="../vista/css/headers.css" rel="stylesheet">
+    <script src="../librerias/bootstrap/jjs/bootstrap.bundle.min.js"></script>    
+    <link rel="stylesheet" type="text/css" href="../vista/css/estiloFRU.css" media="screen" />      
   </head>
 <body>
 
@@ -23,7 +24,7 @@
         <div class="col-2">
            <div class="dropdown text-end icono">
               <a href="#" class=" link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="recursos/imagenes/usuario.png" alt="mdo" width="32" height="32" class="rounded-circle mt-2">
+                <img src="../recursos/imagenes/usuario.png" alt="mdo" width="32" height="32" class="rounded-circle mt-2">
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
                 <li><a class="dropdown-item" href="#">Montecinos Gomez Juan Pablo</a></li>

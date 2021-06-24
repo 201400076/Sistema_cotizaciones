@@ -22,7 +22,7 @@
         $cotizaciones = "SELECT * FROM solicitudes_cotizaciones WHERE id_solicitudes = ".$id_solicitud."";
         $queryCoti=$estadoConexion->query($cotizaciones);
         $registro=$queryCoti->fetch_array(MYSQLI_BOTH);
-        echo $registro['id_solicitud_cotizacion'];
+        //echo $registro['id_solicitud_cotizacion'];
         
         //Para probar se obtienen todas las empresas, se debe restringir a solo las empresas participantes en esta solicitud
         $empresas = "SELECT * FROM empresas";
