@@ -1,6 +1,6 @@
 <?php
     $id=29;//$_GET['usuario'];
-    $nombre="juan";//$_GET['nombre'];
+    $nombre='LTD';//$_GET['nombre'];
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
@@ -211,7 +211,7 @@
 <!-- datatables JS -->
 <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
 <script>
-    var id_solicitud = '<?php echo $_GET['usuario']?>';
+    var id_solicitud = '<?php echo $id?>';
     var nombre_usu = '<?php echo $nombre?>';
 </script>
 <script type="text/javascript" src="../controladores/controladorCotizaaciones.js"></script>  
