@@ -81,12 +81,17 @@
     
     //Se debe recuperar el id de la Solicitud
     $idSolicitud=$_GET["idSolicitud"];
+    $fechas = "SELECT fecha_ini_licitacion, fecha_fin_licitacion FROM solicitudes_cotizaciones WHERE id_solicitudes=".$idSolicitud;
+    $queryFechas = $estadoConexion->query($fechas);
+    $registroFechas=$queryFechas->fetch_array(MYSQLI_BOTH);
+    $fIni = $registroFechas['fecha_ini_licitacion'];
+    $fFin = $registroFechas['fecha_fin_licitacion'];   
 ?>
 <div class="container-fluid">
     
     <h2 style="text-align:center;"><strong>ENVIO DE CORREOS</strong></h2>
   
-    <form action="enviarCorreos.php?idSolicitud=<?php echo $idSolicitud?>" method="post" id="formulario">
+    <form action="enviarCorreos.php?idSolicitud=<?php echo $idSolicitud.'&ff='.$fFin?>" method="post" id="formulario">
         <div class="container">
             <div class="row">
                 <div class="col-md-6" >
@@ -102,11 +107,16 @@
                         <label for="archivo" style="width: 25%;">Archivo adjunto:</label>  
                         <a style="width: 50%;" href="../archivos/cotizacionesIniciales/solicitudCotizacion<?php echo $idSolicitud ?>.pdf" target="_blank">Solicitud_de_cotizacion.pdf</a>
                     </div>
+                    <div>
+                        <label for="fecInicio" style="width: 100%">Fecha Inicio Cotizaciones     : <strong style="font-style: italic; font-size: 18px; color: black;"><?php echo $fIni; ?></strong></label>  
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="descripcion" style="width: 25%;">Descripción:</label> 
                     <textarea name="descripcion" id="descripcion" style="width: 70%;"  cols="50%" rows="3" placeholder="Escriba el cuerpo del correo..." required></textarea> 
+                    <label for="fecFin" style="width: 100%">Fecha Fin Cotizaciones     : <strong style="font-style: italic; font-size: 18px; color: black;"><?php echo $fFin;?></strong></label>  
                 </div>
+
             </div>
             <hr>
         <div class="row">
