@@ -22,6 +22,9 @@ foreach($data as $d){
             $_SESSION["usuario"]=$d['id_usuarios'];
         }elseif($d['id_unidad']!=null){
             $_SESSION["administrador"]=$d['id_usuarios'];
+            $_SESSION["unidadAdmin"]=$d['id_unidad'];
+            $fullName=$d['nombres']." ".$d['apellidos'];
+            $_SESSION["nombreUA"]=$fullName;
         }
         break;
     }

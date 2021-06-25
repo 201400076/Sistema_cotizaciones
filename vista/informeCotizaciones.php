@@ -7,7 +7,6 @@ function Header(){
         $ancho=190;
          $this->setFont('Arial','B',8);
 
-   
             $this->SetY(12); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
             $this->Cell($ancho, 10,'programandoElFuturo.SRL@gmail.com', 0, 0, 'R');
             $this->SetY(15);
@@ -34,14 +33,13 @@ function Body(){
     $this->setY(60);
     $this->Cell(50,10,'Solicitado Por: ',0,0,'L');
 
-    $this->setY(60);
-    $this->setX(103);
+    $this->setXY(10,65);
+    $this->Cell(50,10,'Responsable: ',0,0,'L');
+    $this->setXY(103,60);
     $this->Cell(50,10,utf8_decode('Solicitud N°:'),0,0,'R');
-    $this->setY(65);
-    $this->setX(116);
+    $this->setXY(116,65);
     $this->Cell(50,10,'Fecha de licitacion:',0,0,'R');
-    $this->setY(70);
-    $this->setX(120);
+    $this->setXY(120,70);
     $this->Cell(50,10,'Fecha de evaluacion:',0,0,'R');
 
     $this->SetFont('Times','BI',14);
@@ -65,15 +63,13 @@ function Body1(){
     $this->setY(60);
     $this->Cell(50,10,'Solicitado Por: ',0,0,'L');
 
-
-    $this->setY(60);
-    $this->setX(103);
+    $this->setXY(10,65);
+    $this->Cell(50,10,'Responsable: ',0,0,'L');
+    $this->setXY(103,60);
     $this->Cell(50,10,utf8_decode('Solicitud N°:'),0,0,'R');
-    $this->setY(65);
-    $this->setX(116);
+    $this->setXY(116,65);
     $this->Cell(50,10,'Fecha de licitacion:',0,0,'R');
-    $this->setY(70);
-    $this->setX(120);
+    $this->setXY(120,70);
     $this->Cell(50,10,'Fecha de evaluacion:',0,0,'R');
 
     $this->SetFont('Times','BI',14);
@@ -95,11 +91,14 @@ function Footer()
 }
 }
 require_once('../configuraciones/conexion.php');
+    session_start();
+    $nomUsuAdm = $_SESSION['nombreUA'];
+    
     $idRescate=$_GET['id'];
     $tipo=$_GET['tipo'];
     $conn = new Conexion();
     $estadoConexion = $conn->getConn();
-    $cotizaciones = " SELECT Solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
+    $cotizaciones = " SELECT solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_ini_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, usuarios.apellidos, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
 																															AND pedido.id_pedido=solicitudes.id_pedido
 																															AND usuarios.id_usuarios=pedido.id_usuarios
 																															AND usuarios.id_usuarios=usuarioconrol.id_usuarios
@@ -121,25 +120,17 @@ require_once('../configuraciones/conexion.php');
         $pdf->Body1();
     }
     
-
-    //$pdf->AddPage();
     $pdf->SetFont('Times','BI',14);
-    $pdf->setY(25);
-    $pdf->setX(155);
+    $pdf->setXY(155,25);
     $pdf->Cell(10,80,$registroCotizaciones['id_solicitudes'],0,0,'L');
-
-    $pdf->setY(45);
-    $pdf->setX(170);
-    $pdf->Cell(10,50,$registroCotizaciones['fecha_licitacion'],0,0,'L');
-
-    $pdf->setY(50);
-    $pdf->setX(170);
+    $pdf->setXY(170,45);
+    $pdf->Cell(10,50,$registroCotizaciones['fecha_ini_licitacion'],0,0,'L');
+    $pdf->setXY(170,50);
     $pdf->Cell(10,50,$registroCotizaciones['fecha_evaluacion'],0,0,'L');
-
-    $pdf->setY(40);
-    $pdf->setX(40);
-    $pdf->Cell(10,50,$registroCotizaciones['nombres'],0,0,'L');
-
+    $pdf->setXY(40,40);
+    $pdf->Cell(10,50,$registroCotizaciones['nombres']." ".$registroCotizaciones['apellidos'],0,0,'L');
+    $pdf->setXY(40,45);
+    $pdf->Cell(10,50,$nomUsuAdm,0,0,'L');
 
     $pdf->SetFont('Times','I',14);
     $pdf->setY(95);
@@ -152,62 +143,39 @@ require_once('../configuraciones/conexion.php');
         $datosEmpresa = datosEmpresa($registroCotizaciones['empresa_adjudicada']);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'Nombre: ',0,'L');
-        $pdf->setY(95);
-        $pdf->setX(50);
+        $pdf->setXY(50,95);
         $txt=utf8_decode($datosEmpresa['nombre_empresa']);
         $pdf->SetFont('Times','I',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
-
-        $pdf->setY(102);
-        $pdf->setX(15);
+        $pdf->setXY(15,102);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'Correo: ',0,'L');
-        $pdf->setY(102);
-        $pdf->setX(50);
+        $pdf->setXY(50,102);
         $txt=utf8_decode($datosEmpresa['correo_empresa']);
         $pdf->SetFont('Times','I',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
-
-        $pdf->setY(109);
-        $pdf->setX(15);
+        $pdf->setXY(15,109);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'NIT: ',0,'L');
-        $pdf->setY(109);
-        $pdf->setX(50);
+        $pdf->setXY(50,109);
         $txt=utf8_decode($datosEmpresa['nit']);
         $pdf->SetFont('Times','I',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
-
-        $pdf->setY(116);
-        $pdf->setX(15);
+        $pdf->setXY(15,116);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'Telefono: ',0,'L');
-        $pdf->setY(116);
-        $pdf->setX(50);
+        $pdf->setXY(50,116);
         $txt=utf8_decode($datosEmpresa['telefono']);
         $pdf->SetFont('Times','I',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
-
-        $pdf->setY(123);
-        $pdf->setX(15);
+        $pdf->setXY(15,123);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'Direccion: ',0,'L');
-        $pdf->setY(123);
-        $pdf->setX(50);
+        $pdf->setXY(50,123);
         $txt=utf8_decode($datosEmpresa['direccion']);
         $pdf->SetFont('Times','I',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
     }
-    
-
-    
-    /* $pdf->setY(170);
-    $pdf->setX(40);
-    $pdf->Cell(10,50,$idRescate,0,0,'L'); */
-  
-   //$i++;
-//}
-//while($i<sizeof($valor));
 $pdf->Output();
 
 function datosEmpresa($idEmpresa){

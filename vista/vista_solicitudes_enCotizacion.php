@@ -1,6 +1,7 @@
 <?php
-$active = "";
-	include_once("layouts/navegacionPendientes.php");
+	include('layouts/navAdministracion.php');
+	//$active = "";
+	//include_once("layouts/navegacionPendientes.php");
 ?>
 <div class="container-fluid">
 <h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES EN COTIZACION</strong></h2>
@@ -102,6 +103,6 @@ $active = "";
 </div>
 
 <?php
-include_once("layouts/footer.php");
-
+	include('../vista/layouts/piePagina.php');
+	//include_once("layouts/footer.php");
 ?>
