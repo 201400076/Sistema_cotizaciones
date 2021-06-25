@@ -8,10 +8,12 @@ $modelo =(isset($_POST['modelo'])) ? $_POST['modelo'] : '';
 $descripcion =  (isset($_POST['descripcion'])) ? $_POST['descripcion'] : '';
 $unit = (isset($_POST['unit'])) ? $_POST['unit'] : '';
 $total =(isset($_POST['total'])) ? $_POST['total'] : '';
-$id =(isset($_POST['id'])) ? $_POST['id'] : '';
+$id_solicitud =(isset($_POST['id_solicitud'])) ? $_POST['id_solicitud'] : '';
+$id_empresa =(isset($_POST['id_empresa'])) ? $_POST['id_empresa'] : '';
+$id_item =(isset($_POST['id_item'])) ? $_POST['id_item'] : '';
 
-    $consulta = "INSERT INTO cotizacion_items (id_item_cotizacion, marca, modelo, descripcion, precio_unitario, precio_parcial, id_items) 
-        VALUES (NULL, '$marca', '$modelo', '$descripcion', '$unit', '$total', '$id')";
+    $consulta = "INSERT INTO cotizacion_items (id_item_cotizacion, marca, modelo, descripcion, precio_unitario, precio_parcial, id_items,id_empresa,id_solicitudes) 
+        VALUES (NULL, '$marca', '$modelo', '$descripcion', '$unit', '$total', '$id_item','$id_empresa','$id_solicitud')";
         //$consulta = "INSERT INTO personas (nombre, pais, edad) VALUES('$nombre', '$pais', '$edad') ";			
         $resultado = $conexion->prepare($consulta);
         $resultado->execute(); 
