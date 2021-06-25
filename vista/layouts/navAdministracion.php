@@ -64,9 +64,9 @@
                   Solicitudes de pedido
                 </p>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
-                  <li><a class="dropdown-item" href="#">Solicitudes Pendientes</a></li>                  
-                  <li><a class="dropdown-item" href="#">Solicitudes Aceptadas</a></li>
-                  <li><a class="dropdown-item" href="#">Solicitudes Rechazadas</a></li>
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=nueva">Solicitudes Pendientes</a></li>                  
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li>
                 </ul>
           </div>
         </div>
@@ -76,9 +76,9 @@
                   Solicitudes de cotizaciones
                 </p>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
-                  <li><a class="dropdown-item" href="#">Cotizaciones Pendientes</a></li>                  
-                  <li><a class="dropdown-item" href="#">Cotizaciones Aceptadas Aceptadas</a></li>
-                  <li><a class="dropdown-item" href="#">Cotizaciones Rechazadas</a></li>
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=cotizando">Evaluar Cotizaciones</a></li>                  
+                  <li><a class="dropdown-item" href="../vista/vista_cotizaciones_aceptadas.php">Cotizaciones Aceptadas</a></li>
+                  <li><a class="dropdown-item" href="../vista/vista_cotizaciones_rechazadas.php">Cotizaciones Rechazadas</a></li>
                 </ul>
           </div>
         </div>
@@ -96,7 +96,7 @@
         <div class="color-secondary col">
           <div class="dropdown text-end">
                 <p  class="mt-2">
-                  Buscar Solicitudes
+                  <a href="../vista/seguimientoSolicitudes.php">Buscar Solicitudes</a>
                 </p>                
           </div>
         </div>                           

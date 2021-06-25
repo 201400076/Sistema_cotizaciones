@@ -1,6 +1,7 @@
 <?php
     session_start();
-    $id_administrador=$_SESSION['administrador'];
+    echo $id_administrador=$_SESSION['administrador'];
+    echo $id_unidadAdmin=$_SESSION['unidadAdmin'];
     include('layouts/navAdministracion.php')
 ?>        
     <div class="container" style="width: 650px;margin-top: 0;">
