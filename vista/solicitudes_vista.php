@@ -19,9 +19,7 @@
     $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios='$id_pendientes'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
-    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
-    $active = "active";
-    
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);    
 ?>
 <?php
     include('layouts/navGasto.php')

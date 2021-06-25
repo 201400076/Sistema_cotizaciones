@@ -7,7 +7,7 @@
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $id_pendientes=1;
+    $id_pendientes=$id_usuario;
     $consulta="SELECT id_pedido,cantidad,unidad,detalle,archivo,ruta FROM items WHERE items.id_pedido='$id_pedido'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();

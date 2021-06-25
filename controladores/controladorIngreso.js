@@ -12,7 +12,7 @@ $('#ingresar').on('click', function(){
                 console.log(!fila['estado_cotizador']);
                 if(fila['id_unidad']!=null){                    
                     //redireccionA("vista/registroCotizacion.php?usuario="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']);
-                    redireccionA("vista/empresasSolicitantes.php");                    
+                    redireccionA("vista/vista_cotizaciones_aceptadas.php");                    
                 }else if(fila['id_gasto']!=null){
                     redireccionA("vista/solicitudes_vista.php");                    
                 }                              
