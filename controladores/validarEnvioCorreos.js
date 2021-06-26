@@ -2,35 +2,22 @@ obtenerValores();
 
 function obtenerValores(){
     const $formulario = document.querySelector("#formulario"),
-            $remitente = document.querySelector("#remitente"),
             $asunto = document.querySelector("#asunto"),
             $descripcion = document.querySelector("#descripcion");
 
         $formulario.onsubmit = evento => {
             evento.preventDefault();
-            const remitente = $remitente.value,
-                asunto = $asunto.value,
-                descripcion = $descripcion.value;
-
+            const asunto = $asunto.value,descripcion = $descripcion.value;
             aux = 0;
-            if(esVacio(remitente) || !(verificarPatron(remitente,/^[a-zA-Z][a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s?]+$/))){
-                aux++;
-                Swal.fire('Remitente','Datos ingresados no validos','warning');
-                $("#remitente").val("");
-                $("#asunto").val(asunto);
-                $("#descripcion").val(descripcion);    
-            }
             if(esVacio(asunto) || !(verificarPatron(asunto,/^[a-zA-Z][a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s?]+$/))){
                 aux++;
                 Swal.fire('Asunto','Datos ingresados no validos','warning');
-                $("#remitente").val(remitente);
                 $("#asunto").val("");
                 $("#descripcion").val(descripcion); 
             }
             if(esVacio(descripcion) || !(verificarPatron(descripcion,/^[a-zA-Z][a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s?\.?\,?]+$/))){
                 aux++;
                 Swal.fire('Descripcion','Datos ingresados no validos','warning');
-                $("#remitente").val(remitente);
                 $("#asunto").val(asunto);
                 $("#descripcion").val(""); 
             }
