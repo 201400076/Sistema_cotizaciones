@@ -7,7 +7,7 @@ require '../librerias/phpMailer/Exception.php';
 require '../librerias/phpMailer/PHPMailer.php';
 require '../librerias/phpMailer/SMTP.php';
 
-$conn = new Conexion();
+$conn = new Conexiones();
 $estadoconexion = $conn->getConn();
 
 if(!empty($_POST)){

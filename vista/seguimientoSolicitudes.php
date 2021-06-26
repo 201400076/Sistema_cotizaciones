@@ -61,7 +61,7 @@
         $unidadAdmin = $_SESSION['unidadAdmin'];
 
         require_once('../configuraciones/conexion.php');
-        $conn = new Conexion();
+        $conn = new Conexiones();
         $estadoConexion = $conn->getConn();
         $solicitudes = "SELECT * FROM solicitudes, pedido, usuarios, usuarioconrol, unidad_gasto, unidad_administrativa WHERE (solicitudes.estado='pendiente' OR solicitudes.estado='rechazada')
                                 AND solicitudes.id_pedido=pedido.id_pedido AND  pedido.id_unidad=unidad_gasto.id_unidad AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND usuarios.id_usuarios=pedido.id_usuarios 

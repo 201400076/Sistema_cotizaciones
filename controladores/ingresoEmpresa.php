@@ -1,6 +1,6 @@
 <?php
     require '../configuraciones/conexion.php';
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoconexion = $conn->getConn();
 
     $errors = array();

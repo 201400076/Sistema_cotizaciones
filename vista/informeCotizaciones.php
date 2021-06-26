@@ -96,7 +96,7 @@ require_once('../configuraciones/conexion.php');
     
     $idRescate=$_GET['id'];
     $tipo=$_GET['tipo'];
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
     $cotizaciones = " SELECT solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_ini_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, usuarios.apellidos, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
 																															AND pedido.id_pedido=solicitudes.id_pedido
@@ -180,7 +180,7 @@ $pdf->Output();
 
 function datosEmpresa($idEmpresa){
     require_once('../configuraciones/conexion.php');
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
     $empresa = " SELECT * FROM empresas WHERE id_empresa=".$idEmpresa;
 	$queryEmpresa=$estadoConexion->query($empresa);

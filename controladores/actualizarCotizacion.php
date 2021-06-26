@@ -1,7 +1,7 @@
 <?php
     require '../configuraciones/conexion.php';
 
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoconexion = $conn->getConn();
 
     $id_solicitud=$_GET["id"];
