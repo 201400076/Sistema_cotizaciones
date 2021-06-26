@@ -17,7 +17,7 @@
         //$id_pedido=$_GET['id_pedido'];
         $id_solicitud=$_GET['id_solicitud'];
 
-        $conn = new Conexion();
+        $conn = new Conexiones();
         $estadoConexion = $conn->getConn();
         $cotizaciones = "SELECT * FROM solicitudes_cotizaciones WHERE id_solicitudes = ".$id_solicitud."";
         $queryCoti=$estadoConexion->query($cotizaciones);

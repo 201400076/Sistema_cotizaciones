@@ -7,7 +7,7 @@
 	//include_once("layouts/navegacionPendientes.php");
 
     require_once('../configuraciones/conexion.php');
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
     $cotizaciones = " SELECT * FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones 
 							WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes AND pedido.id_pedido=solicitudes.id_pedido

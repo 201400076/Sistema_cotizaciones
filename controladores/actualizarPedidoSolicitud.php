@@ -2,7 +2,7 @@
     require '../configuraciones/conexion.php';
     require '../librerias/fpdf/fpdf.php';
 
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoconexion = $conn->getConn();
 
     $id_solicitud=$_GET["id"];

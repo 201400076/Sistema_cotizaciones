@@ -74,7 +74,7 @@
     include_once("layouts/navegacionPendientes.php");
 
     require_once('../configuraciones/conexion.php');
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
     $empresas = "SELECT * FROM empresas";
     $queryEmpresas=$estadoConexion->query($empresas);
