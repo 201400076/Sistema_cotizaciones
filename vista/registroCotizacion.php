@@ -1,5 +1,5 @@
 <?php
-    $id_solicitud=29;//$_GET['usuario'];
+    $id_solicitud=1;//$_GET['usuario'];
     $id_empresa=2;
     $nombre='LTD';//$_GET['nombre'];
     include_once '../modelo/conexionPablo.php';
