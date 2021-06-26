@@ -1,11 +1,12 @@
 <?php
-    $id=$_GET['usuario'];
-    $nombre=$_GET['nombre'];
+    $id_solicitud=29;//$_GET['usuario'];
+    $id_empresa=2;
+    $nombre='LTD';//$_GET['nombre'];
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
     $id_pendientes=1;
-    $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id'";
+    $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id_solicitud'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -80,7 +81,7 @@
                             <td><?php echo $dat['detalle'] ?></td>
                             <td>
                                 <a target='_black' href="/proyectos/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
-                            </td>    
+                            </td>  
                             <td></td>                        
                         </tr>
                         <div class="modal fade" id="<?php echo 'modalCRUDJust'.$dat['id_items'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -211,8 +212,9 @@
 <!-- datatables JS -->
 <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
 <script>
-    var id_solicitud = '<?php echo $_GET['usuario']?>';
-    var nombre_usu = '<?php echo $_GET['nombre']?>';
+    var id_solicitud = '<?php echo $id_solicitud?>';
+    var id_empresa = '<?php echo $id_empresa?>';
+    var nombre_usu = '<?php echo $nombre?>';
 </script>
 <script type="text/javascript" src="../controladores/controladorCotizaaciones.js"></script>  
 

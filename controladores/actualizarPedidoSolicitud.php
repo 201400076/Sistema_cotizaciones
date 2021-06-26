@@ -1,9 +1,8 @@
 <?php
     require '../configuraciones/conexion.php';
-    //archivo pdf
     require '../librerias/fpdf/fpdf.php';
 
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoconexion = $conn->getConn();
 
     $id_solicitud=$_GET["id"];
@@ -21,6 +20,7 @@
                 $estado='rechazada';
                 $detalle = str_replace("_", " ", $detalle);
             }else{
+                registrarSolicitudCotizacion($id_solicitud, $fecha, $codigoEstado);
                 $estado='aceptada';
                 $detalle=(NULL);
 
@@ -30,7 +30,6 @@
             
             $stmt->bind_param("sss",$estado,$fecha,$detalle);
                 if ($stmt->execute()) {
-                    registrarSolicitudCotizacion($id_solicitud, $fecha, $codigoEstado);
                     redireccion();
                 } else {
                     echo 0;

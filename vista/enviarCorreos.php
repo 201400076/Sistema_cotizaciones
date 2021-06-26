@@ -7,23 +7,23 @@ require '../librerias/phpMailer/Exception.php';
 require '../librerias/phpMailer/PHPMailer.php';
 require '../librerias/phpMailer/SMTP.php';
 
-$conn = new Conexion();
+session_start();
+$nombre = $_SESSION['nombreUA'];
+$conn = new Conexiones();
 $estadoconexion = $conn->getConn();
 
 if(!empty($_POST)){
     $idSolicitud = $_GET["idSolicitud"];
-    //$fechaInicio = $_GET["fechaI"];
     $fechaFin = $_GET["ff"];
+    $remitente = $nombre;
 
     if(empty($_POST["marcar"])){
         echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=0";</script>';
     }else{
-        $remitente = $_POST["remitente"];
         $asunto = $_POST["asunto"];
         $descripcion = $_POST["descripcion"];
         $listaCorreos = obtenerCorreos();
         $listaIds = obtenerIds();
-        //$registro = registrarCotizacion($idSolicitud, $fechaInicio, $fechaFin);
         foreach($_POST["marcar"] as $correo_marcado){
             $correo = trim($correo_marcado, '/');
             $idCorreoActual = obtenerIdEmpresa($correo, $listaCorreos, $listaIds);
@@ -49,13 +49,13 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'marcoescalera2017@gmail.com';//correo
-        $mail->Password = 'Xmaesc1997X';//Contrasena
+        $mail->Username = 'sistema.cotizaciones.umss@gmail.com';//correo
+        $mail->Password = 'UMSS2021';//Contrasena
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
     
         //Destino
-        $mail->setFrom('marcoescalera2017@gmail.com', $remitente);    //Configurar el emisario(origen)
+        $mail->setFrom('sistema.cotizaciones.umss@gmail.com', $remitente);    //Configurar el emisario(origen)
 
         $mail->addAddress($correo); //<--Enviar a este correo
         $user = generarUsername();
@@ -83,9 +83,6 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         $mail->Body    = $descripcion.$detalles.$paso1.$paso2.$paso3;
         
         $mail->send();
-
-        //echo 'Correo enviado!'
-        
     } catch (Exception $e) {
         echo "Hubo un error al enviar el mensaje: {$mail->ErrorInfo}";
     }
@@ -127,7 +124,7 @@ function obtenerIds(){
     global $estadoconexion;
     $resultado = $estadoconexion->query("SELECT id_empresa FROM empresas");
     if (!$resultado) {
-        echo 'No se pudo ejecutar la consulta: ' . $estadoconexion->mysql_error();
+        echo 'No se pudo ejecutar la consulta: ';// . $estadoconexion->mysql_error();
         exit;
     }
     $fila = array();
@@ -143,7 +140,7 @@ function obtenerCorreos(){
     global $estadoconexion;
     $resultado1 = $estadoconexion->query("SELECT correo_empresa FROM empresas");
     if (!$resultado1) {
-        echo 'No se pudo ejecutar la consulta: ' . $estadoconexion->mysql_error();
+        echo 'No se pudo ejecutar la consulta: ';// . $estadoconexion->mysql_error();
         exit;
     }
     $fila = [];

@@ -82,15 +82,8 @@ function rechazar() {
 }
 
 function registrarFecha(fech){
-    var fechaSumada = '789';
     (async () => {
-
         const ipAPI = '//api.ipify.org?format=json'
-        
-        //const inputValue = fetch(ipAPI)
-        //  .then(response => response.json())
-        //  .then(data => data.ip)
-        
         const { value: fechaFin } = await Swal.fire({
             title: 'Establecer periodo de Cotizacion',
             input: 'number',
@@ -120,10 +113,8 @@ function registrarFecha(fech){
                     redireccionA("../controladores/actualizarPedidoSolicitud.php?id="+id+"&fecha="+fech+"&e="+fechaFin+"&detalle=0");
                 }
             })
-            
             //Swal.fire('Fecha Inicio : '+fech+`\nPeriodo de Cotizacion: ${fechaFin} dias`)
         }
-        
     })()
 }
 

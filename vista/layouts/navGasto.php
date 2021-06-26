@@ -1,3 +1,9 @@
+<?php
+  $consulta="SELECT * FROM usuarios s,usuarioconrol c, unidad_gasto u WHERE c.id_usuarios=s.id_usuarios and u.id_gasto=c.id_gasto  and s.id_usuarios='$id_pendientes'";
+  $resultado = $conexion->prepare($consulta);
+  $resultado->execute();
+  $gasto=$resultado->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -34,9 +40,11 @@
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
                 <li><a class="dropdown-item" href="#"> <?php echo $nombre?></a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Unidad administrativa</a></li>
-                <li><a class="dropdown-item" href="#">Unidad de gasto</a></li>
-                <li><a class="dropdown-item" href="#">Uni adi</a></li>
+                <?php
+                foreach($gasto as $g){
+                  echo "<li><a class='dropdown-item' href='#'>".$g['nombre_gasto']."</a></li>";
+                }
+                ?>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Salir</a></li>
               </ul>

@@ -1,3 +1,20 @@
+<?php
+    include_once '../modelo/conexionPablo.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $id_administrador=  $_SESSION["administrador"];
+    $consulta="SELECT * FROM usuarios s,usuarioconrol c, unidad_administrativa u WHERE c.id_usuarios=s.id_usuarios and u.id_unidad=c.id_unidad  and s.id_usuarios='$id_administrador'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $administracion=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
+    $consulta="SELECT nombres,apellidos FROM usuarios WHERE usuarios.id_usuarios='$id_administrador'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,11 +44,13 @@
                 <img src="../recursos/imagenes/usuario.png" alt="mdo" width="32" height="32" class="rounded-circle mt-2">
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
-                <li><a class="dropdown-item" href="#">Montecinos Gomez Juan Pablo</a></li>
+                <li><a class="dropdown-item" href="#"><?php echo $nombre?></a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="../vista/home.php">Unidad administrativa</a></li>
-                <li><a class="dropdown-item" href="#">Unidad de gasto</a></li>
-                <li><a class="dropdown-item" href="#">Uni adi</a></li>
+                <?php
+                foreach($administracion as $g){
+                  echo "<li><a class='dropdown-item' href='#'>".$g['nombre_unidad']."</a></li>";
+                }
+                ?>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Salir</a></li>
               </ul>
@@ -45,9 +64,9 @@
                   Solicitudes de pedido
                 </p>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
-                  <li><a class="dropdown-item" href="#">Solicitudes Pendientes</a></li>                  
-                  <li><a class="dropdown-item" href="#">Solicitudes Aceptadas</a></li>
-                  <li><a class="dropdown-item" href="#">Solicitudes Rechazadas</a></li>
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=nueva">Solicitudes Pendientes</a></li>                  
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li>
                 </ul>
           </div>
         </div>
@@ -57,9 +76,9 @@
                   Solicitudes de cotizaciones
                 </p>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
-                  <li><a class="dropdown-item" href="#">Cotizaciones Pendientes</a></li>                  
-                  <li><a class="dropdown-item" href="#">Cotizaciones Aceptadas Aceptadas</a></li>
-                  <li><a class="dropdown-item" href="#">Cotizaciones Rechazadas</a></li>
+                  <li><a class="dropdown-item" href="../ruta/rutas.php?ruta=mostrar&con=cotizando">Evaluar Cotizaciones</a></li>                  
+                  <li><a class="dropdown-item" href="../vista/vista_cotizaciones_aceptadas.php">Cotizaciones Aceptadas</a></li>
+                  <li><a class="dropdown-item" href="../vista/vista_cotizaciones_rechazadas.php">Cotizaciones Rechazadas</a></li>
                 </ul>
           </div>
         </div>
@@ -77,7 +96,7 @@
         <div class="color-secondary col">
           <div class="dropdown text-end">
                 <p  class="mt-2">
-                  Buscar Solicitudes
+                  <a href="../vista/seguimientoSolicitudes.php">Buscar Solicitudes</a>
                 </p>                
           </div>
         </div>                           

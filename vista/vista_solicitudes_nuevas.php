@@ -94,10 +94,11 @@ clearInterval(intervalo);
 
 
 //header("http://localhost/Sistema_cotizaciones/ruta/rutas.php?ruta=mostrar&con=nueva");
-$active = "active";
-
-	include_once("layouts/navegacionPendientes.php");
 	
+
+	//$active = "active";
+	//include_once("layouts/navegacionPendientes.php");
+	include('layouts/navAdministracion.php');
 	
 	
 ?>	
@@ -218,6 +219,6 @@ $active = "active";
 </div>
 <?php
 
-include_once("layouts/footer.php");
-
+	//include_once("layouts/footer.php");
+	include('../vista/layouts/piePagina.php');
 ?>
