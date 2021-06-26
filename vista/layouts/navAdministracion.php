@@ -29,7 +29,7 @@
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
                 <li><a class="dropdown-item" href="#">Montecinos Gomez Juan Pablo</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Unidad administrativa</a></li>
+                <li><a class="dropdown-item" href="../vista/home.php">Unidad administrativa</a></li>
                 <li><a class="dropdown-item" href="#">Unidad de gasto</a></li>
                 <li><a class="dropdown-item" href="#">Uni adi</a></li>
                 <li><hr class="dropdown-divider"></li>

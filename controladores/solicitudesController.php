@@ -1,6 +1,7 @@
 <?php
 
 require_once("../modelo/solicitud.php");
+
 class SolicitudesController{
 	private $model;
 	function __construct(){
@@ -18,7 +19,8 @@ class SolicitudesController{
 
     }
     static function mostrar_nueva($condicion){
-
+       // require_once("ingresoSolicitante.php");
+      
         $solicitud =new Solicitud();
 		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto","pedido.id_pedido=solicitudes.id_pedido
                                                             AND usuarios.id_usuarios=pedido.id_usuarios
