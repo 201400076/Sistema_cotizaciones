@@ -2,7 +2,7 @@
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    
+    $id_administrador=  $_SESSION["administrador"];
     $consulta="SELECT * FROM usuarios s,usuarioconrol c, unidad_administrativa u WHERE c.id_usuarios=s.id_usuarios and u.id_unidad=c.id_unidad  and s.id_usuarios='$id_administrador'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
