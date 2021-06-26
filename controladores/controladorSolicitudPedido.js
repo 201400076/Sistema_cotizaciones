@@ -32,6 +32,7 @@ $("#btnNuevo").click(function(){
     $(".modal-title").text("NUEVO ITEM");            
     $("#modalCRUD").modal("show");        
     id_pendientes=null;
+    console.log(id_usu);
     opcion = 1; //alta
     archivo='';
     ruta='';
@@ -76,7 +77,7 @@ $(document).on("click", ".btnGuardarJust", function(){
                 type: "POST",
                 cache:false,
                 dataType: "json",
-                data: {opcion:opcion, justificacion:justificacion},
+                data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu},
                 success: function(data){                         
                 }        
             });
@@ -88,7 +89,7 @@ $(document).on("click", ".btnGuardarJust", function(){
             url: "../modelo/solicitudes_modelo.php",
             type: "POST",
             dataType: "json",
-            data: {opcion:opcion, justificacion:justificacion},
+            data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu},
             success: function(data){                   
             }        
         });
@@ -180,7 +181,7 @@ $("#formPersonas").submit(function(e){
                         url: "../modelo/solicitudes_modelo.php",
                         type: "POST",
                         dataType: "json",
-                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes, opcion:opcion,ruta:ruta, archivo:archivo},
+                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes,id_usu:id_usu, opcion:opcion,ruta:ruta, archivo:archivo},
                         success: function(data){                          
                             id_pendientes = data[0].id_pendientes;            
                             cantidad = data[0].cantidad;

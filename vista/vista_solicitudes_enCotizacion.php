@@ -1,6 +1,7 @@
 <?php
-$active = "";
-	include_once("layouts/navegacionPendientes.php");
+	include('layouts/navAdministracion.php');
+	//$active = "";
+	//include_once("layouts/navegacionPendientes.php");
 ?>
 <div class="container-fluid">
 <h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES EN COTIZACION</strong></h2>
@@ -23,6 +24,7 @@ $active = "";
 											<!-- <th>Fecha-Aceptado</th> -->
 											<th>Solicitante</th>
 											<th>Unidad</th>
+											<th>Dias Restantes</th>
 											<th>Estado</th>
 											<th># Cotizaciones</th>
 											<th>Accion</th>
@@ -50,6 +52,19 @@ $active = "";
 											<td><?php echo $valor[$i]['nombres']?></td>
 
 											<td><?php echo $valor[$i]['nombre_gasto']?></td>
+
+											<td><?php
+												$date1 = date_create(date("Y-m-d"));
+												$date2 = date_create($valor[$i]['fecha_fin_licitacion']);
+												$diff = date_diff($date1,$date2);$d = $diff->format("%R");
+												if($d == '-'){
+													echo 'finalizado';
+												}else if($d == '+'){
+													$diferencia = $diff->format("%a");
+													echo $diferencia;
+												}
+												?>
+											</td>
 
 											<td><span class="label label-info"><?php echo $valor[$i]['estado_cotizacion']?></span></td>
 
@@ -88,6 +103,6 @@ $active = "";
 </div>
 
 <?php
-include_once("layouts/footer.php");
-
+	include('../vista/layouts/piePagina.php');
+	//include_once("layouts/footer.php");
 ?>

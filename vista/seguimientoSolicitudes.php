@@ -1,3 +1,6 @@
+<?php
+    //include("layouts/navAdministracion.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,16 +57,20 @@
 </head>
 <body class="fix-header card-no-border">
     <?php
-        //$active = "";
-        //include_once("layouts/navegacionPendientes.php");
+        session_start();
+        $unidadAdmin = $_SESSION['unidadAdmin'];
 
         require_once('../configuraciones/conexion.php');
-        $conn = new Conexion();
+        $conn = new Conexiones();
         $estadoConexion = $conn->getConn();
-        $solicitudes = "SELECT * FROM solicitudes WHERE estado='aceptada' OR estado='rechazada' OR estado='pendiente'";
+        $solicitudes = "SELECT * FROM solicitudes, pedido, usuarios, usuarioconrol, unidad_gasto, unidad_administrativa WHERE (solicitudes.estado='pendiente' OR solicitudes.estado='rechazada')
+                                AND solicitudes.id_pedido=pedido.id_pedido AND  pedido.id_unidad=unidad_gasto.id_unidad AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND usuarios.id_usuarios=pedido.id_usuarios 
+                                AND usuarios.id_usuarios=usuarioconrol.id_usuarios AND unidad_administrativa.id_unidad=pedido.id_unidad 
+                                AND pedido.id_unidad=".$unidadAdmin." order by pedido.fecha desc";
         $querySolicitudes=$estadoConexion->query($solicitudes);
 
-        $cotizaciones = "SELECT * FROM solicitudes_cotizaciones";
+        $cotizaciones = "SELECT * FROM solicitudes_cotizaciones, pedido, solicitudes WHERE solicitudes_cotizaciones.id_solicitudes=solicitudes.id_solicitudes
+                                    AND pedido.id_unidad=".$unidadAdmin." AND solicitudes.id_pedido=pedido.id_pedido";
         $queryCotizaciones=$estadoConexion->query($cotizaciones);
         
         //Se debe recuperar el id de la Solicitud
@@ -167,8 +174,10 @@
     <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
      
     <script type="text/javascript" src="../controladores/controladorVistaDetalle.js"></script>  
-    <?php
-        //include_once("../vista/layouts/footer.php");
-    ?>
+    
 </body>
+
 </html>
+<?php
+        //include_once("../vista/layouts/piePagina.php");
+    ?>

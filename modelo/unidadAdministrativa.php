@@ -8,7 +8,7 @@ require_once("../configuraciones/conexion.php");
         public function __construct()
         {
             $this->modelo = array();
-            $this->conexion = new Conexion();
+            $this->conexion = new Conexiones();
             $this->conexion_activo = $this->conexion->getConn();
         }
         public function register($dato){

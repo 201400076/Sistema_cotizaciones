@@ -1,18 +1,19 @@
 <?php
-$active = "";
-	include_once("layouts/navegacionPendientes.php");
+	session_start();
+	$id_unidadAdmin=$_SESSION['unidadAdmin'];
 
-    require_once('../configuraciones/conexion.php');
-    $conn = new Conexion();
+	//$active = "";
+	//include_once("layouts/navegacionPendientes.php");
+	include('layouts/navAdministracion.php');
+
+    include('../configuraciones/conexion.php');
+    $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
-    //$cotizaciones = "SELECT * FROM solicitudes_cotizaciones WHERE solicitudes_cotizaciones.estado_cotizacion='aceptada'";
-    $cotizaciones = " SELECT * FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
-																															AND pedido.id_pedido=solicitudes.id_pedido
-																															AND usuarios.id_usuarios=pedido.id_usuarios
-																															AND usuarios.id_usuarios=usuarioconrol.id_usuarios
-																															AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
-																															AND solicitudes_cotizaciones.estado_cotizacion='aceptada'
-																															order by solicitudes_cotizaciones.fecha_evaluacion desc";
+    $cotizaciones = " SELECT * FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones 
+							WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes AND pedido.id_pedido=solicitudes.id_pedido
+									AND usuarios.id_usuarios=pedido.id_usuarios	AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+									AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND solicitudes_cotizaciones.estado_cotizacion='aceptada'
+									AND pedido.id_unidad=".$id_unidadAdmin." order by solicitudes_cotizaciones.fecha_evaluacion desc";
 	$queryCotizaciones=$estadoConexion->query($cotizaciones);
 ?>
 <style>
@@ -74,6 +75,6 @@ $active = "";
 </div>
 
 <?php
-include_once("layouts/footer.php");
-
+	//include_once("layouts/footer.php");
+	include('../vista/layouts/piePagina.php');
 ?>

@@ -7,7 +7,7 @@
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $id_pendientes=1;
+    $id_pendientes=$id_usuario;
     $consulta="SELECT id_pedido,cantidad,unidad,detalle,archivo,ruta FROM items WHERE items.id_pedido='$id_pedido'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
@@ -348,15 +348,6 @@
         <button class="btn btn-danger" id="botonRechazar">RECHAZAR</button>
         <button class="btn btn-secondary" id="botonCancelar" value="Cancelar">CANCELAR</button>
     </div>
-</div>
-
-
-<div>
-    <label for="fecInicio" style="width: 100%">Fecha Inicio Cotizaciones     : <strong style="font-size: 20px; color: black;"><?php echo " ' ".$fechaActual." ' "?></strong></label>  
-</div>
-<div>
-    <label for="fechaFin">Fecha limite Cotizaciones    : </label>
-    <input type="date" id="fechaFin" name="fechaFin" min="<?php echo $fechaActual;?>" max="<?php echo $fechaLimite;?>" pattern="[0-2]{4}-[0-9]{2}-[0-9]{2}" required>
 </div>
 
 <script>

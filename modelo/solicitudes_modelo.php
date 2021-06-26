@@ -12,16 +12,15 @@ $opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
 $archivo = (isset($_POST['archivo'])) ? $_POST['archivo'] : '';
 $ruta = (isset($_POST['ruta'])) ? $_POST['ruta'] : '';
 $id_pendientes = (isset($_POST['id_pendientes'])) ? $_POST['id_pendientes'] : '';
-
+$id_usuario=(isset($_POST['id_usu'])) ? $_POST['id_usu'] : '';
 $justificacion=(isset($_POST['justificacion'])) ? $_POST['justificacion'] : '';
-$id_usuario=1;
 $fecha=date("Y-m-d");
 $carpeta="../archivos/";
 switch($opcion){
     case 1: //alta
 
         $consulta = "INSERT INTO items_pendientes (id_pendientes, cantidad, unidad, detalle, ruta, id_usuarios, archivo) 
-        VALUES (NULL, '$cantidad', '$unidad', '$detalle', '$ruta', 1, '$archivo')";
+        VALUES (NULL, '$cantidad', '$unidad', '$detalle', '$ruta', $id_usuario, '$archivo')";
         //$consulta = "INSERT INTO personas (nombre, pais, edad) VALUES('$nombre', '$pais', '$edad') ";			
         $resultado = $conexion->prepare($consulta);
         $resultado->execute(); 
@@ -40,7 +39,7 @@ switch($opcion){
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();   
 
-        $consulta = "SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes ORDER BY id_pendientes DESC LIMIT 1";
+        $consulta = "SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes where items_pendientes.id_usuarios='$id_usuario' ORDER BY id_pendientes DESC LIMIT 1";
         //$consulta = "SELECT id, nombre, pais, edad FROM personas ORDER BY id DESC LIMIT 1";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
@@ -84,7 +83,7 @@ switch($opcion){
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();   
 
-        $consulta = "SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes ORDER BY id_pendientes DESC LIMIT 1";
+        $consulta = "SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes where items_pendientes.id_usuarios='$id_usuario' ORDER BY id_pendientes DESC LIMIT 1";
         //$consulta = "SELECT id, nombre, pais, edad FROM personas ORDER BY id DESC LIMIT 1";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();

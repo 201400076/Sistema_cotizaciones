@@ -1,6 +1,6 @@
 <?php
     require('../modelo/configuracion.php');
-    class Conexion{
+    class Conexiones{
         private $conexion;
         
         public function __construct(){

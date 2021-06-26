@@ -70,33 +70,39 @@
 </head>
 <body class="fix-header card-no-border">
 <?php
+    session_start();
+    $nombre = $_SESSION['nombreUA'];
     $active = "";
     include_once("layouts/navegacionPendientes.php");
 
     require_once('../configuraciones/conexion.php');
-    $conn = new Conexion();
+    $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
     $empresas = "SELECT * FROM empresas";
     $queryEmpresas=$estadoConexion->query($empresas);
     
     //Se debe recuperar el id de la Solicitud
     $idSolicitud=$_GET["idSolicitud"];
+    $fechas = "SELECT fecha_ini_licitacion, fecha_fin_licitacion FROM solicitudes_cotizaciones WHERE id_solicitudes=".$idSolicitud;
+    $queryFechas = $estadoConexion->query($fechas);
+    $registroFechas=$queryFechas->fetch_array(MYSQLI_BOTH);
+    $fIni = $registroFechas['fecha_ini_licitacion'];
+    $fFin = $registroFechas['fecha_fin_licitacion'];   
 ?>
 <div class="container-fluid">
     
     <h2 style="text-align:center;"><strong>ENVIO DE CORREOS</strong></h2>
   
-    <form action="enviarCorreos.php?idSolicitud=<?php echo $idSolicitud?>" method="post" id="formulario">
+    <form action="enviarCorreos.php?idSolicitud=<?php echo $idSolicitud.'&ff='.$fFin?>" method="post" id="formulario">
         <div class="container">
             <div class="row">
                 <div class="col-md-6" >
                     <div style="width: 100%;">
-                        <label for="remitente" style="width: 25%;">Remitente:</label>  
-                        <input name="remitente" id="remitente" type="text" style="width: 50%;" required><br>
+                    <label for="remitente" style="width: 100%">Remitente : <strong style="font-style: italic; font-size: 18px; color: black;"><?php echo $nombre;?></strong></label><br>
                     </div>
                     <div>
-                        <label for="asunto" style="width: 25%;">Asunto:</label>  
-                        <input name="asunto" id="asunto" type="text" style="width: 50%;" required>
+                        <label for="fecInicio" style="width: 100%">Fecha Inicio Cotizaciones     : <strong style="font-style: italic; font-size: 18px; color: black;"><?php echo $fIni; ?></strong></label>  
+                        <label for="fecFin" style="width: 100%">Fecha Fin Cotizaciones     : <strong style="font-style: italic; font-size: 18px; color: black;"><?php echo $fFin;?></strong></label>  
                     </div>
                     <div>
                         <label for="archivo" style="width: 25%;">Archivo adjunto:</label>  
@@ -104,9 +110,13 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label for="asunto" style="width: 25%;">Asunto:</label>  
+                    <input name="asunto" id="asunto" type="text" style="width: 70%;" required>
                     <label for="descripcion" style="width: 25%;">Descripción:</label> 
                     <textarea name="descripcion" id="descripcion" style="width: 70%;"  cols="50%" rows="3" placeholder="Escriba el cuerpo del correo..." required></textarea> 
+                    
                 </div>
+
             </div>
             <hr>
         <div class="row">

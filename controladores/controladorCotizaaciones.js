@@ -61,13 +61,11 @@ $("#btnPedido").click(function(){
     
 
 $(document).on("click", ".btnEnviar", function(){  
-    
-
     $.ajax({        
         url:"../modelo/actualizarCotizacionEmpresa.php",
         type: "POST",
         dataType: "json",
-        data: {id_solicitud:id_solicitud,nombre_usu:nombre_usu},
+        data: {id_solicitud:id_solicitud,nombre_usu:nombre_usu,id_empresa:id_empresa},
         success: function(fila){  
             console.log(fila);                        
             if(fila==null){                                
@@ -85,7 +83,6 @@ var fila; //capturar la fila para editar o borrar el registro
 
 //botón cotizar
 $(document).on("click", ".cotizar", function(){    
-
     $("#formPersonas").trigger("reset");
     $(".modal-header").css("background-color", "#28a745");
     $(".modal-header").css("color", "white");
@@ -93,15 +90,16 @@ $(document).on("click", ".cotizar", function(){
     $("#cantidad").val(parseInt($(this).closest("tr").find('td:eq(1)').text()));     
     $("#modalCRUD").modal("show");  
 
-    id=parseInt($(this).closest("tr").find('td:eq(0)').text());
+    id_item=parseInt($(this).closest("tr").find('td:eq(0)').text());
+    console.log(id_item);
 });
 
 $(document).on("click", ".cotizado", function(){    
-
+    
     $("#formPersonas").trigger("reset");
     $(".modal-header1").css("background-color", "#17a2b8");
     $(".modal-header1").css("color", "white");
-    $(".modal-title1").text("COTIZACION");
+    $(".modal-title1").text("COTIZACION DE ITEM "+parseInt($(this).closest("tr").find('td:eq(0)').text()));   
     $(".modal-header1").css("text", "center");   
     id=parseInt($(this).closest("tr").find('td:eq(0)').text())      
     $("#modalCRUDJust"+id).modal("show");  
@@ -174,7 +172,7 @@ $('input[type="file"]').on('change', function(){
                     url:"../modelo/cotizacionItem.php",
                     type: "POST",
                     dataType: "json",
-                    data: {marca:marca,modelo:modelo,descripcion:descripcion,unit:unit,total:total,id:id},
+                    data: {marca:marca,modelo:modelo,descripcion:descripcion,unit:unit,total:total,id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud},
                     success: function(fila){  
                         console.log(fila);                        
                         if(fila==null){                                
