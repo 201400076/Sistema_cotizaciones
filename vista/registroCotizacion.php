@@ -1,10 +1,16 @@
 <?php
-    $id_solicitud=1;//$_GET['usuario'];
-    $id_empresa=2;
-    $nombre='LTD';//$_GET['nombre'];
+    session_start();
+    $estado=$_GET['estado'];
+    if($estado=='empresa'){        
+        include_once '../modelo/conexionPablo.php';        
+        include('../vista/layouts/navEmpresa.php'); 
+    }else{
+        include('../vista/layouts/navAdministracion.php'); 
+    }
+    $id_solicitud=$_GET['solicitud'];
+    $id_empresa=$_GET['empresa'];
+    $nombre=$_GET['nombre'];
     include_once '../modelo/conexionPablo.php';
-    $objeto = new Conexion();
-    $conexion = $objeto->Conectar();
     $id_pendientes=1;
     $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id_solicitud'";
     $resultado = $conexion->prepare($consulta);
@@ -35,27 +41,9 @@
 <script src="../librerias/js/sweetalert2.all.min.js"></script>
 </head>
 
-<body class="fix-header card-no-border"> 
-<nav id="header" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-4">
-<div class="container">
-    <div class="row">
-        <div class="col">
-        <a style="color=white">
-        <img src="../recursos/imagenes/icono.jpg"  class="mr-2">Sistema de Cotizaciones
-        </a>  
-        </div>
-    </div>                   
-    <div class="row">
-        <div class="col">
-            <label for="">Home</label>
-        </div>
-    </div> 
-</div>      
-</nav>   
-  
-<h1>Solicitud de Cotización</h1>
-<br>  
-<div class="container">
+<body> 
+
+<div class="container-fluid">
     <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">        
@@ -150,7 +138,7 @@
                 </div>
             </div>
     </div>  
-    <div class="container">
+    <div class="container-fluid">
         <div class="form-group" style="width:100%">    
             <div class="col-12">
                 <button type="button" id="btnEnviar" class="btn btn-dark text-center btn-block mt-2 mb-2 btnEnviar" data-toggle="modalJust">ENVIAR Y GUARDAR</button>
@@ -215,6 +203,7 @@
     var id_solicitud = '<?php echo $id_solicitud?>';
     var id_empresa = '<?php echo $id_empresa?>';
     var nombre_usu = '<?php echo $nombre?>';
+    var estado = '<?php echo $estado?>';
 </script>
 <script type="text/javascript" src="../controladores/controladorCotizaaciones.js"></script>  
 

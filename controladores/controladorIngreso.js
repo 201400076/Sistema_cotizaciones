@@ -1,25 +1,33 @@
 $('#ingresar').on('click', function(){    
+    let rol=document.getElementById('unidades').value;        
     usuario = $("#usuario").val();
     password = $("#password").val();  
     $.ajax({        
         url:"controladores/ingresoSolicitante.php",
         type: "POST",
         dataType: "json",
-        data: {usuario:usuario, password:password},
+        data: {usuario:usuario, password:password,rol:rol},
         success: function(fila){                          
-            if(fila!=null){  
-                console.log(fila);
-                console.log(!fila['estado_cotizador']);
-                if(fila['id_unidad']!=null){                    
-                    //redireccionA("vista/registroCotizacion.php?usuario="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']);
-                    //redireccionA("vista/empresasSolicitantes.php"); 
-                    redireccionA("ruta/rutas.php?ruta=mostrar&con=nueva");                   
-                }else if(fila['id_gasto']!=null){
-                    redireccionA("vista/solicitudes_vista.php");                    
-                }                              
+            if(fila!=null){
+                rol=fila['rolAsignado'];
+                switch (rol) {
+                    case 'Unidad Administrativa':
+                        redireccionA("ruta/rutas.php?ruta=mostrar&con=nueva");
+                        break;
+                    case 'Unidad de Gasto':
+                        redireccionA("vista/solicitudes_vista.php");
+                        break;
+                        case 'Empresa':
+                            solicitud=fila['id_solicitudes'];
+                            empresa=fila['id_empresa'];
+                            nombre=fila['user_cotizador'];                
+                            estado='empresa';
+                            redireccionA("vista/registroCotizacion.php?solicitud="+solicitud+"&empresa="+empresa+"&nombre="+nombre+"&estado="+estado);          
+                        break;                           
+                }
             }else{
-                alert("Se debe ingresar los datos que se le proporcionó en el correo electrónico");
-            }
+                alert("el usuario y contraseña son incorrectos");
+            }            
         }        
     });
 }) 

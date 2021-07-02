@@ -48,7 +48,13 @@ switch($opcion){
         $conexion = NULL;              
         break;      
     case 4://enviar pedido
-        $consulta= "INSERT INTO pedido(id_pedido,fecha,justificacion,id_usuarios) VALUES (null,'$fecha','$justificacion','$id_usuario')";
+        $consulta="SELECT u.id_unidad FROM unidad_gasto u, usuarioconrol us WHERE u.id_gasto=us.id_gasto AND us.id_usuarios='$id_usuario'";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        $administrativa=$data[0]['id_unidad'];
+        
+        $consulta= "INSERT INTO pedido(id_pedido,fecha,justificacion,id_usuarios,id_unidad) VALUES (null,'$fecha','$justificacion','$id_usuario','$administrativa')";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();   
         

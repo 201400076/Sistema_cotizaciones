@@ -8,7 +8,7 @@ $data=null;
         $objeto = new Conexion();
         $conexion = $objeto->Conectar();
 
-        $consulta = "DELETE FROM usuario_cotizador u WHERE u.user_cotizador='$id_solicitud' and u.id_solicitudes='$nombre_usu'";        	
+        $consulta = "DELETE FROM usuario_cotizador WHERE user_cotizador='$nombre_usu' and id_solicitudes='$id_solicitud'";        	
         $resultado = $conexion->prepare($consulta);
         $resultado->execute(); 
         

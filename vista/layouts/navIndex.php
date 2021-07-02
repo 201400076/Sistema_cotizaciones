@@ -16,3 +16,10 @@
     <link rel="stylesheet" type="text/css" href="vista/css/estiloFRU.css" media="screen" />    
   </head>
 <body>
+<div class="container-fluid">
+      <div class="row nav pt-2">
+        <div class=" col-10">          
+            <h1 class="pb-2">Sistema de cotizacion</h1>                         
+        </div>          
+      </div>               
+</div>

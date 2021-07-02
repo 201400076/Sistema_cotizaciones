@@ -1,14 +1,12 @@
 <?php
-    session_start();
-    echo $id_administrador=$_SESSION['administrador'];
-    echo $id_unidadAdmin=$_SESSION['unidadAdmin'];
+    session_start();    
     include('layouts/navAdministracion.php')
 ?>        
     <div class="container" style="width: 650px;margin-top: 0;">
         
         <h2>Empresa participante</h2>
         
-        <form action="../controladores/ingresoSolicitante.php" method="POST">            
+        <form action="  " method="POST">            
             <div class="row">
                 <div class="col-25">
                     <label for="usuario">Usuario:</label>
@@ -27,13 +25,13 @@
                 </div>
             </div>         
             <div class="row">
-                <div class="col-50">
+                <div class="col">
                 <button type="button" id="ingresar" class="btn btn-dark text-center btn-block mt-2 mb-2 ingresar" data-toggle="modalJust">Ingresar</button>
                 </div>                
             </div>
         </form>   
     </div>
-    <script src="../controladores/controladorIngreso.js"></script>
+    <script src="../controladores/ingresoEmpresaSolicitante.js"></script>
 <?php
   include('../vista/layouts/piePagina.php')
 ?>

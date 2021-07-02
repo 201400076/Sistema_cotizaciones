@@ -75,7 +75,11 @@ $(document).on("click", ".btnEnviar", function(){
             }
         }              
     });
-    window.location.href="../vista/empresasSolicitantes.php";                     
+    if(estado=='empresa'){
+        window.location.href="../../index.php";                     
+    }else{
+        window.location.href="../vista/empresasSolicitantes.php";                     
+    }
 });
 
 
@@ -183,7 +187,7 @@ $('input[type="file"]').on('change', function(){
                     }              
                 });
                 $("#modalCRUD").modal("hide");
-                window.location.href="../vista/registroCotizacion.php?usuario="+id_solicitud+"&nombre="+nombre_usu;
+                window.location.href="../vista/registroCotizacion.php?solicitud="+id_solicitud+"&empresa="+id_empresa+"&nombre="+nombre_usu+"&estado="+estado;
             }else{        
                 alert("Debe ingresar un precio unitario");
             }
