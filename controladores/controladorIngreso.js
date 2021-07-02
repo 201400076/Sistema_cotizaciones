@@ -1,12 +1,11 @@
 $('#ingresar').on('click', function(){    
     let rol=document.getElementById('unidades').value;        
     usuario = $("#usuario").val();
-    password = $("#password").val();  
-    $.ajax({        
-        url:"controladores/ingresoSolicitante.php",
+    password = $("#password").val();
+    $.ajax({
+        url: "controladores/ingresoSolicitante.php",
         type: "POST",
         dataType: "json",
-        data: {usuario:usuario, password:password,rol:rol},
         success: function(fila){                          
             if(fila!=null){
                 rol=fila['rolAsignado'];
@@ -30,9 +29,3 @@ $('#ingresar').on('click', function(){
             }            
         }        
     });
-}) 
-
-function redireccionA(url){
-    window.location.href=url;
-}
-    

@@ -1,6 +1,7 @@
 <?php
 
 require_once("../modelo/solicitud.php");
+
 class SolicitudesController{
 	private $model;
 	function __construct(){
