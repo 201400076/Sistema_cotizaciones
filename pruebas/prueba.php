@@ -1,28 +1,69 @@
 <?php
-    include_once '../modelo/conexionPablo.php';
-    $objeto = new Conexion();
-    $conexion = $objeto->Conectar();
-    $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='32'";
+$usuario = 'cotizacion';//(isset($_POST['usuario'])) ? $_POST['usuario'] : '';
+$password ='cotizacion';//(isset($_POST['password'])) ? $_POST['password'] : '';
+
+include_once '../modelo/conexionPablo.php';
+$objeto = new Conexion();
+$conexion = $objeto->Conectar();
+$fila=null;
+$exite=false;
+
+    $consulta = "SELECT * FROM usuarioconrol r, usuarios u WHERE r.id_usuarios=u.id_usuarios";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
-    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
 
-    var_dump($data);
+    foreach($data as $d){
+            //if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
+        if($usuario==$d['usuario'] && $password==$d['password']){
+            $exite=true;
+            $fila=$d;
+            if($d['id_unidad']!=null){
+                $unidad=$d['id_unidad'];
+                $consulta = "SELECT nombres,apellidos,rolAsignado,nombre_unidad FROM unidad_administrativa a, usuarios u, usuarioconrol r WHERE r.id_unidad=a.id_unidad AND r.id_usuarios=u.id_usuarios and a.id_unidad='$unidad'";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                $fila=$data1[0];
+                session_start();
+                $_SESSION["administrador"]=$d['id_usuarios'];
+                $_SESSION["unidadAdmin"]=$d['id_unidad'];
+                $fullName=$d['nombres']." ".$d['apellidos'];
+                $_SESSION["nombreUA"]=$fullName;                
+                break;
+            }elseif($d['id_gasto']!=null){
+                $unidad=$d['id_gasto'];
+                $consulta = "SELECT nombres,apellidos,rolAsignado,nombre_gasto FROM unidad_gasto a, usuarios u, usuarioconrol r WHERE r.id_gasto=a.id_gasto AND r.id_usuarios=u.id_usuarios and a.id_gasto='$unidad'";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                $fila=$data1[0];
+                session_start();
+                $_SESSION["usuario"]=$d['id_usuarios'];
+                $_SESSION["unidadGasto"]=$d['id_gasto'];
+                $fullName=$d['nombres']." ".$d['apellidos'];
+                $_SESSION["nombreUG"]=$fullName;
+                break;
 
-    $consulta="SELECT * FROM `cotizacion_items` WHERE id_solicitudes=32";
-    $resultado = $conexion->prepare($consulta);
-    $resultado->execute();
-    $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
-    var_dump($data1);
-    
-    foreach($data as $a){
-        $id=$a['id_items'];
-        echo $a['id_items'].'--';
-        foreach($data1 as $d){
-            if($d['id_items']==$id){
-                echo $d['precio_parcial'].' -';
             }
         }
-        echo '<br>';
+    }
+    if(!$exite){        
+        $consulta = "SELECT * FROM usuario_cotizador";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+        foreach($data as $d){
+            if($usuario==$d['user_cotizador'] && $password==$d['password_cotizador']){
+                $consulta = "SELECT nombre_empresa,rolAsignado FROM usuario_cotizador u, empresas e WHERE e.id_empresa=u.id_empresa and u.user_cotizador='$usuario' AND u.password_cotizador='$password'";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                var_dump($data1);
+                $exite=true;
+                $fila=$data1[0];                      
+                    break;
+            }
+        }
     }
 ?>

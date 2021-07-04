@@ -14,6 +14,7 @@
     <link href="vista/css/headers.css" rel="stylesheet">
     <script src="librerias/bootstrap/jjs/bootstrap.bundle.min.js"></script>      
     <link rel="stylesheet" type="text/css" href="vista/css/estiloFRU.css" media="screen" />    
+    <script src="librerias/js/sweetalert2.all.min.js"></script>
   </head>
 <body>
 <div class="container-fluid">

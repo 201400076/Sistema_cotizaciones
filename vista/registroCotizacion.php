@@ -1,15 +1,15 @@
 <?php
     session_start();
-    $estado=$_GET['estado'];
+    $estado='empresa';//$_GET['estado'];
     if($estado=='empresa'){        
         include_once '../modelo/conexionPablo.php';        
         include('../vista/layouts/navEmpresa.php'); 
     }else{
         include('../vista/layouts/navAdministracion.php'); 
     }
-    $id_solicitud=$_GET['solicitud'];
-    $id_empresa=$_GET['empresa'];
-    $nombre=$_GET['nombre'];
+    $id_solicitud=32;//$_GET['solicitud'];
+    $id_empresa=2;//$_GET['empresa'];
+    $nombre='cotizacion';//$_GET['nombre'];
     include_once '../modelo/conexionPablo.php';
     $id_pendientes=1;
     $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id_solicitud'";
@@ -25,7 +25,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="shortcut icon" href="#" />  
-<title>Tutorial DataTables</title>
+<title></title>
   
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="../librerias/css/bootstrap.min.css">
@@ -55,6 +55,11 @@
                             <th>unidad</th>                                
                             <th>detalle</th>  
                             <th>archivo</th>  
+                            <th>marca</th>  
+                            <th>modelo</th>  
+                            <th>descripcion</th>  
+                            <th>p/unitario</th>  
+                            <th>p/parcial</th>  
                             <th>Acciones</th>                            
                         </tr>
                     </thead>
@@ -159,6 +164,22 @@
     <form id="formPersonas">    
         <div class="modal-body">
             <div class="form-group">
+                <label for="descripcion" class="col-form-label">DESCRIPCION:</label>
+                <input type="text" class="form-control descripcion" id="descripcion">
+            </div>  
+            <div class="form-group">
+                <label for="unit" class="col-form-label">PRECIO UNITARIO:</label>
+                <input type="number" class="form-control unit" oninput="calcular()" step="0.001" id="unit" min=1 max=1000000>
+            </div>                
+            <div class="form-group">
+                <label for="cantidad" class="col-form-label">CANTIDAD:</label>
+                <input type="number" class="form-control cantidad"  readonly="readonly"  oninput="calcular()" id="cantidad">       
+            </div>
+            <div class="form-group">
+                <label for="total" class="col-form-label">PRECIO PARCIAL:</label>
+                <input type="number" class="form-control total"  readonly="readonly" oninput="calcular()" id="total">        
+            </div>                         
+            <div class="form-group">
                 <label for="marca" class="col-form-label">MARCA:</label>
                 <input type="text" class="form-control marca" id="marca">
             </div>  
@@ -166,22 +187,6 @@
                 <label for="modelo" class="col-form-label">MODELO:</label>
                 <input type="text" class="form-control modelo" id="modelo">
             </div>  
-            <div class="form-group">
-                <label for="descripcion" class="col-form-label">DESCRIPCION:</label>
-                <input type="text" class="form-control descripcion" id="descripcion">
-            </div>  
-            <div class="form-group">
-                <label for="cantidad" class="col-form-label">CANTIDAD:</label>
-                <input type="number" class="form-control cantidad"  readonly="readonly"  oninput="calcular()" id="cantidad">       
-            </div>
-            <div class="form-group">
-                <label for="unit" class="col-form-label">PRECIO UNITARIO:</label>
-                <input type="number" class="form-control unit" oninput="calcular()" step="0.001" id="unit" min=1 max=1000000>
-            </div>                
-            <div class="form-group">
-                <label for="total" class="col-form-label">PRECIO PARCIAL:</label>
-                <input type="number" class="form-control total"  readonly="readonly" oninput="calcular()" id="total">        
-            </div>                         
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>

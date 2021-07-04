@@ -1,31 +1,48 @@
-$('#ingresar').on('click', function(){    
-    let rol=document.getElementById('unidades').value;        
+$('#ingresar').on('click', function() {
     usuario = $("#usuario").val();
     password = $("#password").val();
     $.ajax({
         url: "controladores/ingresoSolicitante.php",
         type: "POST",
         dataType: "json",
-        success: function(fila){                          
-            if(fila!=null){
-                rol=fila['rolAsignado'];
-                switch (rol) {
+        data: { usuario: usuario, password: password },
+        success: function(fila) {
+            if (fila != null) {
+                console.log(fila);
+                switch (fila['rolAsignado']) {
                     case 'Unidad Administrativa':
+                        rol =fila['rolAsignado'];
+                        nombre=fila['nombres']+" "+fila['apellidos'];
+                        unidad=fila['nombre_unidad'];
+                        alert("Bienvenido "+nombre+"\nIngreso con la Unidad Administrativa: "+unidad);
                         redireccionA("ruta/rutas.php?ruta=mostrar&con=nueva");
-                        break;
-                    case 'Unidad de Gasto':
-                        redireccionA("vista/solicitudes_vista.php");
-                        break;
+                        break;            
+                        case 'Unidad de Gasto':
+                            rol =fila['rolAsignado'];
+                            nombre=fila['nombres']+" "+fila['apellidos'];
+                            unidad=fila['nombre_gasto'];
+                            id_gasto=fila['id_gasto'];
+                            alert("Bienvenido "+nombre+"\nIngreso con la Unidad de Gasto: "+unidad);
+                            redireccionA("vista/solicitudes_vista.php?id_unidad="+fila['id_gasto']);
+                        break;            
                         case 'Empresa':
-                            solicitud=fila['id_solicitudes'];
-                            empresa=fila['id_empresa'];
-                            nombre=fila['user_cotizador'];                
-                            estado='empresa';
-                            redireccionA("vista/registroCotizacion.php?solicitud="+solicitud+"&empresa="+empresa+"&nombre="+nombre+"&estado="+estado);          
-                        break;                           
+                            rol =fila['rolAsignado'];
+                            nombre=fila['nombre_empresa'];
+                            alert("Bienvenido empresa: "+nombre);
+                            //redireccionA("vista/registroCotizacion.php?usuario="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']);
+                        break;            
                 }
-            }else{
-                alert("el usuario y contraseña son incorrectos");
-            }            
-        }        
+                if (fila['id_unidad'] != null) {
+                    //redireccionA("ruta/rutas.php?ruta=mostrar&con=nueva");
+                } else if (fila['id_gasto'] != null) {
+                }
+            } else { 
+                alert("Se debe ingresar los datos que se le proporcionó en el correo electrónico");
+            }
+        }
     });
+})
+
+function redireccionA(url) {
+    window.location.href = url;
+}
