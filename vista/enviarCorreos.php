@@ -111,8 +111,9 @@ function generarPassword(){
 function registraUsuarioTemporal($user, $password, $idEmpresa, $estado, $idSolicitud){
     global $estadoconexion;
     $pass = hashPassword($password);
-    $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes) VALUES(?,?,?,?,?)");
-    $stmt->bind_param("ssiii", $user, $pass, $idEmpresa, $estado, $idSolicitud);
+    $rol = 'Empresa';
+    $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes, rolAsignado) VALUES(?,?,?,?,?,?)");
+    $stmt->bind_param("ssiiis", $user, $pass, $idEmpresa, $estado, $idSolicitud,$rol);
     if($stmt->execute()){
         return $estadoconexion->insert_id;
     }else{
