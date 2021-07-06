@@ -1,21 +1,23 @@
 <?php
     session_start();
     $estado='empresa';//$_GET['estado'];
-    if($estado=='empresa'){        
         include_once '../modelo/conexionPablo.php';        
         include('../vista/layouts/navEmpresa.php'); 
-    }else{
-        include('../vista/layouts/navAdministracion.php'); 
-    }
-    $id_solicitud=32;//$_GET['solicitud'];
-    $id_empresa=2;//$_GET['empresa'];
-    $nombre='cotizacion';//$_GET['nombre'];
+    
+    $id_solicitud=$_GET['solicitud'];
+    $id_empresa=$_GET['empresa'];
+    $nombre=$_GET['nombre'];
     include_once '../modelo/conexionPablo.php';
     $id_pendientes=1;
     $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id_solicitud'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
+    $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario FROM cotizacion_items i, solicitudes s WHERE i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and i.id_empresa='$id_empresa'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -71,70 +73,35 @@
                             <td><?php echo $dat['id_items'] ?></td>
                             <td><?php echo $dat['cantidad'] ?></td>
                             <td><?php echo $dat['unidad'] ?></td>
-                            <td><?php echo $dat['detalle'] ?></td>
+                            <td><?php echo $dat['detalle'] ?></td>                            
                             <td>
-                                <a target='_black' href="/proyectos/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
-                            </td>  
-                            <td></td>                        
-                        </tr>
-                        <div class="modal fade" id="<?php echo 'modalCRUDJust'.$dat['id_items'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header1">
-                                        <h5 class=" text-center modal-title1" id="exampleModalLabel">Cotizaciones</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>    
-                                    <?php   
-                                        $id_items= $dat['id_items'];                                                                                                                    
-                                        $consulta="SELECT id_item_cotizacion, marca, modelo, descripcion, precio_unitario, precio_parcial, id_items FROM cotizacion_items c WHERE c.id_items='$id_items'";
-                                        $resultado = $conexion->prepare($consulta);
-                                        $resultado->execute();
-                                        $cotizacion=$resultado->fetchAll(PDO::FETCH_ASSOC);                                                                           
-                                    ?>          
-                                    <div class="container">
-                                            <div class="row align-items-center">                                
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><b>Marca</b></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">                                                    
-                                                    <p><b>Modelo</b></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><b>descripcion</b></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><b>P/Unitario</b></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><b>P/Total</b></p>                                                                                                                                                                                               
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php foreach($cotizacion as $c){?>
-                                        <div class="container">
-                                            <div class="row ">                                
-                                            <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><?php echo $c['marca']?></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><?php echo $c['modelo']?></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><?php echo $c['descripcion']?></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><?php echo $c['precio_unitario'].' Bs.-'?></p>                                                                                                                                                                                               
-                                                </div>
-                                                <div class="col-sm border border-dark border-top-0 border-left-0 border-right-0">
-                                                    <p><?php echo $c['precio_parcial']. ' Bs.-'?></p>                                                                                                                                                                                               
-                                                </div>
-                                            </div>
-                                        </div>                           
-                                    <?php }?>
-                                </div>                           
-                            </div>                           
-                        </div>
+                                <a target='_black' href="/Sistema_cotizaciones/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
+                            </td>
+                            <?php  
+                            $item_cotizacion=false;                          
+                            foreach($data1 as $d) {                                                        
+                                if($dat['id_items']==$d['id_items']){
+                                    echo "<td>".$d['descripcion']."</td>";
+                                    echo "<td>".$d['marca']."</td>";
+                                    echo "<td>".$d['modelo']."</td>";
+                                    echo "<td>".$d['precio_unitario']."</td>";
+                                    echo "<td>".$d['precio_parcial']."</td>";                                        
+                                    echo "<td></td>";
+                                    $item_cotizacion=true;
+                                    break;
+                                }
+                            }
+                            if(!$item_cotizacion){
+                                echo "<td></td>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";                                                                            
+                                    echo "<td></td>";                                                                            
+                            }
+                            ?>                            
+                            
+                        </tr>                        
                         <?php
                             }
                         ?>                                

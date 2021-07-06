@@ -23,7 +23,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.83.1">
-    <title>Headers · Bootstrap v5.0</title>
+    <title></title>
     <!-- Bootstrap core CSS -->
     <link href="../librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->

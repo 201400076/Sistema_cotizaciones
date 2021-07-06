@@ -3,7 +3,7 @@ $(document).ready(function(){
        "columnDefs":[{
         "targets": -1,
         "data":null,
-        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success cotizar' >COTIZAR</button><button class='btn btn-info cotizado' >COTIZADO</button></div></div>"  
+        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success cotizar' >COTIZAR</button></div></div>"  
        }],
         
         //Para cambiar el lenguaje a español
@@ -72,30 +72,58 @@ $(document).on("click", ".btnEnviar", function(){
                 alert("Error no puedo registrar la cotizacion");
             }else{                
                 alert("Se agrego correctamente tu cotizacion");
+                window.location.href = "../index.php";
             }
         }              
-    });
-    if(estado=='empresa'){
-        window.location.href="../../index.php";                     
-    }else{
-        window.location.href="../vista/empresasSolicitantes.php";                     
-    }
+    });   
 });
 
 
-var fila; //capturar la fila para editar o borrar el registro    
 
 //botón cotizar
-$(document).on("click", ".cotizar", function(){    
+$(document).on("click", ".cotizar", function(){        
     $("#formPersonas").trigger("reset");
-    $(".modal-header").css("background-color", "#28a745");
-    $(".modal-header").css("color", "white");
+    id_item=parseInt($(this).closest("tr").find('td:eq(0)').text());
     $(".modal-title").text("COTIZACION DE ITEM "+parseInt($(this).closest("tr").find('td:eq(0)').text()));   
     $("#cantidad").val(parseInt($(this).closest("tr").find('td:eq(1)').text()));     
-    $("#modalCRUD").modal("show");  
-
-    id_item=parseInt($(this).closest("tr").find('td:eq(0)').text());
-    console.log(id_item);
+    console.log(parseInt($(this).closest("tr").find('td:eq(1)').text()));
+    
+    $.ajax({        
+        url:"../modelo/actualizarPedido.php",
+        type: "POST",
+        dataType: "json",
+        data: {id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud},
+        success: function(fila){  
+            console.log(fila);
+            if(fila.length==0){
+                console.log('null');
+                $(".modal-header").css("background-color", "#28a745");
+                $(".modal-header").css("color", "white");
+                $("#modalCRUD").modal("show");  
+            }else{
+                marca=fila[0]['marca'];
+                modelo=fila[0]['modelo'];
+                descripcion=fila[0]['descripcion'];
+                total=fila[0]['precio_parcial'];
+                unit=fila[0]['precio_unitario'];
+                cantidad=fila[0]['cantidad'];
+                $("#formPersonas").trigger("reset");
+                $(".modal-header").css("background-color", "#FF5733");
+                $(".modal-header").css("color", "white");
+                
+                $("#marca").val(marca);
+                $("#modelo").val(modelo);
+                $("#descripcion").val(descripcion);
+                $("#total").val(total);
+                $("#unit").val(unit);
+                $("#cantidad").val(cantidad);
+                
+                $("#modalCRUD").modal("show");              
+            }
+        }              
+    });
+    
+    
 });
 
 $(document).on("click", ".cotizado", function(){    

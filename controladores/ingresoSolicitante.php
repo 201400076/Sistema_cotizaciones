@@ -26,10 +26,10 @@ $exite=false;
                 $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
                 $fila=$data1[0];
                 session_start();
-                $_SESSION["administrador"]=$d['id_usuarios'];
-                $_SESSION["unidadAdmin"]=$d['id_unidad'];
+                $_SESSION["usuario"]=$d['id_usuarios'];
+                $_SESSION["unidad"]=$d['id_unidad'];
                 $fullName=$d['nombres']." ".$d['apellidos'];
-                $_SESSION["nombreUA"]=$fullName;                
+                $_SESSION["nombre_usuario"]=$fullName;                
                 break;
             }elseif($d['id_gasto']!=null){
                 $unidad=$d['id_gasto'];
@@ -40,11 +40,10 @@ $exite=false;
                 $fila=$data1[0];
                 session_start();
                 $_SESSION["usuario"]=$d['id_usuarios'];
-                $_SESSION["unidadGasto"]=$d['id_gasto'];
+                $_SESSION["unidad"]=$d['id_gasto'];
                 $fullName=$d['nombres']." ".$d['apellidos'];
-                $_SESSION["nombreUG"]=$fullName;
+                $_SESSION["nombre_usuario"]=$fullName;
                 break;
-
             }
         }
     }
@@ -55,7 +54,7 @@ $exite=false;
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
         foreach($data as $d){
             if($usuario==$d['user_cotizador'] && $password==$d['password_cotizador']){
-                $consulta = "SELECT nombre_empresa,rolAsignado FROM usuario_cotizador u, empresas e WHERE e.id_empresa=u.id_empresa and u.user_cotizador='$usuario' AND u.password_cotizador='$password'";
+                $consulta = "SELECT nombre_empresa,rolAsignado,u.estado_cotizador, e.id_empresa,u.id_solicitudes,u.user_cotizador FROM usuario_cotizador u, empresas e WHERE e.id_empresa=u.id_empresa and u.user_cotizador='$usuario'";
                 $resultado = $conexion->prepare($consulta);
                 $resultado->execute();
                 $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  

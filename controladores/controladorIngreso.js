@@ -28,8 +28,14 @@ $('#ingresar').on('click', function() {
                         case 'Empresa':
                             rol =fila['rolAsignado'];
                             nombre=fila['nombre_empresa'];
-                            alert("Bienvenido empresa: "+nombre);
-                            //redireccionA("vista/registroCotizacion.php?usuario="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']);
+                            estado=fila['estado_cotizador'];
+                            id_empresa=fila['id_empresa'];
+                            if(estado==1){
+                                alert("Esta cotizacion ya fue registrada");
+                            }else{
+                                alert("Bienvenido empresa: "+nombre);
+                                redireccionA("vista/registroCotizacion.php?solicitud="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']+"&empresa="+fila['id_empresa']);
+                            }
                         break;            
                 }
                 if (fila['id_unidad'] != null) {

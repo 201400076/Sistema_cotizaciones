@@ -5,7 +5,7 @@
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $consulta="SELECT count(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_pendientes'";
+    $consulta="SELECT count(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_pendientes' and pedido.id_gasto='$id_unidad'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -72,7 +72,7 @@
                                 <td><?php echo $dat['cantidad'] ?></td>
                                 <td><?php echo $dat['unidad'] ?></td>
                                 <td><?php echo $dat['detalle'] ?></td>
-                                <td><?php echo $dat['archivo'] ?></td>    
+                                <td><a target='_black' href="/Sistema_cotizaciones/archivos/<?php echo $dat['archivo']?>" type='button'> <?php echo $dat['archivo']?> </a></td>                                    
                                 <td></td>
                             </tr>
                             <?php
@@ -153,14 +153,14 @@
     </div>
 </div>  
       
-    <!-- jQuery, Popper.js, Bootstrap JS -->
-    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>
+    <!-- jQuery, Popper.js, Bootstrap JS -->    
     <script src="../librerias/popper/popper.min.js"></script>
       
     <!-- datatables JS -->
     <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
      <script>
-        var id_usu=<?php echo $id_pendientes?>
+        var id_usu='<?php echo $id_pendientes?>';
+        var id_unidad='<?php echo $id_unidad?>';
      </script>
         <script type="text/javascript" src="../controladores/controladorSolicitudPedido.js"></script>  
     </div>
