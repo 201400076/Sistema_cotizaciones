@@ -66,11 +66,9 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         }
 
         registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud);
-
-        //Archivos adjuntos
         $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion.pdf";
 
-        $mail->addAttachment($rutaArchivo);    //Optional name
+        $mail->addAttachment($rutaArchivo); 
         $mail->addAttachment("../archivos/cotizacionesIniciales/detallesItems.pdf");
         $detalles = "<br /><br />Para realizar su cotización puede hacerlo de dos formas posibles, a continuación se detallan las mismas:";
         $paso1 = "<br /><b>Opción 1:</b><br />  1. Descargar e imprimir el documento pdf adjunto en la presente.<br />  2. Llenar la cotización manualmente.<br />  3. Enviar la cotización a nuestras oficinas.";

@@ -58,7 +58,7 @@
 <body class="fix-header card-no-border">
     <?php
         session_start();
-        $unidadAdmin = $_SESSION['unidadAdmin'];
+        $unidadAdmin = $_SESSION['unidad'];
 
         require_once('../configuraciones/conexion.php');
         $conn = new Conexiones();
@@ -72,9 +72,6 @@
         $cotizaciones = "SELECT * FROM solicitudes_cotizaciones, pedido, solicitudes WHERE solicitudes_cotizaciones.id_solicitudes=solicitudes.id_solicitudes
                                     AND pedido.id_unidad=".$unidadAdmin." AND solicitudes.id_pedido=pedido.id_pedido";
         $queryCotizaciones=$estadoConexion->query($cotizaciones);
-        
-        //Se debe recuperar el id de la Solicitud
-        ////$idSolicitud=$_GET["idSolicitud"];
     ?>
 
     <section class="mt-4">
@@ -99,7 +96,6 @@
                         <thead class="text-center">
                             <tr>
                                 <th># SOLICITUD</th>
-                                <!-- <th>FECHA</th> -->
                                 <th>TIPO DE SOLICITUD</th>
                                 <th>ESTADO</th>
                                 <th>ACCION</th>                                                              
@@ -158,26 +154,15 @@
 
     <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>  
-
-
-
-
-
-
-
-
     </div>
     <script src="../librerias/popper/popper.min.js"></script>
     <script src="../librerias/bootstrap/js/bootstrap.min.js"></script>
-      
-    <!-- datatables JS -->
     <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
-     
     <script type="text/javascript" src="../controladores/controladorVistaDetalle.js"></script>  
     
 </body>
 
 </html>
 <?php
-        //include_once("../vista/layouts/piePagina.php");
-    ?>
+    //include_once("../vista/layouts/piePagina.php");
+?>
