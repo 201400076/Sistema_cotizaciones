@@ -1,25 +1,30 @@
 <?php
     session_start();
     $id_pendientes=$_SESSION['usuario'];
+    $id_unidad=$_GET["id_unidad"];
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $consulta="SELECT max(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_pendientes'";
+    $consulta="SELECT count(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_pendientes' and pedido.id_gasto='$id_unidad'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
-    $nro=$data1['0']['max(pedido.id_pedido)']+1;
+    $nro=$data1['0']['count(pedido.id_pedido)']+1;
     
     $consulta="SELECT nombres,apellidos FROM usuarios WHERE usuarios.id_usuarios='$id_pendientes'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
     $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];
-
-    $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes WHERE items_pendientes.id_usuarios='$id_pendientes'";
+    $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes i WHERE i.id_usuarios='$id_pendientes' and i.id_gasto='$id_unidad'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
-    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);    
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    
+    $consulta="SELECT * FROM unidad_gasto a WHERE a.id_gasto='$id_unidad'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $unidad_gasto=$resultado->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?php
     include('layouts/navGasto.php')
@@ -67,7 +72,7 @@
                                 <td><?php echo $dat['cantidad'] ?></td>
                                 <td><?php echo $dat['unidad'] ?></td>
                                 <td><?php echo $dat['detalle'] ?></td>
-                                <td><?php echo $dat['archivo'] ?></td>    
+                                <td><a target='_black' href="/Sistema_cotizaciones/archivos/<?php echo $dat['archivo']?>" type='button'> <?php echo $dat['archivo']?> </a></td>                                    
                                 <td></td>
                             </tr>
                             <?php
@@ -148,15 +153,14 @@
     </div>
 </div>  
       
-    <!-- jQuery, Popper.js, Bootstrap JS -->
-    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>
+    <!-- jQuery, Popper.js, Bootstrap JS -->    
     <script src="../librerias/popper/popper.min.js"></script>
-    <script src="../librerias/bootstrap/js/bootstrap.min.js"></script>
       
     <!-- datatables JS -->
     <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
      <script>
-        var id_usu=<?php echo $id_pendientes?>
+        var id_usu='<?php echo $id_pendientes?>';
+        var id_unidad='<?php echo $id_unidad?>';
      </script>
         <script type="text/javascript" src="../controladores/controladorSolicitudPedido.js"></script>  
     </div>

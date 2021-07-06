@@ -1,76 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../librerias/js/sweetalert2.all.min.js"></script>
-    <script src="../librerias/js/jquery-3.6.0.js"></script>
-    <title>Document</title>
-    <script src="funciones.js"></script>     
-    <link rel="stylesheet" href="../librerias/sweet/dist/sweetalert2.min.css">
-
-</head>
-<body>    
 <?php
-    if(isset($_POST["ej"])){
+$usuario = 'cotizacion';//(isset($_POST['usuario'])) ? $_POST['usuario'] : '';
+$password ='cotizacion';//(isset($_POST['password'])) ? $_POST['password'] : '';
 
-        $prueba=empty("");
-        echo "<script language='javascript'>
-        Swal.fire('agrego un item');
-        </script>";
-        
+include_once '../modelo/conexionPablo.php';
+$objeto = new Conexion();
+$conexion = $objeto->Conectar();
+$fila=null;
+$exite=false;
+
+    $consulta = "SELECT * FROM usuarioconrol r, usuarios u WHERE r.id_usuarios=u.id_usuarios";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+
+    foreach($data as $d){
+            //if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
+        if($usuario==$d['usuario'] && $password==$d['password']){
+            $exite=true;
+            $fila=$d;
+            if($d['id_unidad']!=null){
+                $unidad=$d['id_unidad'];
+                $consulta = "SELECT nombres,apellidos,rolAsignado,nombre_unidad FROM unidad_administrativa a, usuarios u, usuarioconrol r WHERE r.id_unidad=a.id_unidad AND r.id_usuarios=u.id_usuarios and a.id_unidad='$unidad'";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                $fila=$data1[0];
+                session_start();
+                $_SESSION["administrador"]=$d['id_usuarios'];
+                $_SESSION["unidadAdmin"]=$d['id_unidad'];
+                $fullName=$d['nombres']." ".$d['apellidos'];
+                $_SESSION["nombreUA"]=$fullName;                
+                break;
+            }elseif($d['id_gasto']!=null){
+                $unidad=$d['id_gasto'];
+                $consulta = "SELECT nombres,apellidos,rolAsignado,nombre_gasto FROM unidad_gasto a, usuarios u, usuarioconrol r WHERE r.id_gasto=a.id_gasto AND r.id_usuarios=u.id_usuarios and a.id_gasto='$unidad'";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                $fila=$data1[0];
+                session_start();
+                $_SESSION["usuario"]=$d['id_usuarios'];
+                $_SESSION["unidadGasto"]=$d['id_gasto'];
+                $fullName=$d['nombres']." ".$d['apellidos'];
+                $_SESSION["nombreUG"]=$fullName;
+                break;
+
+            }
+        }
+    }
+    if(!$exite){        
+        $consulta = "SELECT * FROM usuario_cotizador";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+        foreach($data as $d){
+            if($usuario==$d['user_cotizador'] && $password==$d['password_cotizador']){
+                $consulta = "SELECT nombre_empresa,rolAsignado FROM usuario_cotizador u, empresas e WHERE e.id_empresa=u.id_empresa and u.user_cotizador='$usuario' AND u.password_cotizador='$password'";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                var_dump($data1);
+                $exite=true;
+                $fila=$data1[0];                      
+                    break;
+            }
+        }
     }
 ?>
-<form action="" method="post">
-    <input type="submit" name="ej" class="ej" id="ej">
-</form>
-<div class="botones">
-    <button id="botonAceptar">Aceptar</button>
-    <button id="botonRechazar">Rechazar</button>        
-</div>
-
-<script>
-        $('#botonAceptar').on('click', function(){
-            Swal.fire({
-                title: 'Esta seguro de aceptar esta Solicitud?',
-                text: "",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'SI',
-                cancelButtonText: 'NO'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('SOLICITUD ACEPTADA!','','success')
-                }else{
-                    Swal.fire('AUTORIZACION CANCELADA!','Se cancelo la autorizacion de la Solicitud','info')
-                }
-            })
-        })
-
-        $('#botonRechazar').on('click', function(){
-            Swal.fire({
-                input: 'textarea',
-                inputLabel: 'Justificacion de Rechazo de Solicitud',
-                inputPlaceholder: 'Ingrese los motivos por el cual se rechazo la solicitud de Pedido...',
-                inputAttributes: {
-                    'aria-label': 'Type your message here'
-                },
-                showCancelButton: true
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('SOLICITUD RECHAZADA!','Se registro la justificacion para el rechazo de la solicitud','success')
-                }else{
-                    Swal.fire('RECHAZO DE SOLICITUD CANCELADA!','Se cancelo el rechazo de la Solicitud','info')
-                }
-            })
-
-                if (text) {
-                Swal.fire(text)
-                }
-        })   
-    </script>
-</body>
-</html>

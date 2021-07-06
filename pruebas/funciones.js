@@ -1,12 +1,9 @@
-function proceso(){
-    var nombre = $('#nombre').val();    
-    $.post('p.php',{nom:nombre},function(data){
-        window.location.replace('p.php');
-        if(data!=null){
-            alert(data['nombre']);
-        }else{
-            alert("no envio");
-        }
-    });
-
-}
+    
+$("#enviar").click(function(){
+    avion=$.trim($("#avion").val());
+    if(avion==''){
+        alert(avion);
+    }else{
+        alert("seleccione dato");
+    }
+}); 
