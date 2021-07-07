@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -13,7 +12,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    
     <!-- Custom CSS -->
     <link href="../librerias/css/styles.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -33,16 +31,7 @@
     <script src="../librerias/js/sweetalert2.all.min.js"></script>
     <script src="../librerias/js/jquery-3.6.0.js"></script>
     <title>Envio de Correos</title>
-    <link rel="stylesheet" href="css/estilosSolicitud.css?v=<?php echo(rand()); ?>" />
-      
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../librerias/css/bootstrap.min.css">
-    <!-- CSS personalizado --> 
-    <!--<link rel="stylesheet" href="css/estilosSolicitud.css">  -->
-      
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!--datables CSS básico-->
-    <link rel="stylesheet" type="text/css" href="../librerias/datatables/datatables.min.css"/>
+
     <!--datables estilo bootstrap 4 CSS-->  
     <link rel="stylesheet"  type="text/css" href="../librerias/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"> 
 
@@ -71,9 +60,9 @@
 <body class="fix-header card-no-border">
 <?php
     session_start();
-    $nombre = $_SESSION['nombreUA'];
-    $active = "";
-    include_once("layouts/navegacionPendientes.php");
+    $nombre = $_SESSION['nombre_usuario'];
+    //$active = "";
+    //include_once("layouts/navegacionPendientes.php");
 
     require_once('../configuraciones/conexion.php');
     $conn = new Conexiones();
@@ -89,12 +78,12 @@
     $fIni = $registroFechas['fecha_ini_licitacion'];
     $fFin = $registroFechas['fecha_fin_licitacion'];   
 ?>
-<div class="container-fluid">
+
     
     <h2 style="text-align:center;"><strong>ENVIO DE CORREOS</strong></h2>
   
     <form action="enviarCorreos.php?idSolicitud=<?php echo $idSolicitud.'&ff='.$fFin?>" method="post" id="formulario">
-        <div class="container">
+        <div class="container" style="width: 100%;">
             <div class="row">
                 <div class="col-md-6" >
                     <div style="width: 100%;">
@@ -174,7 +163,6 @@
         </div>
     </div>
     
-</div>
 
     <script>
         var idSolicitud = '<?php echo($idSolicitud);?>';

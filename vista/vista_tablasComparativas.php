@@ -1,6 +1,3 @@
-<?php
-  
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +10,8 @@
 </head>
 <body>
     <?php
-        //$active = "";
-        //require_once '../vista/layouts/navegacionPendientes.php';
+        $active = "";
+        require_once '../vista/layouts/navegacionPendientes.php';
         require_once('../configuraciones/conexion.php');
         //require_once('../controladores/solicitudesController.php');
         require_once('../controladores/controlador_tablasComparativas.php');
@@ -30,12 +27,10 @@
         $registro=$queryCoti->fetch_array(MYSQLI_BOTH);
         //echo $registro['id_solicitud_cotizacion'];
 
-        $empresas = "SELECT * FROM usuario_cotizador, empresas WHERE id_solicitudes=".$id_solicitud." AND empresas.id_empresa=usuario_cotizador.id_empresa";
+        $empresas = "SELECT * FROM usuario_cotizador, empresas WHERE id_solicitudes=".$id_solicitud." AND empresas.id_empresa=usuario_cotizador.id_empresa AND usuario_cotizador.estado_cotizador=1";
         $queryEmpresas=$estadoConexion->query($empresas);
 
-        session_start();
-        $unidadAdmin = $_SESSION['unidad'];
-        include("layouts/navAdministracion.php");
+
     ?>
     <h1 style="text-align: center;">Tablas Comparativas</h1>
     <h2 style="text-align: center;">Solicitud de Cotizacion #<?php echo $id_solicitud;?></h2>
