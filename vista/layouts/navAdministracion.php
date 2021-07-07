@@ -13,7 +13,8 @@
     $resultado->execute();
     $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
     $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];       
-
+    $conexion=null;
+  $objeto=null;
 ?>
 <!doctype html>
 <html lang="en">
