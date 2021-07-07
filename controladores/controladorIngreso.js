@@ -43,7 +43,7 @@ $('#ingresar').on('click', function() {
                 } else if (fila['id_gasto'] != null) {
                 }
             } else { 
-                alert("Se debe ingresar los datos que se le proporcionó en el correo electrónico");
+                alert("“Error!! Usuario y Password incorrectos!!!”");
             }
         }
     });
