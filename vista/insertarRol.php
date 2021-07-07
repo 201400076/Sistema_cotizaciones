@@ -1,62 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<?php 
+    $db_host = "localhost";
+    $db_nombre = "sistema_de_cotizaciones";
+    $db_usuario = "root";
+    $db_contra = "";
 
-    <?php 
+    $conexion = mysqli_connect($db_host, $db_usuario, $db_contra, $db_nombre);
 
-$db_host = "localhost";
-$db_nombre = "sistema_de_cotizaciones";
-$db_usuario = "root";
-$db_contra = "";
+    $usuario = $_GET["user"];
+    $rol = $_GET["rolUser"];
+    $uadmin = $_GET["uadmin"];
+    $ugasto = $_GET["ugasto"];
 
-$conexion = mysqli_connect($db_host, $db_usuario, $db_contra, $db_nombre);
+    if(mysqli_connect_errno()){
+        echo "Fallo al conectar con la bd";
+        exit();
+    }
+    mysqli_select_db($conexion, $db_nombre) or die ("No se encuentra la db");
+    mysqli_set_charset($conexion, "utf8");
 
-        $usuario = $_GET["usuario"];
-        $rol = $_GET["rol"];
+    // if($usuario != "" or $rol == 0){
+    //     if($rol == 200){
+    //         $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_gasto`) VALUES ('$usuario', '$rol', '$ugasto')";
+    //     }
+    //     if($rol == 100){
+    //         $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_unidad`) VALUES ('$usuario', '$rol', '$uadmin')";
+    //     }
+    // }else{
+    //     echo '
+    //         <script>
+    //             alert("Seleccione un Rol Por Favor");
+    //             window.location = "./rolesAsignadosprueba.php";
+    //         </script>
+    //         ';
+    // }
 
-        //require(datos_conexion.php);
-        //$conexion = mysqli_connect($db_host, $db_usuario, $db_contra);
-        if(mysqli_connect_errno()){
-            echo "Fallo al conectar con la bd";
-            exit();
-        }
-        mysqli_select_db($conexion, $db_nombre) or die ("No se encuentra la db");
-        mysqli_set_charset($conexion, "utf8");
-        $consulta = "INSERT INTO usuarioconrol (usuario, rolAsignado) VALUES ('$usuario', '$rol')";
-        
 
-        $verificar_usuario = mysqli_query($conexion, "SELECT * FROM usuarioconrol WHERE usuario = '$usuario'");
-        if(mysqli_num_rows($verificar_usuario) > 0){
-            echo '
-                <script>
-                    alert("Este Usuario ya tiene Rol Asignado");
-                    window.location = "./asignarRoles";
-                </script>
-            ';
-            exit();
-        }
-
-        $resultados = mysqli_query($conexion, $consulta);
-        if($resultados == false){
-            echo "Error en la insercion";
-        }else{
-            echo '
-                <script>
-                    alert("Se Asigno Rol Exitosamente!!!");
-                    window.location = "./asignarRoles";
-                </script>
-            ';
-        }
-
-        mysqli_close($conexion); 
-
-    ?>
     
-</body>
-</html>
+    if($rol == 200){
+             //verificar que unidades no se repitan en la base de datos
+
+     $consultaugasto = "SELECT * FROM `usuarioconrol` WHERE `id_gasto` = '$ugasto'";
+     $verificar_ugasto = mysqli_query($conexion, $consultaugasto);
+     if(mysqli_num_rows($verificar_ugasto) > 0){
+         echo '
+             <script>
+                 alert("Esta Unidad de gasto ya esta registrado");
+                 window.location = "./rolesAsignadosprueba.php";
+             </script>
+             ';
+             exit();
+     }
+
+        $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_gasto`) VALUES ('$usuario', '$rol', '$ugasto')";
+    }else if($rol == 100){
+
+        //verificar que unidades no se repitan en la base de datos
+    $consultauadmin = "SELECT * FROM `usuarioconrol` WHERE `id_unidad` = '$uadmin'";
+    $verificar_uadmin = mysqli_query($conexion, $consultauadmin);
+    if(mysqli_num_rows($verificar_uadmin) > 0){
+        echo '
+            <script>
+                alert("Esta Unidad administrativa ya esta registrado");
+                window.location = "./rolesAsignadosprueba.php";
+            </script>
+            ';
+            exit();
+    }
+
+        $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_unidad`) VALUES ('$usuario', '$rol', '$uadmin')";
+    }else if($rol == 0){
+        echo '
+            <script>
+                alert("Seleccione un Rol Por Favor");
+                window.location = "./rolesAsignadosprueba.php";
+            </script>
+            ';
+    }
+
+    // //verificar que unidades no se repitan en la base de datos
+    // $consultauadmin = "SELECT * FROM `usuarioconrol` WHERE `id_unidad` = '$uadmin'";
+    // $verificar_uadmin = mysqli_query($conexion, $consultauadmin);
+    // if(mysqli_num_rows($verificar_uadmin) > 0){
+    //     echo '
+    //         <script>
+    //             alert("Esta Unidad administrativa ya esta registrado");
+    //             window.location = "./rolesAsignadosprueba.php";
+    //         </script>
+    //         ';
+    //         exit();
+    // }
+
+    
+    //  //verificar que unidades no se repitan en la base de datos
+
+    //  $consultaugasto = "SELECT * FROM `usuarioconrol` WHERE `id_gasto` = '$ugasto'";
+    //  $verificar_ugasto = mysqli_query($conexion, $consultaugasto);
+    //  if(mysqli_num_rows($verificar_ugasto) > 0){
+    //      echo '
+    //          <script>
+    //              alert("Esta Unidad de gasto ya esta registrado");
+    //              window.location = "./rolesAsignadosprueba.php";
+    //          </script>
+    //          ';
+    //          exit();
+    //  }
+
+
+    $resultados = mysqli_query($conexion, $consultaInsertar);
+    if($resultados == false){
+        echo "Error en la insercion";
+    }else{
+        echo '
+            <script>
+                alert("Se Asigno Rol Exitosamente!!!");
+                window.location = "./rolesAsignadosprueba.php";
+            </script>
+        ';
+    }
+
+    mysqli_close($conexion); 
+?>
