@@ -29,7 +29,9 @@ include_once("layouts/navegacion.php");
 				<hr>
 				<a class="btn btn-success" style="width: 300px;background-color: #45A049;" href="../vista/formularioRU.php">Crear Nuevo Usuario</a>
 				<hr>
-				<a class="btn btn-success" style="width: 300px;background-color: #45A049;" href="../vista/asignarRoles.php">Asignar Roles a Usuarios</a>
+				<a class="btn btn-success" style="width: 300px;background-color: #45A049;" href="../vista/asignarRoles.php">Lista de Usuarios</a>
+				<hr>
+				<a class="btn btn-success" style="width: 300px;background-color: #45A049;" href="../vista/rolesAsignadosprueba.php">Asignar Roles a Usuarios</a>
 				<hr>
 			</div>
 		</div>
