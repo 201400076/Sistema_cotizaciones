@@ -1,11 +1,7 @@
 <?php
     session_start();
-    $id_unidadAdmin = $_SESSION['unidadAdmin'];
-
+    $id_unidadAdmin = $_SESSION['unidad'];
 	include('layouts/navAdministracion.php');
-    //$active = "";
-	//include_once("layouts/navegacionPendientes.php");
-
     require_once('../configuraciones/conexion.php');
     $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
@@ -34,7 +30,6 @@
 								<table class="table">
 									<tbody>
 										<tr align="center"class="warning">
-											<!-- <th>#</th> -->
 											<th>Id Cotizacion</th>
                                             <th>Id Solicitud</th>
                                             <th>Unidad</th>
@@ -42,35 +37,10 @@
 											<th># Cotizaciones</th>
 											<th>Estado</th>
 											<th>Accion</th>
-
 										</tr>
 
 										<?php
-                                        function direccionar($tipo, $estado){
-                                            $res = '';
-                                            if($tipo == 'pedido'){
-                                                if($estado == 'aceptada'){
-                                                    $res = '../ruta/rutas.php?ruta=mostrar&con=aceptada';
-                                                }else if($estado == 'rechazada'){
-                                                    $res = '../ruta/rutas.php?ruta=mostrar&con=rechazada';
-                                                }else if($estado == 'pendiente'){
-                                                    $res ='../ruta/rutas.php?ruta=mostrar&con=nueva';
-                                                }  
-                                            }else if($tipo == 'cotizacion'){
-                                                if($estado == 'aceptada'){
-                                                    //$res = '../ruta/rutas.php?ruta=mostrar&con=aceptada';
-                                                }else if($estado == 'rechazada'){
-                                                    //$res = '../ruta/rutas.php?ruta=mostrar&con=rechazada';
-                                                }else if($estado == 'cotizando'){
-                                                    $res = '../ruta/rutas.php?ruta=mostrar&con=cotizando';
-                                                }
-                                            }  
-                                            return $res;    
-                                        }
-
-
                                         while($registroCotizaciones=$queryCotizaciones->fetch_array(MYSQLI_BOTH)){
-                                            
                                             echo "<tr>
                                                     <td>".$registroCotizaciones['id_solicitud_cotizacion']."</td>
                                                     <td>".$registroCotizaciones['id_solicitudes']."</td>";
@@ -96,5 +66,4 @@
 
 <?php 
     include('../vista/layouts/piePagina.php');
-    //include_once("layouts/footer.php");
 ?>

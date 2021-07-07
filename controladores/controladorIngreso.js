@@ -15,7 +15,7 @@ $('#ingresar').on('click', function() {
                         nombre=fila['nombres']+" "+fila['apellidos'];
                         unidad=fila['nombre_unidad'];
                         alert("Bienvenido "+nombre+"\nIngreso con la Unidad Administrativa: "+unidad);
-                        redireccionA("ruta/rutas.php?ruta=mostrar&con=nueva");
+                        redireccionA("./ruta/rutas.php?ruta=mostrar&con=nueva");
                         break;            
                         case 'Unidad de Gasto':
                             rol =fila['rolAsignado'];
@@ -23,7 +23,7 @@ $('#ingresar').on('click', function() {
                             unidad=fila['nombre_gasto'];
                             id_gasto=fila['id_gasto'];
                             alert("Bienvenido "+nombre+"\nIngreso con la Unidad de Gasto: "+unidad);
-                            redireccionA("vista/solicitudes_vista.php?id_unidad="+fila['id_gasto']);
+                            redireccionA("./vista/solicitudes_vista.php?id_unidad="+fila['id_gasto']);
                         break;            
                         case 'Empresa':
                             rol =fila['rolAsignado'];
@@ -34,7 +34,7 @@ $('#ingresar').on('click', function() {
                                 alert("Esta cotizacion ya fue registrada");
                             }else{
                                 alert("Bienvenido empresa: "+nombre);
-                                redireccionA("vista/registroCotizacion.php?solicitud="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']+"&empresa="+fila['id_empresa']);
+                                redireccionA("./vista/registroCotizacion.php?solicitud="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']+"&empresa="+fila['id_empresa']);
                             }
                         break;            
                 }

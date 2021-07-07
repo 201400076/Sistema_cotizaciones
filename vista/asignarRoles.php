@@ -9,6 +9,8 @@ $conexion = mysqli_connect($db_host, $db_usuario, $db_contra, $db_nombre);
 $consulta = "SELECT u.id_usuarios, u.nombres, u.apellidos, u.usuario FROM usuarios u";
 
 $consulta1 = "SELECT r.usuario, r.rolAsignado FROM usuarioconrol r";
+ 
+
 ?>
 
 <html lang="en"><head>
@@ -85,44 +87,15 @@ $consulta1 = "SELECT r.usuario, r.rolAsignado FROM usuarioconrol r";
                                                 <td><?php echo $data["nombres"] ?></td>
                                                 <td><?php echo $data["apellidos"] ?></td>
                                                 <td><?php echo $data["usuario"] ?></td>
-                                                <td>
-                                                    <a class="link_asignar" href="reasignar.php?user=<?php echo $data["usuario"] ?>">Asignar Rol</a>
-                                                </td>
+                                               <!-- <td>
+                                                    <a class="link_asignar" href="reasignar.php?user=<?php //echo $data["usuario"] ?>">Asignar Rol</a>
+                                                </td> -->
                                             </tr>
                                             <?php
                                         }
                                     }
                                 ?>
 
-                            </table>
-                        </section>
-
-                        <section class="container">
-                            <h2><span class="glyphicon glyphicon-edit"></span> Lista Usuarios Con Rol</h2>
-                            <table>
-                                <tr>
-                                    <th>Usuario</th>
-                                    <th>Rol</th>
-                                </tr>
-
-                                <?php 
-                                    $query1 = mysqli_query($conexion, $consulta1);
-                                    $result1 = mysqli_num_rows($query1);
-                                    if($result1 > 0){
-                                        while ($data1 = mysqli_fetch_array($query1)){
-                                    ?>
-
-                                            <tr>
-                                                <td><?php echo $data1["usuario"] ?></td>
-                                                <td><?php echo $data1["rolAsignado"] ?></td>
-                                            </tr>
-                                        <?php
-                                        }
-                                    } 
-                                ?>
-                                    <tr>
-                        
-                                    </tr>
                             </table>
                         </section>
                     </div>
