@@ -36,7 +36,7 @@ switch($opcion){
         $conexion = NULL;
         break;      
     case 3://baja
-        $consulta = "DELETE FROM items_pendientes WHERE id_pendientes='$id_pendientes' ";		
+        $consulta = "DELETE FROM items_pendientes WHERE id_pendientes='$id_pendientes' and id_gasto='$id_unidad'";		
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();   
 
@@ -49,7 +49,7 @@ switch($opcion){
         $conexion = NULL;              
         break;      
     case 4://enviar pedido
-        $consulta="SELECT u.id_unidad FROM unidad_gasto u, usuarioconrol us WHERE u.id_gasto=us.id_gasto AND us.id_usuarios='$id_usuario'";
+        $consulta="SELECT u.id_unidad FROM unidad_gasto u, usuarioconrol us WHERE u.id_gasto=us.id_gasto AND us.id_usuarios='$id_usuario' and u.id_gasto='$id_unidad'";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -65,7 +65,7 @@ switch($opcion){
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         $ultimoPedido=$data[0]['id_pedido'];
         
-        $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta,id_gasto FROM items_pendientes WHERE items_pendientes.id_usuarios='$id_usuario'";
+        $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta,id_gasto FROM items_pendientes WHERE items_pendientes.id_usuarios='$id_usuario' and id_gasto='$id_unidad'";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $items=$resultado->fetchAll(PDO::FETCH_ASSOC);

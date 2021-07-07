@@ -77,7 +77,7 @@ $(document).on("click", ".btnGuardarJust", function(){
                 type: "POST",
                 cache:false,
                 dataType: "json",
-                data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu},
+                data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
                 success: function(data){                         
                 }        
             });
@@ -89,7 +89,7 @@ $(document).on("click", ".btnGuardarJust", function(){
             url: "../modelo/solicitudes_modelo.php",
             type: "POST",
             dataType: "json",
-            data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu},
+            data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
             success: function(data){                   
             }        
         });
@@ -112,7 +112,7 @@ $(document).on("click", ".btnBorrar", function(){
             url: "../modelo/solicitudes_modelo.php",
             type: "POST",
             dataType: "json",
-            data: {opcion:opcion, id_pendientes:id_pendientes},
+            data: {opcion:opcion, id_pendientes:id_pendientes,id_unidad:id_unidad},
             success: function(){
                 tablaPersonas.row(fila.parents('tr')).remove().draw();
             }
