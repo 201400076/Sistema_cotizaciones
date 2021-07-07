@@ -74,7 +74,7 @@ $consulta1 = "SELECT r.usuario, r.rolAsignado FROM usuarioconrol r";
                                     <th>Nombre</th>
                                     <th>Apellido</th>
                                     <th>Usuario</th>
-                                    <th>Acciones</th>
+                                    <!-- <th>Acciones</th> -->
                                 </tr>
                                 <?php
                                     $query = mysqli_query($conexion, $consulta);

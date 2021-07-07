@@ -1,7 +1,5 @@
 <?php
-        session_start();
-        require('../vista/layouts/navAdministracion.php'); 
-        
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +13,8 @@
 </head>
 <body>
     <?php
-        $active = "";
-        require_once '../vista/layouts/navegacionPendientes.php';
+        //$active = "";
+        //require_once '../vista/layouts/navegacionPendientes.php';
         require_once('../configuraciones/conexion.php');
         //require_once('../controladores/solicitudesController.php');
         require_once('../controladores/controlador_tablasComparativas.php');
@@ -31,10 +29,13 @@
         $queryCoti=$estadoConexion->query($cotizaciones);
         $registro=$queryCoti->fetch_array(MYSQLI_BOTH);
         //echo $registro['id_solicitud_cotizacion'];
-        
-        //Para probar se obtienen todas las empresas, se debe restringir a solo las empresas participantes en esta solicitud
-        $empresas = "SELECT * FROM empresas";
+
+        $empresas = "SELECT * FROM usuario_cotizador, empresas WHERE id_solicitudes=".$id_solicitud." AND empresas.id_empresa=usuario_cotizador.id_empresa";
         $queryEmpresas=$estadoConexion->query($empresas);
+
+        session_start();
+        $unidadAdmin = $_SESSION['unidad'];
+        include("layouts/navAdministracion.php");
     ?>
     <h1 style="text-align: center;">Tablas Comparativas</h1>
     <h2 style="text-align: center;">Solicitud de Cotizacion #<?php echo $id_solicitud;?></h2>
@@ -235,9 +236,6 @@
 
 </divS>
 
-
-
-
     <div class="row">
         <div class="col-lg-12" style="text-align: center;">
             <label for="empresasCotizadoras">Seleccione la Empresa Adjudicada a la Cotizacion:</label><br>
@@ -263,9 +261,10 @@
 
     <script>
         var id = '<?php echo $_GET['id_solicitud']?>';
-        //var id_pedido = '<?php // echo $_GET['id_pedido']?>';
-        //var id_usuario = '<?php // echo $_GET['id_usuario']?>';
     </script>
     <script src="../controladores/evaluarCotizacion.js"></script>
 </body>
+<?php
+    include_once("../vista/layouts/piePagina.php");
+?>
 </html>
