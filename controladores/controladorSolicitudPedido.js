@@ -82,7 +82,7 @@ $(document).on("click", ".btnGuardarJust", function(){
                 }        
             });
             $("#modalCRUDJust").modal("hide");  
-            window.location.href="../vista/solicitudes_vista.php";             
+            window.location.href="../vista/solicitudes_vista.php?id_unidad="+id_unidad;             
         }
     }else{
         $.ajax({
@@ -94,7 +94,7 @@ $(document).on("click", ".btnGuardarJust", function(){
             }        
         });
         $("#modalCRUDJust").modal("hide");     
-        window.location.href="../vista/solicitudes_vista.php";                     
+        window.location.href="../vista/solicitudes_vista.php?id_unidad="+id_unidad;                     
     }
 });
 
@@ -173,6 +173,7 @@ $("#formPersonas").submit(function(e){
     cantidad = $.trim($("#cantidad").val());
     unidad = $.trim($("#unidad").val());    
     detalle = $.trim($("#detalle").val());      
+    archivo = $.trim($("#archivo").val());      
     if(cantidad!='' && cantidad>=1 && cantidad<=1000000){
         if(unidad!='' && unidad.length>=1 && unidad.length<=10){
             if(archivo!=0 || detalle!=0){
@@ -181,7 +182,7 @@ $("#formPersonas").submit(function(e){
                         url: "../modelo/solicitudes_modelo.php",
                         type: "POST",
                         dataType: "json",
-                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes,id_usu:id_usu, opcion:opcion,ruta:ruta, archivo:archivo},
+                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes,id_usu:id_usu, opcion:opcion,ruta:ruta, archivo:archivo,id_unidad:id_unidad},
                         success: function(data){                          
                             id_pendientes = data[0].id_pendientes;            
                             cantidad = data[0].cantidad;

@@ -8,15 +8,26 @@ $data=null;
         $objeto = new Conexion();
         $conexion = $objeto->Conectar();
 
-        $consulta = "DELETE FROM usuario_cotizador u WHERE u.user_cotizador='$id_solicitud' and u.id_solicitudes='$nombre_usu'";        	
+        $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id_solicitud'";
         $resultado = $conexion->prepare($consulta);
-        $resultado->execute(); 
-        
-        $consulta = "UPDATE solicitudes_cotizaciones SET cantidad_cotizaciones = cantidad_cotizaciones + 1 WHERE id_solicitudes='$id_solicitud'";        	        
+        $resultado->execute();
+        $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario FROM cotizacion_items i, solicitudes s, usuario_cotizador c WHERE c.id_empresa=i.id_empresa and i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and c.user_cotizador='$nombre_usu'";
         $resultado = $conexion->prepare($consulta);
-        $resultado->execute(); 
+        $resultado->execute();
+        $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        if(count($data2)==count($data1)){
+                $consulta = "UPDATE usuario_cotizador SET estado_cotizador=true WHERE usuario_cotizador.user_cotizador='$nombre_usu'";        	
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute(); 
+                
+                $consulta = "UPDATE solicitudes_cotizaciones SET cantidad_cotizaciones = cantidad_cotizaciones + 1 WHERE id_solicitudes='$id_solicitud'";        	        
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute(); 
+                $data='exito';        
+        }
         
-        $data='exito';        
 print json_encode($data, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS
 $conexion = NULL;
 ?>

@@ -1,11 +1,7 @@
 <?php
 	session_start();
-	$id_unidadAdmin=$_SESSION['unidadAdmin'];
-
-	//$active = "";
-	//include_once("layouts/navegacionPendientes.php");
+	$id_unidadAdmin=$_SESSION['unidad'];
 	include('layouts/navAdministracion.php');
-
     include('../configuraciones/conexion.php');
     $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
@@ -34,7 +30,6 @@
 								<table class="table">
 									<tbody>
 										<tr align="center"class="warning">
-											<!-- <th>#</th> -->
 											<th>Id Cotizacion</th>
                                             <th>Id Solicitud</th>
                                             <th>Unidad</th>
@@ -67,14 +62,8 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
 </div>
 
 <?php
-	//include_once("layouts/footer.php");
 	include('../vista/layouts/piePagina.php');
 ?>

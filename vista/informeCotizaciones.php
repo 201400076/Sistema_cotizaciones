@@ -2,13 +2,12 @@
 require('../librerias/fpdf/fpdf.php');
 class PDF extends FPDF{
 function Header(){
-    // Logo
     $this->Image('../recursos/imagenes/umss.png',8,1,53);
         $ancho=190;
          $this->setFont('Arial','B',8);
 
             $this->SetY(12); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
-            $this->Cell($ancho, 10,'programandoElFuturo.SRL@gmail.com', 0, 0, 'R');
+            $this->Cell($ancho, 10,'sistema.cotizaciones.umss@gmail.com', 0, 0, 'R');
             $this->SetY(15);
             $this->Cell($ancho, 10,'NIT: 6407874001 ', 0, 0, 'R');
             $this->SetY(18);
@@ -17,16 +16,14 @@ function Header(){
             $this->Cell($ancho, 10,utf8_decode('(+591) 76436540 - 44355215'), 0, 0, 'R');       
 }         
 
-
 function Body(){
 
-    $yy = 40; //Variable auxiliar para desplazarse 40 puntos del borde superior hacia abajo en la coordenada de las Y para evitar que el título este al nivel de la cabecera.
+    $yy = 40;
     $y = $this->GetY(); 
-    //$x = 12;
     $this->AddPage($this->CurOrientation);
      
-    $this->SetFont('helvetica', 'BU', 20); //Asignar la fuente, el estilo de la fuente (negrita) y el tamaño de la fuente
-    $this->SetXY(45, 45); //Ubicación según coordenadas X, Y. X=0 porque empezará desde el borde izquierdo de la página
+    $this->SetFont('helvetica', 'BU', 20);
+    $this->SetXY(45, 45);
     $this->Cell(120, 10, "Informe Cotizacion Rechazada", 0, 1, 'C');
 
     $this->SetFont('Arial', '', 12);
@@ -52,11 +49,10 @@ function Body1(){
 
     $yy = 40; //Variable auxiliar para desplazarse 40 puntos del borde superior hacia abajo en la coordenada de las Y para evitar que el título este al nivel de la cabecera.
     $y = $this->GetY(); 
-    //$x = 12;
     $this->AddPage($this->CurOrientation);
      
-    $this->SetFont('helvetica', 'BU', 20); //Asignar la fuente, el estilo de la fuente (negrita) y el tamaño de la fuente
-    $this->SetXY(45, 45); //Ubicación según coordenadas X, Y. X=0 porque empezará desde el borde izquierdo de la página
+    $this->SetFont('helvetica', 'BU', 20);
+    $this->SetXY(45, 45);
     $this->Cell(120, 10, "Informe Cotizacion Aceptada", 0, 1, 'C');
 
     $this->SetFont('Arial', '', 12);
@@ -79,20 +75,16 @@ function Body1(){
 
 }
 
-// Pie de página
 function Footer()
 {
-    // Posición: a 1,5 cm del final
     $this->SetY(-15);
-    // Arial italic 8
     $this->SetFont('Arial','I',8);
-    // Número de página
     $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
 }
 }
 require_once('../configuraciones/conexion.php');
     session_start();
-    $nomUsuAdm = $_SESSION['nombreUA'];
+    $nomUsuAdm = $_SESSION['nombre_usuario'];
     
     $idRescate=$_GET['id'];
     $tipo=$_GET['tipo'];

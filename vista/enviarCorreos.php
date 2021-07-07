@@ -66,11 +66,9 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         }
 
         registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud);
-
-        //Archivos adjuntos
         $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion.pdf";
 
-        $mail->addAttachment($rutaArchivo);    //Optional name
+        $mail->addAttachment($rutaArchivo); 
         $mail->addAttachment("../archivos/cotizacionesIniciales/detallesItems.pdf");
         $detalles = "<br /><br />Para realizar su cotización puede hacerlo de dos formas posibles, a continuación se detallan las mismas:";
         $paso1 = "<br /><b>Opción 1:</b><br />  1. Descargar e imprimir el documento pdf adjunto en la presente.<br />  2. Llenar la cotización manualmente.<br />  3. Enviar la cotización a nuestras oficinas.";
@@ -111,8 +109,9 @@ function generarPassword(){
 function registraUsuarioTemporal($user, $password, $idEmpresa, $estado, $idSolicitud){
     global $estadoconexion;
     $pass = hashPassword($password);
-    $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes) VALUES(?,?,?,?,?)");
-    $stmt->bind_param("ssiii", $user, $pass, $idEmpresa, $estado, $idSolicitud);
+    $rol = 'Empresa';
+    $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes, rolAsignado) VALUES(?,?,?,?,?,?)");
+    $stmt->bind_param("ssiiis", $user, $pass, $idEmpresa, $estado, $idSolicitud,$rol);
     if($stmt->execute()){
         return $estadoconexion->insert_id;
     }else{
