@@ -8,6 +8,13 @@
   $resultado = $conexion->prepare($consulta);
   $resultado->execute();
   $administracion=$resultado->fetchAll(PDO::FETCH_ASSOC);
+  
+
+  $consulta="SELECT * FROM unidad_gasto a WHERE a.id_gasto='$id_unidad'";
+  $resultado = $conexion->prepare($consulta);
+  $resultado->execute();
+  $unidad_gasto=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -51,7 +58,8 @@
                 if(!empty($administracion)){
                   echo "<li><p class='ml-4'><b>Unidad Administrativa</b></p></li>";
                   foreach($administracion as $ad){
-                    echo "<li><a class='dropdown-item' href='#'>".$ad['nombre_unidad']."</a></li>";
+                    $id_unidad=$ad['id_unidad'];
+                    echo "<li><a class='dropdown-item' href='../ruta/rutaUsuarios.php?tipo=administracion&id_unidad=".$id_unidad."'>".$ad['nombre_unidad']."</a></li>";
                   }
                 }
                 ?>
@@ -61,7 +69,7 @@
                   echo "<li><p class='ml-4'><b>Unidad de Gasto</b></p></li>";                
                   foreach($gasto as $g){
                     $id_gasto=$g['id_gasto'];
-                    echo "<li><a class='dropdown-item' href='../vista/solicitudes_vista.php?id_unidad=".$id_gasto."'>".$g['nombre_gasto']."</a></li>";
+                    echo "<li><a class='dropdown-item' href='../ruta/rutaUsuarios.php?tipo=gasto&id_unidad=".$id_gasto."'>".$g['nombre_gasto']."</a></li>";
                   }
                 }
                 ?>

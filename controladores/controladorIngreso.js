@@ -23,7 +23,7 @@ $('#ingresar').on('click', function() {
                             unidad=fila['nombre_gasto'];
                             id_gasto=fila['id_gasto'];
                             alert("Bienvenido "+nombre+"\nIngreso con la Unidad de Gasto: "+unidad);
-                            redireccionA("./vista/solicitudes_vista.php?id_unidad="+fila['id_gasto']);
+                            redireccionA("./vista/solicitudes_vista.php");
                         break;            
                         case 'Empresa':
                             rol =fila['rolAsignado'];

@@ -1,8 +1,14 @@
 <?php
-    include_once '../modelo/conexionPablo.php';
+    include_once ('../modelo/conexionPablo.php');
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
     $id_administrador=  $_SESSION["usuario"];
+
+    $consulta="SELECT * FROM usuarios s,usuarioconrol c, unidad_gasto u WHERE c.id_usuarios=s.id_usuarios and u.id_gasto=c.id_gasto  and s.id_usuarios='$id_administrador'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $gasto=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    
     $consulta="SELECT * FROM usuarios s,usuarioconrol c, unidad_administrativa u WHERE c.id_usuarios=s.id_usuarios and u.id_unidad=c.id_unidad  and s.id_usuarios='$id_administrador'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
@@ -12,7 +18,14 @@
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
-    $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];       
+    $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];   
+    
+    $id_unidad=$_SESSION['unidad'];
+
+    $consulta="SELECT * FROM unidad_administrativa a WHERE a.id_unidad='$id_unidad'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $unidad_gasto=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!doctype html>
@@ -45,15 +58,32 @@
                 <img src="../recursos/imagenes/usuario.png" alt="mdo" width="32" height="32" class="rounded-circle mt-2">
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
-                <li><a class="dropdown-item" href="#"><?php echo $nombre?></a></li>
+                <li><a class="dropdown-item" href="#"> <?php echo $nombre?></a></li>                
                 <li><hr class="dropdown-divider"></li>
-                  <?php
-                  foreach($administracion as $g){
-                    echo "<li><a class='dropdown-item' href='#'>".$g['nombre_unidad']."</a></li>";
+                <li><p class='ml-4'><b>Unidad actual</b></p></li>
+                <li><p class ='ml-4'> <?php echo $unidad_gasto[0]['nombre_unidad']?></p></li>                
+                <li><hr class="dropdown-divider"></li>
+                <?php 
+                if(!empty($administracion)){
+                  echo "<li><p class='ml-4'><b>Unidad Administrativa</b></p></li>";
+                  foreach($administracion as $ad){
+                    $id_unidad=$ad['id_unidad'];
+                    echo "<li><a class='dropdown-item' href='../ruta/rutaUsuarios.php?tipo=administracion&id_unidad=".$id_unidad."'>".$ad['nombre_unidad']."</a></li>";
                   }
-                  ?>
+                }
+                ?>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Salir</a></li>
+                <?php 
+                if(!empty($gasto)){
+                  echo "<li><p class='ml-4'><b>Unidad de Gasto</b></p></li>";                
+                  foreach($gasto as $g){
+                    $id_gasto=$g['id_gasto'];
+                    echo "<li><a class='dropdown-item' href='../ruta/rutaUsuarios.php?tipo=gasto&id_unidad=".$id_gasto."'>".$g['nombre_gasto']."</a></li>";
+                  }
+                }
+                ?>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../index.php">Salir</a></li>
               </ul>
             </div>
         </div>    

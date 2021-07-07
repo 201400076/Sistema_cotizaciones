@@ -1,3 +1,8 @@
+<?php
+        session_start();
+        require('../vista/layouts/navAdministracion.php'); 
+        
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

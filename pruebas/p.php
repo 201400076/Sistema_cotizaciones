@@ -1,23 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>   
-    <title>Document</title>
-</head>
-<body>
-<select name="transporte">
+<?php
+        session_start();
+        include('../vista/layouts/navAdministracion.php'); 
+        $active = "";
+        require_once '../vista/layouts/navegacionPendientes.php';
+        require_once('../configuraciones/conexion.php');
+        //require_once('../controladores/solicitudesController.php');
+        require_once('../controladores/controlador_tablasComparativas.php');
+        
+        //$id_usuario=$_GET['id_usuario'];
+        //$id_pedido=$_GET['id_pedido'];
+        $id_solicitud=$_GET['id_solicitud'];
 
-<option id="coche">Coche</option>
-
-<option id="avion">Avión</option>
-
-<option id="tren">Tren</option>
-
-</select>
-<button id="enviar">enviar</button>
-<script type="text/javascript" src="funciones.js"></script>  
-</body>
-</html>
+        $conn = new Conexiones();
+        $estadoConexion = $conn->getConn();
+        $cotizaciones = "SELECT * FROM solicitudes_cotizaciones WHERE id_solicitudes = ".$id_solicitud."";
+        $queryCoti=$estadoConexion->query($cotizaciones);
+        $registro=$queryCoti->fetch_array(MYSQLI_BOTH);
+        //echo $registro['id_solicitud_cotizacion'];
+        
+        //Para probar se obtienen todas las empresas, se debe restringir a solo las empresas participantes en esta solicitud
+        $empresas = "SELECT * FROM empresas";
+        $queryEmpresas=$estadoConexion->query($empresas);
+?>

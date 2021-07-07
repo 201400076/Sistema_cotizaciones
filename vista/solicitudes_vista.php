@@ -1,7 +1,7 @@
 <?php
     session_start();
     $id_pendientes=$_SESSION['usuario'];
-    $id_unidad=$_GET["id_unidad"];
+    $id_unidad=$_SESSION["unidad"];
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
@@ -20,11 +20,6 @@
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
-    
-    $consulta="SELECT * FROM unidad_gasto a WHERE a.id_gasto='$id_unidad'";
-    $resultado = $conexion->prepare($consulta);
-    $resultado->execute();
-    $unidad_gasto=$resultado->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?php
     include('layouts/navGasto.php')
