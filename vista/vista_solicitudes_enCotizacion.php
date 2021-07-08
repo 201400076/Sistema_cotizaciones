@@ -1,7 +1,5 @@
 <?php
 	include('layouts/navAdministracion.php');
-	//$active = "";
-	//include_once("layouts/navegacionPendientes.php");
 ?>
 <div class="container-fluid">
 <h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES EN COTIZACION</strong></h2>
