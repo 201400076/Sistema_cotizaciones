@@ -1,5 +1,5 @@
 <?php
-    require '../configuraciones/conexion.php';
+    require_once '../configuraciones/conexion.php';
     $conn = new Conexiones();
     $estadoconexion = $conn->getConn();
 
@@ -40,7 +40,7 @@
             $error = "* Direccion no Valida";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
-        }else if(!validarPatron($rubro, "/^[a-zA-Z]([a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s]+){5}$/")){ 
+        }else if(!is_numeric($rubro)){ //"/^[a-zA-Z]([a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s.,()]+){5}$/"
             $error = "* Rubro no Valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
@@ -111,9 +111,9 @@
 
     function registraEmpresa($nombre, $correo, $nit, $telefono, $direccion, $rubro){
         global $estadoconexion;
-
+        
         $stmt = $estadoconexion->prepare("INSERT INTO empresas (nombre_empresa, correo_empresa, rubro, nit, telefono, direccion) VALUES(?,?,?,?,?,?)");
-        $stmt->bind_param("sssiss", $nombre, $correo, $rubro, $nit, $telefono, $direccion);
+        $stmt->bind_param("ssiiss", $nombre, $correo, $rubro, $nit, $telefono, $direccion);
 
         if($stmt->execute()){
             return $estadoconexion->insert_id;

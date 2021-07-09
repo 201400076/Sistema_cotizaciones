@@ -54,13 +54,11 @@
     -->
 
     <div class="container-fluid">
-        <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card" >
+                    <div class="card-body" >
                         <div class="row">
-                            <div id="resultados" class="col-sm-12 "></div>
-                                <div class="outer_div" style="width:100%">
+                                <div class="outer_div" style="width:90%;margin: auto;">
                                     <div class="table-responsive">        
                                         <table id="tablaPersonas" class="table table-striped table-bordered table-condensed table-hover table-sm" style="width:100%">
                                             <thead class="text-center">
@@ -124,18 +122,14 @@
                 </div>
             </div>                                  
         </div>
-
-
     <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>  
     </div>
     <script src="../librerias/popper/popper.min.js"></script>
     <script src="../librerias/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../librerias/datatables/datatables.min.js"></script>    
     <script type="text/javascript" src="../controladores/controladorVistaDetalle.js"></script>  
-    
 </body>
-
-</html>
 <?php
-    include_once("../vista/layouts/piePagina.php");
+    //include_once("../vista/layouts/piePagina.php");
 ?>
+</html>

@@ -1,5 +1,5 @@
 document.getElementById("botonAceptar").onclick = function(){
-    aceptar();
+    aceptar();    
 }
 
 document.getElementById("botonRechazar").onclick = function(){
@@ -31,11 +31,6 @@ function aceptar() {
             
             if (result.isConfirmed) {
                 mensajeConfirmacion(id,fechaAccion,idEmpresa);
-                /*if(esPosibleAutorizar()){
-                    mensajeConfirmacion(id,fechaAccion,1);
-                }else{
-                    mensajeAviso("Solicitud de pedido RECHAZADA!","El monto de la presente solicitud sobrepasa el limite establecido por la Institucion",'warning');
-                }*/
             }else{
                 redireccionA("../vista/vista_tablasComparativas.php?id_solicitud="+id);
             }

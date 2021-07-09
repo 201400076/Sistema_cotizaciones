@@ -1,106 +1,23 @@
 <?php
-//https://trello.com/b/OePiF9xp/proyecto-cotizaiones
-//header("Location:../ruta/rutas.php?ruta=mostrar&con=nueva");
-//$dir="../ruta/rutas.php?ruta=mostrar&con=nueva";
-//header('Location:'. $dir);
-
-/* echo "<script> 
-var str=decodeURIComponent('../ruta/rutas.php?ruta=mostrar&con=nueva');
-
-window.location=str;
-
-</script>";  */
-
-//echo "<meta http-equiv='refresh' content=1'; url=http://localhost/Sistema_cotizaciones/ruta/rutas.php?ruta=mostrar&con=nueva'>";
-
-
-/* echo"<script language='JavaScript'>
-  var pagina='../ruta/rutas.php?ruta=mostrar&con=nueva'
-  var timer=0;
-  var valor=1;
-  function redireccionar() {
-	  location.href=pagina
-  }
-  
-
-  
-  tiempo(valor);
-  
-  
-  function tiempo(val){
-	  var aux=val;
-	  for(var i=1;i<10;i++){
-	  timer=setInterval('redireccionar()', 3000*i);
-	  if(valor==1){
-		  clearInterval(timer);
-	  }
-	  aux=2;
-	  }
-  }
-  
-</script>"; */
-
-
-
-
-
-/* echo"<script language='JavaScript'>
-var c=0;
-(function(){
-  var contador=false;
-  var pagina='../ruta/rutas.php?ruta=mostrar&con=nueva'
-  var intervalo=0;
-  var time=0;
-  var redireccionar=function(){
-	  
-		  location.href=pagina;
-	  
-  
-  };
-
-  function random(min, max) {
-	  return Math.floor((Math.random() * (max - min + 1)) + min);
-  }
-
-  if(c===0){
-	  c++;
-
-	  time=500*random(1,3);
-	  
-	   intervalo=setInterval(redireccionar,time);
-	  
-	  
-  }
-  if(contador){
-	  intervalo=setInterval(redireccionar,10000);
-  }
-
-  
-}())
-clearInterval(intervalo);
-</script>"; 
-*/
-
-
-
-
-
-/* echo"<script>
-  setTimeout(function () {
-  // Redirigir con JavaScript
-  window.location.href= '../ruta/rutas.php?ruta=mostrar&con=nueva';
-}50000);
-</script>"; */
-
-
-//header("http://localhost/Sistema_cotizaciones/ruta/rutas.php?ruta=mostrar&con=nueva");
-	
-
-	//$active = "active";
-	//include_once("layouts/navegacionPendientes.php");
 	include('layouts/navAdministracion.php');
-	
-	
+	include_once '../configuraciones/conexion.php';
+    $conn = new Conexiones();
+    $estadoConexion = $conn->getConn();
+    $cotizaciones = "SELECT solicitudes.id_solicitudes, fecha_ini_licitacion, fecha_fin_licitacion FROM solicitudes_cotizaciones, solicitudes WHERE fecha_fin_licitacion IS NOT NULL AND solicitudes_cotizaciones.id_solicitudes=solicitudes.id_solicitudes AND solicitudes.estado='aceptada'";
+	$queryCotizaciones=$estadoConexion->query($cotizaciones);
+	while($listaFechas=$queryCotizaciones->fetch_array(MYSQLI_BOTH)){
+		$ini = $listaFechas['fecha_ini_licitacion'];
+		$fin = $listaFechas['fecha_fin_licitacion'];
+		$id = $listaFechas['id_solicitudes'];
+			$date1 = date_create(date("Y-m-d"));
+			$date2 = date_create($fin);
+			$diff = date_diff($date1,$date2);$d = $diff->format("%R");
+			if($d == '-'){
+				$consulta = "UPDATE solicitudes SET estado='aceptadaC' WHERE id_solicitudes=".$id;        	
+                $resultado = $estadoConexion->prepare($consulta);
+                $resultado->execute();
+			}
+	}
 ?>	
 <div class="container-fluid">
 <h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES PENDIENTES</strong></h2>
@@ -120,17 +37,10 @@ clearInterval(intervalo);
 											<th>#</th>
 											<th>Id</th>
 											<th>Fecha</th>
-											<!-- <th>Detalle</th>
-											<th>Departamento</th>
-											<th>Unidad</th> -->
-
 											<th>Solicitante</th>
 											<th>Unidad</th>
 											<th>Estado</th>
 											<th>Detalle</th>
-										
-											<!-- <th class="text-right">Acciones</th> -->
-
 										</tr>
 								
 										<?php
@@ -138,8 +48,6 @@ clearInterval(intervalo);
 										$i=0;
 										foreach($dato as $valor):
 										do{
-									
-										
 										?>
 										<tr align="center">
 											<td><?php echo $i+1?></td>
@@ -170,27 +78,7 @@ clearInterval(intervalo);
 									
 												<a class="btn btn-info" target="_top" href="../vista/vista_detalle.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>&id_pedido=<?php echo($valor[$i]['id_pedido'])?>&id_usuario=<?php echo($valor[$i]['id_usuarios'])?>">Ver Detalle</a>
 											</td>
-
-											<!-- <td class="text-right">
-												<div class="btn-group dropleft">
-													<button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-														Acciones
-													</button>
-													<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-														<a class="dropdown-item" href="editar_cotizacion.php?id=230" title="Editar cotización"><i class="fa fa-edit"></i> Aceptar</a>
-														<a class="dropdown-item" href="#" title="Imprimir cotización" onclick="descargar('303');"><i class="fa fa-print"></i> Rechazar</a>
-							
-													</div>
-												</div>
-											</td> -->
-
 										</tr>
-
-
-									<!-- ################segunda fila manual de momento -->
-								
-
-
 										<?php
 										$i++;
 										}
@@ -200,15 +88,7 @@ clearInterval(intervalo);
 										?>
 									</tbody>
 								</table>
-								<!-- <div class="float-right">
-									<nav aria-label="Page navigation example">
-										<ul class="pagination">
-											<li class="disabled page-item"><span><a class="page-link">‹ Siguiente</a></span></li>
-											<li class="page-item active"><a class="page-link">1</a></li>
-											<li class="page-item"><span><a class="page-link">Anterior ›</a></span></li>
-										</ul>
-									</nav>
-								</div> -->
+
 							</div>
 						</div>
 					</div>

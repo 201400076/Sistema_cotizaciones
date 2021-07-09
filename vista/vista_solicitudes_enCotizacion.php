@@ -1,7 +1,5 @@
 <?php
 	include('layouts/navAdministracion.php');
-	//$active = "";
-	//include_once("layouts/navegacionPendientes.php");
 ?>
 <div class="container-fluid">
 <h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES EN COTIZACION</strong></h2>
@@ -9,7 +7,6 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-					
 					<div class="row">
 						<div id="resultados" class="col-sm-12 "></div>
 						<div class="outer_div" style="width:100%">
@@ -28,15 +25,12 @@
 											<th>Estado</th>
 											<th># Cotizaciones</th>
 											<th>Accion</th>
-
 										</tr>
 
 										<?php
-										
 											$i=0;
 											foreach($dato as $valor):
 											do{
-										
 										?>
 										<tr align="center">
 											<td><?php echo $i+1?></td>
@@ -72,20 +66,16 @@
 
 											<td>
 												<a class="btn btn-info" target="_top" href="../vista/vista_tablasComparativas.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>">Ver Cotizaciones</a>
-												<!-- <a class="btn btn-info" target="_top">EVALUAR</a> -->
 											</td>
 
 										</tr>
-
 
 										<?php
 										$i++;
 										}
 										while($i<sizeof($valor));
-
 										endforeach;
 										?>
-										
 									</tbody>
 								</table>
 							</div>
@@ -95,14 +85,7 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
 </div>
-
 <?php
 	include('../vista/layouts/piePagina.php');
-	//include_once("layouts/footer.php");
 ?>

@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    $unidadAdmin = $_SESSION['unidad'];
+    include("layouts/navAdministracion.php");
+    require_once '../configuraciones/conexion.php';
+    $conn = new Conexiones();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,11 +33,6 @@
 
 </head>
 <body>
-<?php
-    $active = "active";
-    include_once("../vista/layouts/navegacion.php");
-?>
-
     <div class="container" style="width: 650px;margin-top: 0;">
         
         <h2>Formulario de Registro de Empresa</h2>
@@ -87,15 +89,24 @@
                     <label for="rubro">Rubro:</label>
                 </div>
                 <div class="col-75">
-                    <input list="rubro" name="rubro" style="width: 100%;padding: 12px;border-radius: 10px;" value="<?php echo isset($_POST['rubro']) ? $_POST['rubro']:'';?>" placeholder="Elija el rubro de su empresa" required>
+                    <input list="rubro" name="rubro" style="width: 100%;padding: 12px;border-radius: 10px;" placeholder="Elija el rubro de su empresa" required>
+                <?php
+                    
+                    $estadoConexion = $conn->getConn();
+                    $rubros = "SELECT * FROM rubros";
+                    $queryRubros=$estadoConexion->query($rubros);
+                    
+                    echo "<datalist id='rubro'>";
+                    while($listaRubros=$queryRubros->fetch_array(MYSQLI_BOTH)){
+                        $rubroActualNombre = $listaRubros['nombre_rubro'];
+                        $idRubroActual = $listaRubros['id_rubro'];
+                        echo "<option label='".$rubroActualNombre."' value=".$idRubroActual.">".$rubroActualNombre;
+                    }
+                    echo '</datalist>';
+                ?>
+            </select>
 
-                    <datalist id="rubro" >
-                        <option value="Ferreteria">
-                        <option value="Imprenta">
-                        <option value="Electronica">
-                        <option value="Telecomunicaciones">
-                        <option value="Venta de Comida">
-                    </datalist>
+                   
                     <!--<input type="text" id="rubro" name="rubro" value="<?php //echo isset($_POST['rubro']) ? $_POST['rubro'] : '';?>" required>-->
                 </div>
             </div>
