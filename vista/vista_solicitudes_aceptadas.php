@@ -27,6 +27,7 @@
 											<th>Unidad</th>
 											<th>Estado</th>
 											<th>Accion</th>
+											<th>Accion</th>
 											<th>Cotizacion Pdf</th>
 											
 											
@@ -72,10 +73,11 @@
 											</td>
 
 											<td>
-									
 												<a class="btn btn-info" target="_top" href="../vista/formularioEnviarCotizaciones.php?idSolicitud=<?php echo $valor[$i]['id_solicitudes']?>">Cotizar</a>
 											</td>
-
+											<td>
+												<button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-info">Registrar</button>
+											</td>
 											<td>
 												<a style="padding: 0; margin-top: 0;" target="_blank" href="../archivos/cotizacionesIniciales/solicitudCotizacion<?php echo $valor[$i]['id_solicitudes']?>.pdf">
 													<input style="padding: 0; margin-top: 0;" type="image" src="../recursos/imagenes/iconoImprimir.png" name="imprimir" alt="imprimir" width="40px"/>
@@ -126,13 +128,33 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
 </div>
 
+
+<div class="modal fade" id="modalCRUDJust" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class=" text-center modal-title1" id="exampleModalLabel">Enviar Solicitud de Pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <form id="formPersonas">    
+            <div class="modal-body">            
+                <div class="form-group">
+                <label for="Justificacion" class="col-form-label">Justificacion:</label>
+                <textarea  class="form-control"  id="Justificacion" cols="20" rows="5" placeholder="Puede agregar una justificacion..."></textarea>                
+                </div>                         
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                <button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-dark">GUARDAR</button>
+            </div>
+        </form>    
+        </div>
+    </div>
+</div>  
+<script type="text/javascript" src="../controladores/controladorRegistroManual.js"></script>  
 <?php
 	include('../vista/layouts/piePagina.php');
 	//include_once("layouts/footer.php");

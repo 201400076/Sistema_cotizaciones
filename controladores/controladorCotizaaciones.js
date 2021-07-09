@@ -66,13 +66,18 @@ $(document).on("click", ".btnEnviar", function(){
         type: "POST",
         dataType: "json",
         data: {id_solicitud:id_solicitud,nombre_usu:nombre_usu,id_empresa:id_empresa},
-        success: function(fila){  
+        success: function(fila){ 
             console.log(fila);                        
             if(fila==null){                                
                 alert("Error no puedo registrar la cotizacion");
-            }else{                
-                alert("Se agrego correctamente tu cotizacion");
-                window.location.href = "../index.php";
+            }else{               
+                if(estado=='empresa'){
+                    alert("Se agrego correctamente tu cotizacion");
+                    window.location.href = "../index.php";
+                }else{
+                    alert("Se agrego correctamente tu cotizacion");
+                    window.location.href = "../ruta/rutas.php?ruta=mostrar&con=aceptada";
+                }
             }
         }              
     });   
@@ -92,7 +97,7 @@ $(document).on("click", ".cotizar", function(){
         url:"../modelo/actualizarPedido.php",
         type: "POST",
         dataType: "json",
-        data: {id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud},
+        data: {id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud,nombre_usu:nombre_usu},
         success: function(fila){  
             console.log(fila);
             if(fila.length==0){
@@ -204,7 +209,7 @@ $('input[type="file"]').on('change', function(){
                     url:"../modelo/cotizacionItem.php",
                     type: "POST",
                     dataType: "json",
-                    data: {marca:marca,modelo:modelo,descripcion:descripcion,unit:unit,total:total,id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud},
+                    data: {marca:marca,modelo:modelo,descripcion:descripcion,unit:unit,total:total,id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud,nombre_usu:nombre_usu},
                     success: function(fila){  
                         console.log(fila);                        
                         if(fila==null){                                

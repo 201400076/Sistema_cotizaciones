@@ -1,13 +1,14 @@
 <?php
     session_start();
-    $estado='empresa';//$_GET['estado'];
-        include_once '../modelo/conexionPablo.php';        
-        include('../vista/layouts/navEmpresa.php'); 
-    
+    $estado=$_GET['estado'];
+    if($estado=='empresa'){
+        include('layouts/navEmpresa.php'); 
+    }else{
+        include('../vista/layouts/navAdministracion.php'); 
+    }
     $id_solicitud=$_GET['solicitud'];
     $id_empresa=$_GET['empresa'];
     $nombre=$_GET['nombre'];
-    include_once '../modelo/conexionPablo.php';
     $id_pendientes=1;
     $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id_solicitud'";
     $resultado = $conexion->prepare($consulta);

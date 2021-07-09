@@ -43,6 +43,7 @@
     <link href="../vista/css/headers.css" rel="stylesheet">
     <script src="../librerias/bootstrap/jjs/bootstrap.bundle.min.js"></script>    
     <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../librerias/js/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../vista/css/estiloFRU.css" media="screen" />      
   </head>
 <body>
@@ -50,7 +51,14 @@
 <div class="container-fluid">
     <div class="row nav">
         <div class=" col-10">          
-            <h1>Sistema de cotizacion</h1>                         
+            <div class="row">
+              <div class="col-10">
+                <h4>Sistema de cotizacion</h4>                         
+              </div>
+              <div class="col-10">
+                <h3><?php echo $unidad_gasto[0]['nombre_unidad']?></h3>                         
+              </div>
+            </div>
         </div>  
         <div class="col-2">
            <div class="dropdown text-end icono">
@@ -60,8 +68,6 @@
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
                 <li><a class="dropdown-item" href="#"> <?php echo $nombre?></a></li>                
                 <li><hr class="dropdown-divider"></li>
-                <li><p class='ml-4'><b>Unidad actual</b></p></li>
-                <li><p class ='ml-4'> <?php echo $unidad_gasto[0]['nombre_unidad']?></p></li>                
                 <li><hr class="dropdown-divider"></li>
                 <?php 
                 if(!empty($administracion)){
@@ -83,7 +89,7 @@
                 }
                 ?>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="../index.php">Salir</a></li>
+                <li><a class="dropdown-item" href="../controladores/cerrarSession.php">Salir</a></li>
               </ul>
             </div>
         </div>    

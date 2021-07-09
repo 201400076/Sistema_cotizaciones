@@ -41,7 +41,14 @@
 <div class="container-fluid">
   <div class="row nav">
       <div class=" col-10">          
-            <h1>Sistema de cotizacion</h1>                         
+            <div class="row">
+              <div class="col-10">
+                <h4>Sistema de cotizacion</h4>                         
+              </div>
+              <div class="col-10">
+                <h3><?php echo $unidad_gasto[0]['nombre_gasto']?></h3>                         
+              </div>
+            </div>
       </div>  
       <div class="col-2">                  
           <div class="dropdown text-end icono">
@@ -51,15 +58,12 @@
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
                 <li><a class="dropdown-item" href="#"> <?php echo $nombre?></a></li>                
                 <li><hr class="dropdown-divider"></li>
-                <li><p class='ml-4'><b>Unidad actual</b></p></li>
-                <li><p class ='ml-4'> <?php echo $unidad_gasto[0]['nombre_gasto']?></p></li>                
-                <li><hr class="dropdown-divider"></li>
                 <?php 
                 if(!empty($administracion)){
                   echo "<li><p class='ml-4'><b>Unidad Administrativa</b></p></li>";
                   foreach($administracion as $ad){
-                    $id_unidad=$ad['id_unidad'];
-                    echo "<li><a class='dropdown-item' href='../ruta/rutaUsuarios.php?tipo=administracion&id_unidad=".$id_unidad."'>".$ad['nombre_unidad']."</a></li>";
+                    $id_admi=$ad['id_unidad'];
+                    echo "<li><a class='dropdown-item' href='../ruta/rutaUsuarios.php?tipo=administracion&id_unidad=".$id_admi."'>".$ad['nombre_unidad']."</a></li>";
                   }
                 }
                 ?>
@@ -74,7 +78,7 @@
                 }
                 ?>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="../index.php">Salir</a></li>
+                <li><a class="dropdown-item" href="../controladores/cerrarSession.php">Salir</a></li>
               </ul>
           </div>   
       </div>            

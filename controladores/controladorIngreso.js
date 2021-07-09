@@ -28,20 +28,16 @@ $('#ingresar').on('click', function() {
                         case 'Empresa':
                             rol =fila['rolAsignado'];
                             nombre=fila['nombre_empresa'];
-                            estado=fila['estado_cotizador'];
                             id_empresa=fila['id_empresa'];
-                            if(estado==1){
+                            estado='empresa'
+                            if(fila['estado_cotizador']==1){
                                 alert("Esta cotizacion ya fue registrada");
-                            }else{
+                            }else{                                
                                 alert("Bienvenido empresa: "+nombre);
-                                redireccionA("./vista/registroCotizacion.php?solicitud="+fila['id_solicitudes']+"&nombre="+fila['user_cotizador']+"&empresa="+fila['id_empresa']);
+                                redireccionA("./vista/registroCotizacion.php?solicitud="+fila['id_solicitudes']+"&empresa="+fila['id_empresa']+"&nombre="+fila['user_cotizador']+"&estado="+estado);
                             }
                         break;            
-                }
-                if (fila['id_unidad'] != null) {
-                    //redireccionA("ruta/rutas.php?ruta=mostrar&con=nueva");
-                } else if (fila['id_gasto'] != null) {
-                }
+                }                
             } else { 
                 alert("“Error!! Usuario y Password incorrectos!!!”");
             }

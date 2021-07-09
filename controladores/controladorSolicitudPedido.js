@@ -67,7 +67,6 @@ $("#btnPedido").click(function(){
     
 
 $(document).on("click", ".btnGuardarJust", function(){    
-    console.log(justificacion);
     justificacion = $.trim($("#Justificacion").val());
     if(justificacion==''){
         var respuesta = confirm("¿Está seguro que desea agregar el pedido si ninguna justificacion?");
@@ -82,7 +81,7 @@ $(document).on("click", ".btnGuardarJust", function(){
                 }        
             });
             $("#modalCRUDJust").modal("hide");  
-            window.location.href="../vista/solicitudes_vista.php?id_unidad="+id_unidad;             
+            window.location.href="../vista/solicitudes_vista.php";             
         }
     }else{
         $.ajax({
@@ -94,7 +93,7 @@ $(document).on("click", ".btnGuardarJust", function(){
             }        
         });
         $("#modalCRUDJust").modal("hide");     
-        window.location.href="../vista/solicitudes_vista.php?id_unidad="+id_unidad;                     
+        window.location.href="../vista/solicitudes_vista.php";             
     }
 });
 
