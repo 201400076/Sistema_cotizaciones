@@ -2,18 +2,7 @@
 require('../librerias/fpdf/fpdf.php');
 class PDF extends FPDF{
 function Header(){
-    $this->Image('../recursos/imagenes/umss.png',8,1,53);
-        $ancho=190;
-         $this->setFont('Arial','B',8);
-
-            $this->SetY(12); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
-            $this->Cell($ancho, 10,'sistema.cotizaciones.umss@gmail.com', 0, 0, 'R');
-            $this->SetY(15);
-            $this->Cell($ancho, 10,'NIT: 6407874001 ', 0, 0, 'R');
-            $this->SetY(18);
-            $this->Cell($ancho, 10,utf8_decode('Vinto - Motecato, calle Bélgica y Noruega'), 0, 0, 'R');    
-            $this->SetY(21);
-            $this->Cell($ancho, 10,utf8_decode('(+591) 76436540 - 44355215'), 0, 0, 'R');       
+    $this->Image('../recursos/imagenes/umss.png',8,1,53);      
 }         
 
 function Body(){
@@ -23,15 +12,15 @@ function Body(){
     $this->AddPage($this->CurOrientation);
      
     $this->SetFont('helvetica', 'BU', 20);
-    $this->SetXY(45, 45);
+    $this->SetXY(45, 35);
     $this->Cell(120, 10, "Informe Cotizacion Rechazada", 0, 1, 'C');
-
     $this->SetFont('Arial', '', 12);
     $this->setY(60);
-    $this->Cell(50,10,'Solicitado Por: ',0,0,'L');
-
+    $this->Cell(50,10,'Responsable  : ',0,0,'L');
     $this->setXY(10,65);
-    $this->Cell(50,10,'Responsable: ',0,0,'L');
+    $this->Cell(50,10,'Solicitante      : ',0,0,'L');
+    $this->setXY(10,70);
+    $this->Cell(50,10,'Encargado de: ',0,0,'L');
     $this->setXY(103,60);
     $this->Cell(50,10,utf8_decode('Solicitud N°:'),0,0,'R');
     $this->setXY(116,65);
@@ -52,15 +41,15 @@ function Body1(){
     $this->AddPage($this->CurOrientation);
      
     $this->SetFont('helvetica', 'BU', 20);
-    $this->SetXY(45, 45);
+    $this->SetXY(45, 35);
     $this->Cell(120, 10, "Informe Cotizacion Aceptada", 0, 1, 'C');
-
     $this->SetFont('Arial', '', 12);
     $this->setY(60);
-    $this->Cell(50,10,'Solicitado Por: ',0,0,'L');
-
+    $this->Cell(50,10,'Responsable  : ',0,0,'L');
     $this->setXY(10,65);
-    $this->Cell(50,10,'Responsable: ',0,0,'L');
+    $this->Cell(50,10,'Solicitante      : ',0,0,'L');
+    $this->setXY(10,70);
+    $this->Cell(50,10,'Encargado de: ',0,0,'L');
     $this->setXY(103,60);
     $this->Cell(50,10,utf8_decode('Solicitud N°:'),0,0,'R');
     $this->setXY(116,65);
@@ -85,12 +74,13 @@ function Footer()
 require_once('../configuraciones/conexion.php');
     session_start();
     $nomUsuAdm = $_SESSION['nombre_usuario'];
+    $unidad = $_SESSION['unidad'];
     
     $idRescate=$_GET['id'];
     $tipo=$_GET['tipo'];
     $conn = new Conexiones();
     $estadoConexion = $conn->getConn();
-    $cotizaciones = " SELECT solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_ini_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, usuarios.apellidos, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
+    $cotizaciones = "SELECT unidad_gasto.nombre_gasto, solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_ini_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, usuarios.apellidos, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
 																															AND pedido.id_pedido=solicitudes.id_pedido
 																															AND usuarios.id_usuarios=pedido.id_usuarios
 																															AND usuarios.id_usuarios=usuarioconrol.id_usuarios
@@ -101,7 +91,7 @@ require_once('../configuraciones/conexion.php');
     if($tipo == 'a'){
         $idEmpresa = $registroCotizaciones['empresa_adjudicada'];
     }
-
+             
     $pdf = new PDF();
   
     $pdf->pagina=0;
@@ -111,7 +101,16 @@ require_once('../configuraciones/conexion.php');
     }else{
         $pdf->Body1();
     }
-    
+    $datosUnidad = datosGenerales($unidad);
+
+    $pdf->setFont('Arial','B',8);
+    $pdf->SetY(12);
+    $pdf->Cell(190, 10,utf8_decode($datosUnidad['nombre_facultad']), 0, 0, 'R');
+    $pdf->SetY(16);
+    $pdf->Cell(190, 10,'sistema.cotizaciones.umss@gmail.com', 0, 0, 'R');   
+    $pdf->SetY(20);
+    $pdf->Cell(190, 10,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'), 0, 0, 'R'); 
+
     $pdf->SetFont('Times','BI',14);
     $pdf->setXY(155,25);
     $pdf->Cell(10,80,$registroCotizaciones['id_solicitudes'],0,0,'L');
@@ -120,9 +119,15 @@ require_once('../configuraciones/conexion.php');
     $pdf->setXY(170,50);
     $pdf->Cell(10,50,$registroCotizaciones['fecha_evaluacion'],0,0,'L');
     $pdf->setXY(40,40);
-    $pdf->Cell(10,50,$registroCotizaciones['nombres']." ".$registroCotizaciones['apellidos'],0,0,'L');
-    $pdf->setXY(40,45);
     $pdf->Cell(10,50,$nomUsuAdm,0,0,'L');
+    $pdf->setXY(40,45);
+    $pdf->Cell(10,50,$registroCotizaciones['nombres']." ".$registroCotizaciones['apellidos'],0,0,'L');
+    $pdf->setXY(40,50);
+    $pdf->Cell(10,50,$registroCotizaciones['nombre_gasto'],0,0,'L');
+
+    $pdf->SetFont('Times','BI',13);
+    $pdf->SetXY(25,45);
+    $pdf->Cell(150, 10, utf8_decode($datosUnidad['nombre_unidad']), 0, 1, 'C');
 
     $pdf->SetFont('Times','I',14);
     $pdf->setY(95);
@@ -171,11 +176,18 @@ require_once('../configuraciones/conexion.php');
 $pdf->Output();
 
 function datosEmpresa($idEmpresa){
-    require_once('../configuraciones/conexion.php');
-    $conn = new Conexiones();
+    global $conn;
     $estadoConexion = $conn->getConn();
     $empresa = " SELECT * FROM empresas WHERE id_empresa=".$idEmpresa;
 	$queryEmpresa=$estadoConexion->query($empresa);
     return $queryEmpresa->fetch_array(MYSQLI_BOTH);
+}
+
+function datosGenerales($idEmpresa){
+    global $conn;
+    $estadoConexion = $conn->getConn();
+    $datos = "SELECT facultad.nombre_facultad, unidad_administrativa.nombre_unidad FROM facultad, unidad_administrativa WHERE unidad_administrativa.id_facultad=facultad.id_facultad AND unidad_administrativa.id_unidad=".$idEmpresa;
+	$queryDatos=$estadoConexion->query($datos);
+    return $queryDatos->fetch_array(MYSQLI_BOTH);
 }
 ?>

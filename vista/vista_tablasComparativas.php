@@ -30,12 +30,31 @@
         $empresas = "SELECT * FROM usuario_cotizador, empresas WHERE id_solicitudes=".$id_solicitud." AND empresas.id_empresa=usuario_cotizador.id_empresa AND usuario_cotizador.estado_cotizador=1";
         $queryEmpresas=$estadoConexion->query($empresas);
 
-
+        $conNumCoti = "SELECT cantidad_cotizaciones FROM solicitudes_cotizaciones WHERE id_solicitudes=".$id_solicitud;
+        $numCot = $estadoConexion->query($conNumCoti);
+        $cantidadCotizaciones = $numCot->fetch_array(MYSQLI_BOTH);
+        $cotizacionesRegistradas = $cantidadCotizaciones['cantidad_cotizaciones'];
+        $label = 'label-success';
+        if($cotizacionesRegistradas<3){
+            $label = 'label-danger';
+        }
     ?>
-    <h1 style="text-align: center;">Tablas Comparativas</h1>
-    <h2 style="text-align: center;">Solicitud de Cotizacion #<?php echo $id_solicitud;?></h2>
+    
+   
+    <div class="row">
+        <div class="col-md-6" >
+            <h2 style="text-align: center;">Tablas Comparativas <?php echo $cotizacionesRegistradas;?></h2>
+            <h3 style="text-align: center;">Solicitud de Cotizacion #<?php echo $id_solicitud;?></h3>
+        </div>
+        <div class="col-md-6 text-center" >
+        <h2 style="text-align: center;">Empresas Participantes: </h2>
+        
+        <h3 style="font-size: x-large;" class="label <?php echo $label?>"><span class="label"><?php if($cotizacionesRegistradas<3){echo 'No existen suficientes empresas participantes -- Registradas: '.$cotizacionesRegistradas.' (minimo: 3)';}else{echo 'Registradas: '.$cotizacionesRegistradas.' (minimo: 3)';} ?></span></h3>
+        
+        </div>
+    </div>
 
-    <div class="container-fluid">
+    <div class="">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
@@ -239,7 +258,7 @@
                     while($listaEmpresas=$queryEmpresas->fetch_array(MYSQLI_BOTH)){
                         $empresaActualNombre = $listaEmpresas['nombre_empresa'];
                         $idEmpresaActual = $listaEmpresas['id_empresa'];
-                        echo "<option value=".$idEmpresaActual.">".$empresaActualNombre."</option>";
+                        echo '<option value='.$idEmpresaActual.'>'.$empresaActualNombre.'</option>';
                     }
                 ?>
             </select>
@@ -248,7 +267,7 @@
     <br>
     <div class="row">
         <div class="col-lg-12" style="text-align: center;">
-            <button class="btn btn-success" id="botonAceptar">ACEPTAR</button>
+            <button class='btn btn-success' id='botonAceptar'>ACEPTAR</button>
             <button class="btn btn-danger" id="botonRechazar">RECHAZAR</button>
             <button class="btn btn-secondary" id="botonCancelar" value="Cancelar">CANCELAR</button>
         </div>
@@ -256,6 +275,7 @@
 
     <script>
         var id = '<?php echo $_GET['id_solicitud']?>';
+        var cotizaciones = '<?php echo $cotizacionesRegistradas?>';
     </script>
     <script src="../controladores/evaluarCotizacion.js"></script>
 </body>
