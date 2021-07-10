@@ -15,25 +15,46 @@ function aceptar() {
     var selected = combo.options[combo.selectedIndex].text;
     var idEmpresa = document.getElementById("empresasCotizadoras").value;
     fechaAccion = fecha();
+    if(numCotizaciones>=3){
+        
+        Swal.fire({
+            title: "Autorizar Cotizacion con:\n "+selected+"? ",
+            text: "En fecha: "+fechaAccion,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'SI',
+            cancelButtonText: 'NO',
+            allowOutsideClick: false,
+            closeOnClickOutside: false,
+            allowEnterKey: true
+            }).then((result) => {
+                
+                if (result.isConfirmed) {
+                    mensajeConfirmacion(id,fechaAccion,idEmpresa);
+                }else{
+                    redireccionA("../vista/vista_tablasComparativas.php?id_solicitud="+id);
+                }
+        })
+    }else{
+        insuficientes();
+    }
+}
+
+function insuficientes(){
     Swal.fire({
-        title: "Autorizar Cotizacion con:\n "+selected+"? ",
-        text: "En fecha: "+fechaAccion,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'SI',
-        cancelButtonText: 'NO',
+        title: 'EMPRESAS INSUFICIENTES',
+        text: 'Para ACEPTAR la licitacion de una cotizacion se debe tener al menos 3 empresas participantes',
+        icon: 'warning',
+        confirmButtonText: 'OK',
         allowOutsideClick: false,
         closeOnClickOutside: false,
         allowEnterKey: true
-        }).then((result) => {
-            
-            if (result.isConfirmed) {
-                mensajeConfirmacion(id,fechaAccion,idEmpresa);
-            }else{
-                redireccionA("../vista/vista_tablasComparativas.php?id_solicitud="+id);
-            }
+    }).then((result) =>{
+        if(result.isConfirmed){
+            redireccionA("../ruta/rutas.php?ruta=mostrar&con=cotizando");
+        }
     })
 }
 

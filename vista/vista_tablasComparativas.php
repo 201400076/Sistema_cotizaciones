@@ -43,7 +43,7 @@
    
     <div class="row">
         <div class="col-md-6" >
-            <h2 style="text-align: center;">Tablas Comparativas <?php echo $cotizacionesRegistradas;?></h2>
+            <h2 style="text-align: center;">Tablas Comparativas</h2>
             <h3 style="text-align: center;">Solicitud de Cotizacion #<?php echo $id_solicitud;?></h3>
         </div>
         <div class="col-md-6 text-center" >
@@ -231,7 +231,7 @@
                                         ?>
 
                                        <!--  <th><?php echo $suma;?></th>  -->     
-											
+
                                             
                                             <!-- <th class="text-right">Acciones</th> -->
 
@@ -259,7 +259,14 @@
 
     <div class="row">
         <div class="col-lg-12" style="text-align: center;">
-            <label for="empresasCotizadoras">Seleccione la Empresa Adjudicada a la Cotizacion:</label><br>
+        <?php
+            if($cotizacionesRegistradas==0){
+                echo ("<label for='empresasCotizadoras' style='font-size: medium' class='label label-warning'>NO EXISTEN EMPRESAS PARTICIPANTES</label>");
+            }else{
+                echo ("<label for='empresasCotizadoras'>Seleccione la Empresa Adjudicada a la Cotizacion:</label>");
+            }
+        ?>
+            <br>
             <select name="empresasCotizadoras" id="empresasCotizadoras">
                 <?php
                     while($listaEmpresas=$queryEmpresas->fetch_array(MYSQLI_BOTH)){
@@ -282,7 +289,7 @@
 
     <script>
         var id = '<?php echo $_GET['id_solicitud']?>';
-        var cotizaciones = '<?php echo $cotizacionesRegistradas?>';
+        var numCotizaciones = '<?php echo $cotizacionesRegistradas?>';
     </script>
     <script src="../controladores/evaluarCotizacion.js"></script>
 </body>
