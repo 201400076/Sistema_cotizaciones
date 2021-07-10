@@ -4,6 +4,7 @@
     include("layouts/navAdministracion.php");
     require_once '../configuraciones/conexion.php';
     $conn = new Conexiones();
+    
 ?>
 <!DOCTYPE html>
 <html>

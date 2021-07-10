@@ -124,10 +124,9 @@
                 <p  class="dropdown-toggle mt-2" id="dropdownUser1" data-bs-toggle="dropdown">
                   Empresas
                 </p>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">          
-                  <li><a class="dropdown-item" href="#">Registrar Empresas</a></li>                  
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">  
+                  <li><a class="dropdown-item" href="../vista/formularioRE.php">Registrar Empresas</a></li>                  
                   <li><a class="dropdown-item" href="#">Listado de Empresas</a></li>
-                  <li><a class="dropdown-item" href="../vista/empresasSolicitantes.php">Cotizacion Empresas</a></li>
                 </ul>
           </div>
         </div>
