@@ -8,7 +8,7 @@ class PDF extends FPDF{
         $this->Image('../recursos/imagenes/umss.png', 5, 5, 50); //Insertamos el logo si es en PNG su calidad o formato debe estar entre PNG 8/PNG 24
          
         $ancho = 250;
-        $this->SetFont('Arial', 'B', 12);
+        $this->SetFont('Arial', 'B', 11);
          
         if($this->pagina == 1){ //Cuando el archivo está en Horizontal
             $horizontal = 85; //Permitirá que las dimensiones que abarca horizontalmente sea 85 puntos más que cuando es vertical
@@ -20,14 +20,14 @@ class PDF extends FPDF{
             $this->Cell($ancho + $horizontal, 10,'Hora: '.date('H:i:s'), 0, 0, 'R');            
         } 
          else {            
-            $this->SetY(15);
+            $this->SetY(30);
             $this->setX(1); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
             $this->Cell($ancho, 10,'Emision:', 0, 1, 'R');
-            $this->SetY(20);
+            $this->SetY(35);
             $this->SetX(35);
             $this->Cell($ancho, 10,'Fecha: '.date('d/m/Y'), 0, 0, 'R');
-            $this->SetY(25);
-            $this->SetX(28);
+            $this->SetY(40);
+            $this->SetX(29);
             $this->Cell($ancho, 10,'Hora: '.date('H:i:s'), 0, 0, 'R');            
         }     
     }
@@ -194,6 +194,31 @@ foreach($data2 as $ne){
 }
 //#######################################
 
+//##3##################ENCABEZADO############################
+require_once '../configuraciones/conexion.php';
+session_start();
+$nomUsuAdm = $_SESSION['nombre_usuario']; 
+$unidad = $_SESSION['unidad']; 
+
+$nombre = nombreUnidad($unidad);
+
+$y=$pdf->GetY();
+$pdf->setFont('Arial','B',11);
+$pdf->SetXY(95,$y-60);
+$pdf->Cell(190, 10,utf8_decode($nombre['nombre_facultad']), 0, 0, 'R');
+$pdf->SetXY(95,$y-55);
+$pdf->Cell(190, 10,'sistema.cotizaciones.umss@gmail.com', 0, 0, 'R');  
+$pdf->SetXY(194, $y-50);
+$pdf->MultiCell(94, 8,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'), 0, 'C');
+$pdf->SetXY(190, $y);
+//$pdf->MultiCell(190, 10,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'), 0, 0, 'R'); 
+
+
+
+//######################################################
+
+
+
 //############################################################3
 $pdf->SetFont('Arial', '', 10);    
    $aux;
@@ -212,9 +237,9 @@ $pdf->SetFont('Arial', '', 10);
        $pdf->SetXY(16, $y);
        $pdf->MultiCell(12, 8,$a['cantidad'], 1, 'C');
        $pdf->SetXY(28, $y);
-       $pdf->MultiCell(19, 8,$a['unidad'], 1, 'C');
+       $pdf->MultiCell(19, 8,utf8_decode($a['unidad']), 1, 'C');
        $pdf->SetXY(47, $y);
-       $pdf->MultiCell(94, 8, $a['detalle'], 1, 'C');
+       $pdf->MultiCell(94, 8, utf8_decode($a['detalle']), 1, 'C');
      
        foreach($data1 as $d){
            if($d['id_items']==$id){
@@ -290,9 +315,9 @@ $y = $pdf->GetY();
 $pdf->SetXY(8, $y+2);
 $pdf->MultiCell(133, 8, "Totales", 1, 'C');
 $suma=0;
-$tam=sizeof($valores)/$cantEmpresa;
+//$tam=sizeof($valores)/$cantEmpresa;
 $tam2=sizeof($valores);
-$tamAux=$tam;
+//$tamAux=$tam;
 for($i=0;$i<$cantEmpresa;$i++){
     $suma+=$valores[$i];
     for($j=$i+$cantEmpresa;$j<$tam2;$j+=$cantEmpresa){
@@ -354,10 +379,16 @@ for($k=$cantEmpresa;$k<5;$k++){
 
 
 
-    $pdf->Output('ReporteEjemplo_TuCafeJava_'.date("d_m_Y_H_i_s"), 'I'); //El primer parámetro es para colocar el nombre del archivo al momento de ser descargado y el segundo parámetro es para abrir el archivo en el navegador con la opción para poder ser descargado
+    $pdf->Output(); //El primer parámetro es para colocar el nombre del archivo al momento de ser descargado y el segundo parámetro es para abrir el archivo en el navegador con la opción para poder ser descargado
 
 
-
+    function nombreUnidad($idUnidad){
+        $conn = new Conexiones();
+        $estadoConexion = $conn->getConn();
+        $datos = "SELECT * FROM unidad_administrativa, facultad WHERE facultad.id_facultad=unidad_administrativa.id_facultad AND unidad_administrativa.id_unidad=".$idUnidad;
+        $queryDatos=$estadoConexion->query($datos);
+        return $queryDatos->fetch_array(MYSQLI_BOTH);
+    }
 
 
 ?>

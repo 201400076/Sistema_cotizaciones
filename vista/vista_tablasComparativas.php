@@ -211,9 +211,9 @@
                                         <?php
                                         $suma=0;
                                        // var_dump($valores);
-                                        $tam=sizeof($valores)/$cantEmpresa;
+                                        //$tam=sizeof($valores)/$cantEmpresa;
                                         $tam2=sizeof($valores);
-                                        $tamAux=$tam;
+                                       // $tamAux=$tam;
                                         
                                         for($i=0;$i<$cantEmpresa;$i++){
                                             $suma+=$valores[$i];

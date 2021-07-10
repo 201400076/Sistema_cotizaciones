@@ -19,12 +19,15 @@ class SolicitudesController{
     static function mostrar_nueva($condicion){
         session_start();
         $id_unidadAdmin=$_SESSION['unidad'];
+        //$id_pendientes=$_SESSION['usuario'];
+        //var_dump($id_unidadAdmin);
         $solicitud =new Solicitud();
-		$dato = $solicitud->mostrar("solicitudes, pedido, usuarios, usuarioconrol, unidad_gasto, unidad_administrativa","solicitudes.estado='pendiente' 
-                                        AND solicitudes.id_pedido=pedido.id_pedido AND  pedido.id_unidad=unidad_gasto.id_unidad 
-                                        AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND usuarios.id_usuarios=pedido.id_usuarios 
-                                        AND usuarios.id_usuarios=usuarioconrol.id_usuarios AND unidad_administrativa.id_unidad=pedido.id_unidad 
-                                        AND pedido.id_unidad=".$id_unidadAdmin." order by solicitudes.fecha_evaluacion desc");
+		$dato = $solicitud->mostrar("solicitudes s, pedido p, unidad_gasto g,unidad_administrativa ua, usuarioconrol ur, usuarios us ","s.estado='pendiente' 
+                                        AND s.id_pedido=p.id_pedido AND g.id_gasto=p.id_gasto 
+                                        AND ur.id_gasto=g.id_gasto AND us.id_usuarios=ur.id_usuarios
+                                       
+                                        AND ua.id_unidad=g.id_unidad 
+                                        AND p.id_unidad=".$id_unidadAdmin." order by s.fecha_evaluacion desc");
 
 
 
@@ -36,11 +39,12 @@ class SolicitudesController{
         session_start();
         $id_unidadAdmin=$_SESSION['unidad'];
         $solicitud =new Solicitud();
-        $dato = $solicitud->mostrar("solicitudes, pedido, usuarios, usuarioconrol, unidad_gasto, unidad_administrativa","solicitudes.estado='aceptada' 
-                                                AND solicitudes.id_pedido=pedido.id_pedido AND  pedido.id_unidad=unidad_gasto.id_unidad 
-                                                AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND usuarios.id_usuarios=pedido.id_usuarios 
-                                                AND usuarios.id_usuarios=usuarioconrol.id_usuarios AND unidad_administrativa.id_unidad=pedido.id_unidad 
-                                                AND pedido.id_unidad=".$id_unidadAdmin." order by solicitudes.fecha_evaluacion desc");
+        $dato = $solicitud->mostrar("solicitudes s, pedido p, unidad_gasto g,unidad_administrativa ua, usuarioconrol ur, usuarios us ","s.estado='aceptada' 
+                                        AND s.id_pedido=p.id_pedido AND g.id_gasto=p.id_gasto 
+                                        AND ur.id_gasto=g.id_gasto AND us.id_usuarios=ur.id_usuarios
+                                        AND ur.id_gasto=g.id_gasto 
+                                        AND ua.id_unidad=g.id_unidad 
+                                        AND p.id_unidad=".$id_unidadAdmin." order by s.fecha_evaluacion desc");
        $active="active";
         require_once("../vista/vista_solicitudes_aceptadas.php");
 
@@ -49,11 +53,12 @@ class SolicitudesController{
         session_start();
         $id_unidadAdmin=$_SESSION['unidad'];
         $solicitud =new Solicitud();
-        $dato = $solicitud->mostrar("solicitudes, pedido, usuarios, usuarioconrol, unidad_gasto, unidad_administrativa","solicitudes.estado='rechazada' 
-                                                AND solicitudes.id_pedido=pedido.id_pedido AND  pedido.id_unidad=unidad_gasto.id_unidad 
-                                                AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND usuarios.id_usuarios=pedido.id_usuarios 
-                                                AND usuarios.id_usuarios=usuarioconrol.id_usuarios AND unidad_administrativa.id_unidad=pedido.id_unidad 
-                                                AND pedido.id_unidad=".$id_unidadAdmin." order by solicitudes.fecha_evaluacion desc");
+        $dato = $solicitud->mostrar("solicitudes s, pedido p, unidad_gasto g,unidad_administrativa ua, usuarioconrol ur, usuarios us ","s.estado='rechazada' 
+                                        AND s.id_pedido=p.id_pedido AND g.id_gasto=p.id_gasto 
+                                        AND ur.id_gasto=g.id_gasto AND us.id_usuarios=ur.id_usuarios
+                                        AND ur.id_gasto=g.id_gasto 
+                                        AND ua.id_unidad=g.id_unidad 
+                                        AND p.id_unidad=".$id_unidadAdmin." order by s.fecha_evaluacion desc");
        $active="active";
         require_once("../vista/vista_solicitudes_rechazadas.php");
     }
@@ -63,13 +68,12 @@ class SolicitudesController{
         $id_unidadAdmin=$_SESSION['unidad'];
 
         $solicitud =new Solicitud();
-		$dato = $solicitud->mostrar("pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones","solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
-                                                            AND pedido.id_pedido=solicitudes.id_pedido
-                                                            AND usuarios.id_usuarios=pedido.id_usuarios
-                                                            AND usuarios.id_usuarios=usuarioconrol.id_usuarios
-                                                            AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
-                                                            AND solicitudes_cotizaciones.estado_cotizacion='cotizando'
-                                                            AND pedido.id_unidad=".$id_unidadAdmin." order by solicitudes_cotizaciones.fecha_ini_licitacion desc");
+		$dato = $solicitud->mostrar("solicitudes s, pedido p, unidad_gasto g,unidad_administrativa ua, usuarioconrol ur, usuarios us,solicitudes_cotizaciones sc","s.id_solicitudes=sc.id_solicitudes
+                                    AND s.id_pedido=p.id_pedido AND g.id_gasto=p.id_gasto 
+                                    AND ur.id_gasto=g.id_gasto AND us.id_usuarios=ur.id_usuarios
+                                    AND ur.id_gasto=g.id_gasto 
+                                    AND ua.id_unidad=g.id_unidad 
+                                    AND p.id_unidad=".$id_unidadAdmin." order by sc.fecha_ini_licitacion desc");
                                                         
        $active="active";
         require_once("../vista/vista_solicitudes_enCotizacion.php");
