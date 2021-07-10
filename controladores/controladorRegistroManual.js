@@ -47,10 +47,11 @@ $(document).on("click", ".btnGuardarJust", function(){
                     });
                     $("#modalCRUDJust").modal("hide");  
                 } else {
+                   
                 }
             })
-        } else if (result.isDenied) {
-          Swal.fire('Changes are not saved', '', 'info')
+        } else if (result.isDenied) { 
+            window.location.href="../vista/formularioRE.php";
         }
     })        
 });
