@@ -79,8 +79,12 @@
 											<th>Archivo</th>
                                             
 										<?php
+                                        $cantEmpresa=0;
                                         foreach($data2 as $ne){
+                                            $cantEmpresa++;
+                                            
                                             echo"<th>".$ne['nombre_empresa']."</th>";
+
                                         }
                                         ?>
 										
@@ -206,20 +210,23 @@
                                             <th></th>
                                         <?php
                                         $suma=0;
-                                        $tam=sizeof($valores)/2;
+                                       // var_dump($valores);
+                                        $tam=sizeof($valores)/$cantEmpresa;
                                         $tam2=sizeof($valores);
                                         $tamAux=$tam;
-                                        for($i=0;$i<$tam;$i++){
-                                            for($j=$tamAux;$j<$tam2;$j++){
-                                            //var_dump(sizeof($valores));
-                                                $suma=$valores[$i]+$valores[$j];
-                                                echo "<th>".$suma."</th>";
-
-                                                $suma=0;
-                                                $j+=$tam;
+                                        
+                                        for($i=0;$i<$cantEmpresa;$i++){
+                                            $suma+=$valores[$i];
+                                            for($j=$i+$cantEmpresa;$j<$tam2;$j+=$cantEmpresa){
+                                                $suma+=$valores[$j];
+                                             //$j+=$cantEmpresa;
                                                 //var_dump(sizeof($valores)/$id2);
+                                            
+                                            
                                             }
-                                            $tamAux++;
+                                            echo "<th>".$suma."</th>";
+                                            $suma=0;
+                                            //$tamAux+=$tam;
                                         }
                                         ?>
 
