@@ -183,6 +183,17 @@ $id_solicitud=$_GET['id_solicitud'];
     $resultado->execute();
     $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
+
+    //#######################################33
+$cantEmpresa=0;
+foreach($data2 as $ne){
+    $cantEmpresa++;
+    
+    //echo"<th>".$ne['nombre_empresa']."</th>";
+
+}
+//#######################################
+
 //############################################################3
 $pdf->SetFont('Arial', '', 10);    
    $aux;
@@ -229,23 +240,21 @@ $pdf->SetFont('Arial', '', 10);
            
         }
         
-      
+        for($i=$cantEmpresa;$i<5;$i++){
+            $x=$pdf->GetX();
+            //$pdf->setX($x+131);
+            $y = $pdf->GetY();
+                $pdf->setXY($x+131,$y-8);
+                $pdf->MultiCell(29, 8,"", 1, 'C');
+                $pdf->setXY($x+29,$y);
+    
+               
+    
+        }
     
     }
 
-    for($i=sizeof($valores)/2;$i<5;$i++){
-        $x=$pdf->GetX();
-        //$pdf->setX($x+131);
-        $y = $pdf->GetY();
-            $pdf->setXY($x+131,$y-8);
-            $pdf->MultiCell(29, 8,"", 1, 'C');
-            $pdf->setXY($x+29,$y);
-
-            $pdf->setXY($x+131,$y-16);
-            $pdf->MultiCell(29, 8,"", 1, 'C');
-            $pdf->setXY($x+29,$y);
-
-    }
+    
 
      for($j=$n;$j<=10;$j++){
        
@@ -273,38 +282,43 @@ $pdf->SetFont('Arial', '', 10);
 
      }
 
+
+
 //##################################TOTALES#################################################
 $pdf->SetFont('Arial', 'B', 10); 
 $y = $pdf->GetY();
 $pdf->SetXY(8, $y+2);
 $pdf->MultiCell(133, 8, "Totales", 1, 'C');
 $suma=0;
-$tam=sizeof($valores)/2;
+$tam=sizeof($valores)/$cantEmpresa;
 $tam2=sizeof($valores);
 $tamAux=$tam;
-for($i=0;$i<$tam;$i++){
-    for($j=$tamAux;$j<$tam2;$j++){
-    //var_dump(sizeof($valores));
-        $suma=$valores[$i]+$valores[$j];
-        $x=$pdf->GetX();
-        $y = $pdf->GetY();
-        $pdf->SetXY($x+131, $y-8);
-        $pdf->MultiCell(29, 8, $suma, 1, 'C');
-        $pdf->SetXY($x+29, $y);
+for($i=0;$i<$cantEmpresa;$i++){
+    $suma+=$valores[$i];
+    for($j=$i+$cantEmpresa;$j<$tam2;$j+=$cantEmpresa){
+        $suma+=$valores[$j];
 
-        $suma=0;
-        $j+=$tam;
-        //var_dump(sizeof($valores)/$id2);
+        
     }
-    $tamAux++;
+    $x=$pdf->GetX();
+    $y = $pdf->GetY();
+    $pdf->SetXY($x+131, $y-8);
+    $pdf->MultiCell(29, 8, $suma, 1, 'C');
+    $pdf->SetXY($x+29, $y);
+        //var_dump(sizeof($valores)/$id2);
+
+    $suma=0;
+    
+   
 }
 
-for($k=$tam;$k<5;$k++){
+for($k=$cantEmpresa;$k<5;$k++){
     $x=$pdf->GetX();
     //$pdf->setX($x+131);
     $y = $pdf->GetY();
         $pdf->setXY($x+131,$y-8);
         $pdf->MultiCell(29, 8,"", 1, 'C');  
+        $pdf->SetXY($x+29, $y);
 }
 
 

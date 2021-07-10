@@ -21,10 +21,14 @@ class SolicitudesController{
         $id_unidadAdmin=$_SESSION['unidad'];
         $solicitud =new Solicitud();
 		$dato = $solicitud->mostrar("solicitudes, pedido, usuarios, usuarioconrol, unidad_gasto, unidad_administrativa","solicitudes.estado='pendiente' 
-                                                AND solicitudes.id_pedido=pedido.id_pedido AND  pedido.id_unidad=unidad_gasto.id_unidad 
-                                                AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND usuarios.id_usuarios=pedido.id_usuarios 
-                                                AND usuarios.id_usuarios=usuarioconrol.id_usuarios AND unidad_administrativa.id_unidad=pedido.id_unidad 
-                                                AND pedido.id_unidad=".$id_unidadAdmin." order by pedido.fecha desc");
+                                        AND solicitudes.id_pedido=pedido.id_pedido AND  pedido.id_unidad=unidad_gasto.id_unidad 
+                                        AND usuarioconrol.id_gasto=unidad_gasto.id_gasto AND usuarios.id_usuarios=pedido.id_usuarios 
+                                        AND usuarios.id_usuarios=usuarioconrol.id_usuarios AND unidad_administrativa.id_unidad=pedido.id_unidad 
+                                        AND pedido.id_unidad=".$id_unidadAdmin." order by solicitudes.fecha_evaluacion desc");
+
+
+
+                                                
        $active="active";
         require_once("../vista/vista_solicitudes_nuevas.php");
     }
