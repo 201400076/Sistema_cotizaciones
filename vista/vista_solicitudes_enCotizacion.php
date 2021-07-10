@@ -14,16 +14,16 @@
 								<table class="table">
 									<tbody>
 										<tr align="center"class="warning">
-											<th>#</th>
-											<th>Id</th>
-											<th>Fecha Inicio Lic</th>
-											<th>Fecha Fin Lic</th>
+											<th>Nro</th>
+											<th>Id Solicitud</th>
+											<th>Unidad Gasto</th>
+											<!--<th>Fecha Inicio Lic</th>-->
 											<!-- <th>Fecha-Aceptado</th> -->
 											<th>Solicitante</th>
-											<th>Unidad</th>
 											<th>Dias Restantes</th>
+											<th>Fecha Fin Lic</th>
 											<th>Estado</th>
-											<th># Cotizaciones</th>
+											<th>Nro Cotizaciones</th>
 											<th>Accion</th>
 										</tr>
 
@@ -37,15 +37,13 @@
 
 											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 
-											<td><?php echo $valor[$i]['fecha_ini_licitacion']?></td>
-
-											<td><?php echo $valor[$i]['fecha_fin_licitacion']?></td>
-
+											<!--<td><?php //echo $valor[$i]['fecha_ini_licitacion']?></td>-->
+											
 											<!--<td><?php //echo $valor[$i]['fecha_evaluacion']?></td>-->
 
-											<td><?php echo $valor[$i]['nombres']?></td>
-
 											<td><?php echo $valor[$i]['nombre_gasto']?></td>
+
+											<td><?php echo $valor[$i]['nombres']?></td>
 
 											<td><?php
 												$date1 = date_create(date("Y-m-d"));
@@ -59,6 +57,8 @@
 												}
 												?>
 											</td>
+
+											<td><?php echo $valor[$i]['fecha_fin_licitacion']?></td>
 
 											<td><span class="label label-info"><?php echo $valor[$i]['estado_cotizacion']?></span></td>
 

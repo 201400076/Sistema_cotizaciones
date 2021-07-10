@@ -34,11 +34,11 @@
 								<table class="table">
 									<tbody>
 										<tr align="center"class="warning">
-											<th>#</th>
-											<th>Id</th>
-											<th>Fecha</th>
+											<th>Nro</th>
+											<th>Id Solicitud</th>
+											<th>Unidad Gasto</th>
 											<th>Solicitante</th>
-											<th>Unidad</th>
+											<th>Fecha Recepcion</th>
 											<th>Estado</th>
 											<th>Detalle</th>
 										</tr>
@@ -52,11 +52,10 @@
 										<tr align="center">
 											<td><?php echo $i+1?></td>
 											<td><?php echo($valor[$i]['id_solicitudes'])?></td>
-											<td><?php echo($valor[$i]['fecha'])?></td>
-											
-
-											<td><?php echo($valor[$i]['nombres'])?></td>	
-											<td><?php echo($valor[$i]['nombre_gasto'])?></td>		
+											<td><?php echo($valor[$i]['nombre_gasto'])?></td>
+											<td><?php echo($valor[$i]['nombres'])?></td>
+											<td><?php echo($valor[$i]['fecha'])?></td>	
+													
 											<!-- <td>
 												<?php echo($valor[0]['detalle'])?><br>
 												<div class="text-center">

@@ -30,27 +30,34 @@
 								<table class="table">
 									<tbody>
 										<tr align="center"class="warning">
-											<th>Id Cotizacion</th>
+											<!--<th>Id Cotizacion</th>-->
+											<th>Nro</th>
                                             <th>Id Solicitud</th>
-                                            <th>Unidad</th>
+                                            <th>Unidad Gasto</th>
+											<th>Solicitante</th>
 											<th>Fecha-Evaluacion</th>
-											<th># Cotizaciones</th>
+											<th>Nro Cotizaciones</th>
 											<th>Estado</th>
-											<th>Accion</th>
+											<th>Informe</th>
+											<th>Detalle</th>
 										</tr>
 
 										<?php
+											$aux = 1;
                                             while($registroCotizaciones=$queryCotizaciones->fetch_array(MYSQLI_BOTH)){
                                                 echo "<tr>
-                                                        <td>".$registroCotizaciones['id_solicitud_cotizacion']."</td>
+                                                        <td>".$aux."</td>
                                                         <td>".$registroCotizaciones['id_solicitudes']."</td>
-                                                        <td>".$registroCotizaciones['nombre_gasto']."</td>";
+                                                        <td>".$registroCotizaciones['nombre_gasto']."</td>
+														<td>".$registroCotizaciones['nombres']."</td>";
                                                         $idSol = $registroCotizaciones['id_solicitudes'];
                                                 echo    "<td>".$registroCotizaciones['fecha_evaluacion']."</td>
                                                         <td>".$registroCotizaciones['cantidad_cotizaciones']."</td>
 														<td><span class='label label-success'>".$registroCotizaciones['estado_cotizacion']."</span></td>
                                                         <td><a class='btn btn-info' target='_blank' href='../vista/informeCotizaciones.php?id=$idSol&tipo=a'>Ver Informe</a></td>
+														<td><a class='btn btn-info' target='_blank' href='../vista/vistaPDFCuadroComparativo.php?id_solicitud=$idSol'>Ver Cuadros</a></td>
                                                     </tr>";
+													$aux++;
                                             } 
                                             ?>
 									</tbody>

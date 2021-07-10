@@ -19,15 +19,17 @@
 								<table class="table" method="get">
 									<tbody>
 										<tr align="center"class="warning">
-											<th>#</th>
-											<th>Id</th>
-											<th>Fecha-Recepcion</th>
-											<th>Fecha-Rechazo</th>
+											<th>Nro</th>
+											<th>Id Solicitud</th>
+											<th>Unidad Gasto</th>
 											<th>Solicitante</th>
+											<th>Fecha Recepcion</th>
+											<th>Fecha Rechazo</th>
+											
 											<!-- <th>Detalle</th>
 											<th>Departamento</th>
 											<th>Unidad</th> -->
-											<th>Unidad</th>
+											
 											<th>Estado</th>
 											<th>Informe</th>
 
@@ -46,12 +48,11 @@
 										<tr align="center">
 											<td><?php echo $i+1?></td>
 											<td><?php echo $valor[$i]['id_solicitudes']?></td>
+											<td><?php echo $valor[$i]['nombre_gasto']?></td>
+											<td><?php echo $valor[$i]['nombres']?></td>
 											<td><?php echo $valor[$i]['fecha']?></td>
 											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
 
-											<td><?php echo $valor[$i]['nombres']?></td>
-
-											<td><?php echo $valor[$i]['nombre_gasto']?></td>
 											<!-- <td>
 												Compra de Sillas<br>
 												

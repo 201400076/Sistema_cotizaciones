@@ -30,27 +30,30 @@
 								<table class="table">
 									<tbody>
 										<tr align="center"class="warning">
-											<th>Id Cotizacion</th>
+											<th>Nro</th>
                                             <th>Id Solicitud</th>
-                                            <th>Unidad</th>
+                                            <th>Unidad Gasto</th>
+											<th>Solicitante</th>
 											<th>Fecha-Evaluacion</th>
-											<th># Cotizaciones</th>
+											<th>Nro Cotizaciones</th>
 											<th>Estado</th>
 											<th>Accion</th>
 										</tr>
 
 										<?php
+										$aux=1;
                                         while($registroCotizaciones=$queryCotizaciones->fetch_array(MYSQLI_BOTH)){
                                             echo "<tr>
-                                                    <td>".$registroCotizaciones['id_solicitud_cotizacion']."</td>
+                                                    <td>".$aux."</td>
                                                     <td>".$registroCotizaciones['id_solicitudes']."</td>";
                                                     $idSol = $registroCotizaciones['id_solicitudes'];
                                             echo    "<td>".$registroCotizaciones['nombre_gasto']."</td>
+													<td>".$registroCotizaciones['nombres']."</td>
                                                     <td>".$registroCotizaciones['fecha_evaluacion']."</td>
                                                     <td>".$registroCotizaciones['cantidad_cotizaciones']."</td>
 													<td><span class='label label-danger'>".$registroCotizaciones['estado_cotizacion']."</span></td>
                                                     <td><a class='btn btn-info' target='_blank' href='../vista/informeCotizaciones.php?id=$idSol&tipo=r'>Ver Informe</a></td>
-                                                </tr>";
+                                                </tr>";$aux++;
                                             } 
                                             ?>
 									</tbody>

@@ -69,7 +69,7 @@ class SolicitudesController{
 
         $solicitud =new Solicitud();
 		$dato = $solicitud->mostrar("solicitudes s, pedido p, unidad_gasto g,unidad_administrativa ua, usuarioconrol ur, usuarios us,solicitudes_cotizaciones sc","s.id_solicitudes=sc.id_solicitudes
-                                    AND s.id_pedido=p.id_pedido AND g.id_gasto=p.id_gasto 
+                                    AND s.id_pedido=p.id_pedido AND g.id_gasto=p.id_gasto AND sc.estado_cotizacion='cotizando'
                                     AND ur.id_gasto=g.id_gasto AND us.id_usuarios=ur.id_usuarios
                                     AND ur.id_gasto=g.id_gasto 
                                     AND ua.id_unidad=g.id_unidad 

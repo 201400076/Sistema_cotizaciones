@@ -60,8 +60,12 @@ function Body1(){
     $this->SetFont('Times','BI',14);
     $this->SetY(80);
     $this->Cell(190, 10, utf8_decode("Empresa Adjudicada"), 0, 1, 'C');
-    $this->Cell(190, 50, utf8_decode(""), 1, 1, 'L');
+    $this->Cell(190, 45, utf8_decode(""), 1, 1, 'L');
 
+    $this->SetFont('Times','BI',13);
+    $this->SetY(132);
+    $this->Cell(155, 45, utf8_decode("Nro. Empresa                                    Empresas Participantes"), 0, 1, 'C');
+   // $this->Cell(190, 50, utf8_decode(""), 1, 1, 'L');
 }
 
 function Footer()
@@ -102,6 +106,7 @@ require_once('../configuraciones/conexion.php');
         $pdf->Body1();
     }
     $datosUnidad = datosGenerales($unidad);
+    $datosParticipantes = participantes($idRescate);
 
     $pdf->setFont('Arial','B',8);
     $pdf->SetY(12);
@@ -142,36 +147,61 @@ require_once('../configuraciones/conexion.php');
         $pdf->MultiCell(0,5,'Nombre: ',0,'L');
         $pdf->setXY(50,95);
         $txt=utf8_decode($datosEmpresa['nombre_empresa']);
-        $pdf->SetFont('Times','I',14);
+        $pdf->SetFont('Times','',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
         $pdf->setXY(15,102);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'Correo: ',0,'L');
         $pdf->setXY(50,102);
         $txt=utf8_decode($datosEmpresa['correo_empresa']);
-        $pdf->SetFont('Times','I',14);
+        $pdf->SetFont('Times','',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
         $pdf->setXY(15,109);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'NIT: ',0,'L');
         $pdf->setXY(50,109);
         $txt=utf8_decode($datosEmpresa['nit']);
-        $pdf->SetFont('Times','I',14);
+        $pdf->SetFont('Times','',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
         $pdf->setXY(15,116);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'Telefono: ',0,'L');
         $pdf->setXY(50,116);
         $txt=utf8_decode($datosEmpresa['telefono']);
-        $pdf->SetFont('Times','I',14);
+        $pdf->SetFont('Times','',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
         $pdf->setXY(15,123);
         $pdf->SetFont('Times','BI',14);
         $pdf->MultiCell(0,5,'Direccion: ',0,'L');
         $pdf->setXY(50,123);
         $txt=utf8_decode($datosEmpresa['direccion']);
-        $pdf->SetFont('Times','I',14);
+        $pdf->SetFont('Times','',14);
         $pdf->MultiCell(0,5,$txt,0,'L');
+
+        $pdf->SetXY(20,150);
+        $pdf->Cell(170, 10, utf8_decode(""), 1, 1, 'C');
+        $x=40;$y=160;
+        $x1=20;$y1=160;
+        $aux = 1;
+        while($registroEmpresas=$datosParticipantes->fetch_array(MYSQLI_BOTH)){
+            $pdf->SetXY($x1,$y1);
+            $pdf->Cell(170, 10, utf8_decode(""), 1, 1, 'C');
+            $pdf->SetXY(30,$y1);
+            if($registroEmpresas['id_empresa']==$registroCotizaciones['empresa_adjudicada']){
+                $pdf->SetFont('Times','B',14);
+            }
+            $pdf->Cell(0, 10, "          ".$aux, 0, 1, 'L');
+            
+            $y1+=10;$aux++;
+            
+            $pdf->SetXY($x,$y);
+            if($registroEmpresas['id_empresa']==$registroCotizaciones['empresa_adjudicada']){
+                $pdf->SetFont('Times','BU',14);
+            }
+            $pdf->Cell(0, 10, utf8_decode($registroEmpresas['nombre_empresa']), 0, 1, 'C');
+            $y+=10;
+        }
+
     }
 $pdf->Output();
 
@@ -189,5 +219,13 @@ function datosGenerales($idEmpresa){
     $datos = "SELECT facultad.nombre_facultad, unidad_administrativa.nombre_unidad FROM facultad, unidad_administrativa WHERE unidad_administrativa.id_facultad=facultad.id_facultad AND unidad_administrativa.id_unidad=".$idEmpresa;
 	$queryDatos=$estadoConexion->query($datos);
     return $queryDatos->fetch_array(MYSQLI_BOTH);
+}
+
+function participantes($id_solicitud){
+    global $conn;
+    $estadoConexion = $conn->getConn();
+    $consulta="SELECT distinct ci.id_empresa,e.nombre_empresa FROM cotizacion_items ci,empresas e WHERE ci.id_empresa=e.id_empresa AND id_solicitudes=$id_solicitud"; 
+    return $estadoConexion->query($consulta);
+    //return $queryDatos->fetch_array(MYSQLI_BOTH);
 }
 ?>

@@ -14,12 +14,12 @@
 								<table class="table">
 									<tbody>
 										<tr align="center"class="warning">
-											<th>#</th>
-											<th>Id</th>
-											<th>Fecha-Recepcion</th>
-											<th>Fecha-Aceptado</th>
+											<th>Nro</th>
+											<th>Id Solicitud</th>
+											<th>Unidad Gasto</th>
 											<th>Solicitante</th>
-											<th>Unidad</th>
+											<th>Fecha Recepcion</th>
+											<th>Fecha Aceptado</th>
 											<th>Estado</th>
 											<th>Accion</th>
 											<th>Accion</th>
@@ -38,13 +38,13 @@
 
 											<td><?php echo $valor[$i]['id_solicitudes']?></td>
 
-											<td><?php echo $valor[$i]['fecha']?></td>
-
-											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
+											<td><?php echo $valor[$i]['nombre_gasto']?></td>
 
 											<td><?php echo $valor[$i]['nombres']?></td>
 
-											<td><?php echo $valor[$i]['nombre_gasto']?></td>
+											<td><?php echo $valor[$i]['fecha']?></td>
+
+											<td><?php echo $valor[$i]['fecha_evaluacion']?></td>
 
 											<td>
 												<span class="label label-success"><?php echo $valor[$i]['estado']?></span>
