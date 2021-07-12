@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    require_once('layouts/navAdministracion.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,7 @@
 <body>
     <?php
         $active = "";
-        require_once '../vista/layouts/navegacionPendientes.php';
+        //require_once '../vista/layouts/navegacionPendientes.php';
         require_once('../configuraciones/conexion.php');
         //require_once('../controladores/solicitudesController.php');
         require_once('../controladores/controlador_tablasComparativas.php');
@@ -293,7 +297,4 @@
     </script>
     <script src="../controladores/evaluarCotizacion.js"></script>
 </body>
-<?php
-    include_once("../vista/layouts/piePagina.php");
-?>
 </html>

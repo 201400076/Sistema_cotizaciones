@@ -126,7 +126,7 @@
                 </p>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">  
                   <li><a class="dropdown-item" href="../vista/formularioRE.php">Registrar Empresas</a></li>                  
-                  <li><a class="dropdown-item" href="#">Listado de Empresas</a></li>
+                  <li><a class="dropdown-item" href="../vista/ListadoEmpresas.php">Listado de Empresas</a></li>
                 </ul>
           </div>
         </div>
