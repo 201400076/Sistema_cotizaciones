@@ -119,25 +119,10 @@
         
             <div class="scroll-sidebar">
              
-                <nav class="sidebar-nav active">
+               <!--  <nav class="sidebar-nav active">
                     <ul id="sidebarnav" class="in">
-                      <!--   <li class="nav-small-cap">PERSONAL</li>
-                        <li class="active" id="inicio">
-                            <a class="has-arrow active" href="homkke.php" aria-expanded="false"><i
-                                    class="mdi mdi-gauge"></i><span class="hide-menu">Inicio </span></a>
-
-                        </li>
-                        <li>
-                            <a class="has-arrow " href="cotizaciones.php" aria-expanded="false"><i
-                                    class="mdi mdi-shopping"></i><span class="hide-menu">Cotizaciones</span></a>
-
-                        </li>
-
-                        <li>
-                            <a class="has-arrow " href="clientes.php" aria-expanded="false"><i
-                                    class="mdi mdi-contact-mail"></i><span class="hide-menu">Clientes</span></a>
-
-                        </li> -->
+                     
+                        </li> 
                         <li class="<?php echo $active?>">
                             <a class="has-arrow <?php echo $active?> " href="#" aria-expanded="false"><i class="mdi mdi-barcode"></i><span
                                     class="hide-menu">Home</span></a>
@@ -149,45 +134,19 @@
                             <a class="has-arrow <?php echo $active?> " href="#" aria-expanded="false"><i class="mdi mdi-barcode"></i><span
                                     class="hide-menu">Solicitudes</span></a>
                             <ul aria-expanded="false" class="collapse">
-<!-- <<<<<<< HEAD -->
+
                                 <li ><a href="../ruta/rutas.php?ruta=mostrar&con=nueva" id="nueva" name="nueva">Solicitudes Pendientes</a></li>
                                 <li><a href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
 								<li><a href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li>
                                 
-<!-- ======= -->
-                                 <!-- <li ><a href="../vista/formularioRU.php" id="nueva" name="nueva">usuario</a></li>  -->
-                                <!-- <li><a href="../ruta/rutas.php?ruta=mostrar&con=aceptada">Solicitudes Aceptadas</a></li>
-								<li><a href="../ruta/rutas.php?ruta=mostrar&con=rechazada">Solicitudes Rechazadas</a></li> -->
-<!-- >>>>>>> 7af3d9df64eeef8eeb31cbb131604d9d55fe7036 -->
+
 
                             </ul>
                         </li>
 
                    
-<!-- 
-                        <li>
-                            <a class="has-arrow " href="#" aria-expanded="false"><i
-                                    class="mdi mdi-account-settings-variant"></i><span class="hide-menu">Administrar
-                                    accesos</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="usuarios.php">Usuarios</a></li>
-                                <li><a href="group_list.php">Roles de usuario</a></li>
-
-                            </ul>
-                        </li> -->
-
-                     <!--    <li>
-                            <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-settings"></i><span
-                                    class="hide-menu">Configuración</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="empresa.php">Perfil de la empresa</a></li>
-                                <li><a href="monedas.php">Monedas</a></li>
-                                <li><a href="impuestos.php">Impuestos</a></li>
-                                <li><a href="plantillas.php">Plantillas</a></li>
-                            </ul>
-                        </li> -->
                     </ul>
-                </nav>
+                </nav> -->
                 
             </div>
          
