@@ -121,7 +121,7 @@
                     <input type="submit" value="REGISTRAR">
                 </div>
                 <div class="col-50">
-                    <input type="button" id="boton-cancelar" onClick="window.parent.location='../vista/home.php'" value="CANCELAR">
+                    <input type="button" id="boton-cancelar" onClick="window.parent.location='../ruta/rutas.php?ruta=mostrar&con=cotizando'" value="CANCELAR">
                 </div>
             </div>
 
