@@ -44,6 +44,13 @@ $exite=false;
                 $fullName=$d['nombres']." ".$d['apellidos'];
                 $_SESSION["nombre_usuario"]=$fullName;
                 break;
+            }elseif($d['id_gasto']==null && $d['id_unidad']==null){
+                $consulta = "SELECT nombres,apellidos,rolAsignado FROM  usuarios u, usuarioconrol r WHERE  r.id_usuarios=u.id_usuarios and u.id_usuarios=27";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                $fila=$data1[0];
+                break;
             }
         }
     }
@@ -65,7 +72,6 @@ $exite=false;
             }
         }
     }
-
 print json_encode($fila, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS
 $conexion = NULL;
 ?>

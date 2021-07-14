@@ -7,8 +7,8 @@ $('#ingresar').on('click', function() {
         dataType: "json",
         data: { usuario: usuario, password: password },
         success: function(fila) {
+            console.log(fila);
             if (fila != null) {
-                console.log(fila);
                 switch (fila['rolAsignado']) {
                     case 'Unidad Administrativa':
                         rol =fila['rolAsignado'];
@@ -36,7 +36,13 @@ $('#ingresar').on('click', function() {
                                 alert("Bienvenido empresa: "+nombre);
                                 redireccionA("./vista/registroCotizacion.php?solicitud="+fila['id_solicitudes']+"&empresa="+fila['id_empresa']+"&nombre="+fila['user_cotizador']+"&estado="+estado);
                             }
-                        break;            
+                        break;  
+                        case 'Administrador':
+                            rol =fila['rolAsignado'];
+                            nombre=fila['nombres']+" "+fila['apellidos'];
+                                alert("Bienvenido Administrador");
+                                redireccionA("./vista/home.php");
+                        break;           
                 }                
             } else { 
                 alert("“Error!! Usuario y Password incorrectos!!!”");
