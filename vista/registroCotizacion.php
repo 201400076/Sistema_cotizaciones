@@ -15,7 +15,7 @@
     $resultado->execute();
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
-    $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario,i.ruta FROM cotizacion_items i, solicitudes s WHERE i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and i.id_empresa='$id_empresa'";
+    $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario,i.ruta FROM cotizacion_items i, solicitudes s WHERE i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and i.id_empresa='$id_empresa' and i.user_cotizador='$nombre'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
