@@ -29,7 +29,7 @@ while(usuarioExiste($user,$conexion)){
     $user = generarUsername();
 }
 
-$pass = generarPassword();
+$pass = hashPassword(generarPassword());
 $id_empresa=$data[0]['id_empresa'];
 $rol='Empresa';
 $estado=0;
@@ -79,5 +79,9 @@ function generarUsername(){
     $numero1 = mt_rand(0,10);
     $numero2 = mt_rand(0,10);
     return "$nombre$letra1$numero1$letra2$numero2";
+}
+function hashPassword($pass){
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+    return $hash;
 }
 ?>
