@@ -1,7 +1,9 @@
 <?php
     require '../configuraciones/conexion.php';
     require '../librerias/fpdf/fpdf.php';
-    
+    require_once('../configuraciones/conexion.php');
+        session_start();
+        $unidad = $_SESSION['unidad'];
     $conn = new Conexiones();
     $estadoconexion = $conn->getConn();
 
@@ -10,9 +12,9 @@
     $codigoEstado=$_GET['e'];
     $detalle=$_GET['detalle'];
 
-    actualizarSolicitud($id_solicitud,$fecha,$codigoEstado,$detalle);
+    actualizarSolicitud($id_solicitud,$fecha,$codigoEstado,$detalle,$unidad);
 
-    function actualizarSolicitud($id_solicitud,$fecha,$codigoEstado,$detalle){
+    function actualizarSolicitud($id_solicitud,$fecha,$codigoEstado,$detalle,$unidad){
         global $estadoconexion;
         //if(validarPatron($detalle,"/^[a-zA-Z][a-zA-Z0-9ñÑáéíóú\d_\s]{1,2800}$/i")){
             $stmt = $estadoconexion->prepare("UPDATE solicitudes SET estado=?, fecha_evaluacion=?, detalle=? WHERE id_solicitudes=".$id_solicitud);
@@ -25,7 +27,7 @@
                 $detalle=(NULL);
 
                 //archivo pdf
-                generarArchivoPDF($id_solicitud);
+                generarArchivoPDF($id_solicitud, $unidad);
             }
             
             $stmt->bind_param("sss",$estado,$fecha,$detalle);
@@ -66,8 +68,8 @@
     }
 
     //funcion temporal
-    function generarArchivoPDF($id_solicitud)
-    {
+    function generarArchivoPDF($id_solicitud, $unidad)
+    {   
         //$detalle = 'Archivo de Cotizacion Nro: ' . $id_solicitud;
         $nombre = 'solicitudCotizacion' . $id_solicitud . '.pdf';
         $ruta = '../archivos/cotizacionesIniciales/' . $nombre;
@@ -82,13 +84,11 @@
                 $ancho = 172;
                 $this->setFont('Arial', 'B', 8);
                 $this->SetY(12); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
-                $this->Cell($ancho,10,'programandoElFuturo.SRL@gmail.com',0,0,'R');
+                $this->Cell($ancho,10,'SOLICITUD DE COTIZACION',0,0,'R');
                 $this->SetY(15);
-                $this->Cell($ancho,10,'NIT: 6407874001 ',0,0,'R');
+                $this->Cell($ancho,10,'sistema.cotizaciones.umss@gmail.com',0,0,'R');
                 $this->SetY(18);
-                $this->Cell($ancho,10,utf8_decode('Vinto - Motecato, calle Bélgica y Noruega'),0,0,'R');
-                $this->SetY(21);
-                $this->Cell($ancho,10,utf8_decode('(+591) 76436540 - 44355215'),0,0,'R');
+                $this->Cell($ancho,10,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'),0,0,'R');
             }
             function Body(){
                 $yy = 10; //Variable auxiliar para desplazarse 40 puntos del borde superior hacia abajo en la coordenada de las Y para evitar que el título este al nivel de la cabecera.
@@ -171,7 +171,7 @@
         }
     
         $pdf = new PDF('P', 'mm', 'A4');
-        $pdf->Body();
+        //$pdf->Body();
         $lineheight = 8;
         $fontsize = 10;
         
@@ -181,20 +181,22 @@
     
         $pdf->AddPage();
         $pdf->Ln();
-        $table = reporteCotizacion($id_solicitud);
+        $table = reporteCotizacion($id_solicitud,$unidad);
         $widths = array(10, 20, 22, 80, 20, 20);
         $pdf->plot_table($widths, $lineheight, $table);
         $pdf->Output($ruta, 'F');
     }
     
-    function reporteCotizacion($id_solicitud)
+    function reporteCotizacion($id_solicitud,$unidad)
     {
         $mysqli = new mysqli('localhost', 'root', '', 'sistema_de_cotizaciones');
-        $query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido  FROM pedido,items,usuarios,usuarioconrol,unidad_gasto, solicitudes WHERE pedido.id_pedido=items.id_pedido 
+        $query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
+        /*$query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido  FROM pedido,items,usuarios,usuarioconrol,unidad_gasto, solicitudes WHERE pedido.id_pedido=items.id_pedido 
                                                                                                 AND usuarios.id_usuarios=pedido.id_usuarios 
                                                                                                 AND usuarios.id_usuarios=usuarioconrol.id_usuarios
                                                                                                 AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
                                                                                                 AND solicitudes.id_solicitudes=".$id_solicitud;
+                                                                                                */
         $respuesta = [];
         $numero = 0;
         $resultado = $mysqli->query($query);
