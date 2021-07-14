@@ -29,7 +29,8 @@
     <!-- Custom styles for this template -->
     <link href="../vista/css/headers.css" rel="stylesheet">
     <script src="../librerias/bootstrap/jjs/bootstrap.bundle.min.js"></script>   
-    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>   
+    <script src="../librerias/jquery/jquery-3.3.1.min.js"></script>  
+    <script src="../librerias/js/sweetalert2.all.min.js"></script> 
 
     <link rel="stylesheet" type="text/javascript" href="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
 

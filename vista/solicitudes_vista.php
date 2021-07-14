@@ -93,8 +93,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
             </div>
         <form id="formPersonas">    
             <div class="modal-body">
@@ -116,7 +114,7 @@
                 </div>           
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                <button type="button" id="cancelar" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
                 <button type="submit" id="btnGuardar" class="btn btn-dark">INSERTAR</button>
             </div>
         </form>    
@@ -129,8 +127,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class=" text-center modal-title1" id="exampleModalLabel">Enviar Solicitud de Pedido</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
             </div>
         <form id="formPersonas">    
             <div class="modal-body">            
@@ -140,7 +136,7 @@
                 </div>                         
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                <button type="button" id="cancelarJust" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
                 <button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-dark">GUARDAR</button>
             </div>
         </form>    
@@ -168,7 +164,5 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js"></script>
 <script src="../librerias/js/custom.min.js"></script>
-<?php
-  include('../vista/layouts/piePagina.php')
-?>
-
+</body>
+</html>

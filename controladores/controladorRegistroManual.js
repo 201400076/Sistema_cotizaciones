@@ -14,7 +14,7 @@ $(document).on("click", ".btnGuardarJust", function(){
                 inputPlaceholder: 'Clave de solicitud...',
                 inputAttributes: { 'aria-label': 'Type your message here' },
                 showCancelButton: true,
-                confirmButtonText: 'GUARDAR',
+                confirmButtonText: 'INGRESAR',
                 cancelButtonText: 'CANCELAR',
                 allowOutsideClick: false,
                 closeOnClickOutside: false,

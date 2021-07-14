@@ -37,6 +37,12 @@ $("#btnNuevo").click(function(){
     archivo='';
     ruta='';
 });   
+$("#cancelar").click(function(){
+    $("#modalCRUD").modal("hide");    
+});  
+$("#cancelarJust").click(function(){
+    $("#modalCRUDJust").modal("hide");    
+});  
 //boton enviar pedido
 $("#btnPedido").click(function(){   
     console.log("hola");
@@ -57,7 +63,7 @@ $("#btnPedido").click(function(){
                     opcion=4; 
                     justificacion='';                    
                 }else{
-                    alert("Debe ingresar almenos 1 item antes de enviar");                
+                    Swal.fire("Debe ingresar almenos 1 item antes de enviar");                
                 }                              
             }else{                
             }
@@ -69,20 +75,30 @@ $("#btnPedido").click(function(){
 $(document).on("click", ".btnGuardarJust", function(){    
     justificacion = $.trim($("#Justificacion").val());
     if(justificacion==''){
-        var respuesta = confirm("¿Está seguro que desea agregar el pedido si ninguna justificacion?");
-        if(respuesta){           
-            $.ajax({
-                url: "../modelo/solicitudes_modelo.php",
-                type: "POST",
-                cache:false,
-                dataType: "json",
-                data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
-                success: function(data){                         
-                }        
-            });
-            $("#modalCRUDJust").modal("hide");  
-            window.location.href="../vista/solicitudes_vista.php";             
-        }
+        Swal.fire({
+            title: 'Desea enviar el pedido sin ninguna justificacion?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Enviar`,
+            denyButtonText: `No Enviar`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "../modelo/solicitudes_modelo.php",
+                    type: "POST",
+                    cache:false,
+                    dataType: "json",
+                    data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
+                    success: function(data){                         
+                    }        
+                });
+                $("#modalCRUDJust").modal("hide");  
+                window.location.href="../vista/solicitudes_vista.php";      
+            } else if (result.isDenied) {
+
+            }
+          })
     }else{
         $.ajax({
             url: "../modelo/solicitudes_modelo.php",
@@ -98,7 +114,7 @@ $(document).on("click", ".btnGuardarJust", function(){
 });
 
 
-var fila; //capturar la fila para editar o borrar el registro    
+var fila; 
 
 //botón BORRAR
 $(document).on("click", ".btnBorrar", function(){    
@@ -142,7 +158,6 @@ $('input[type="file"]').on('change', function(){
             var miArchivo=$(this)[0].files[0]
             var datosForm=new FormData;
             datosForm.append("archivo",miArchivo);
-            var destino="subir.php";            
 
             $.ajax({
                 type:'POST',
@@ -152,9 +167,10 @@ $('input[type="file"]').on('change', function(){
                 data:datosForm,
                 url:"../controladores/subir.php"
             }).done(function(data){
-                ruta=data;                
+                ruta=data;       
+                console.log(ruta);         
             }).fail(function(data){
-                alert("error al subir el archivo, vuelva a seleccionar otro archivo");
+                Swal.fire("error al subir el archivo, vuelva a seleccionar otro archivo");
             });
           $("#modal-gral").hide();
         }
@@ -162,7 +178,7 @@ $('input[type="file"]').on('change', function(){
       else
       {
         $( this ).val('');
-        alert("Solo se puede agregar archivos .pdf");
+        Swal.fire("Solo se puede agregar archivos .pdf");
       }
     }
   });
@@ -181,7 +197,7 @@ $("#formPersonas").submit(function(e){
                         url: "../modelo/solicitudes_modelo.php",
                         type: "POST",
                         dataType: "json",
-                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes,id_usu:id_usu, opcion:opcion,ruta:ruta, archivo:archivo,id_unidad:id_unidad},
+                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes,id_usu:id_usu, opcion:opcion,ruta:ruta, ruta:ruta,id_unidad:id_unidad,archivo:archivo},
                         success: function(data){                          
                             id_pendientes = data[0].id_pendientes;            
                             cantidad = data[0].cantidad;
@@ -198,16 +214,16 @@ $("#formPersonas").submit(function(e){
                     });
                     $("#modalCRUD").modal("hide");    
                 }else{
-                    alert("Error!!\nDebe introducir detelle maximo de 200 caracteres");
+                    Swal.fire("Error!!\nDebe introducir detelle maximo de 200 caracteres");
                 }                                        
             }else{
-                alert("Error!!\nDebe introducir el detalle o un archivo");
+                Swal.fire("Error!!\nDebe introducir el detalle o un archivo");
             }
         }else{
-            alert("Error!!\nDebe introducir una unidad entre 1 y 10 caracteres");
+            Swal.fire("Error!!\nDebe introducir una unidad entre 1 y 10 caracteres");
         }
     }else{
-        alert("Error!!\nDebe introducir una cantidad entre 1 y 1000000");
+        Swal.fire("Error!!\nDebe introducir una cantidad entre 1 y 1000000");
     }
 });    
     

@@ -11,6 +11,7 @@ $total =(isset($_POST['total'])) ? $_POST['total'] : '';
 $id_solicitud =(isset($_POST['id_solicitud'])) ? $_POST['id_solicitud'] : '';
 $id_empresa =(isset($_POST['id_empresa'])) ? $_POST['id_empresa'] : '';
 $id_item =(isset($_POST['id_item'])) ? $_POST['id_item'] : '';
+$ruta =(isset($_POST['ruta'])) ? $_POST['ruta'] : '';
 $nombre_usu=(isset($_POST['nombre_usu'])) ? $_POST['nombre_usu'] : '';
 
     $consulta = "SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario, it.cantidad FROM cotizacion_items i, solicitudes s, items it WHERE it.id_items=i.id_items and i.id_solicitudes=s.id_solicitudes and i.id_items='$id_item' and i.user_cotizador='$nombre_usu'";
@@ -18,8 +19,8 @@ $nombre_usu=(isset($_POST['nombre_usu'])) ? $_POST['nombre_usu'] : '';
     $resultado->execute();
     $items=$resultado->fetchAll(PDO::FETCH_ASSOC);
     if(empty($items)){
-        $consulta = "INSERT INTO cotizacion_items (id_item_cotizacion, marca, modelo, descripcion, precio_unitario, precio_parcial, id_items,id_empresa,id_solicitudes,user_cotizador) 
-        VALUES (NULL, '$marca', '$modelo', '$descripcion', '$unit', '$total', '$id_item','$id_empresa','$id_solicitud','$nombre_usu')";
+        $consulta = "INSERT INTO cotizacion_items (id_item_cotizacion, marca, modelo, descripcion, precio_unitario, precio_parcial, id_items,id_empresa,id_solicitudes,user_cotizador,ruta) 
+        VALUES (NULL, '$marca', '$modelo', '$descripcion', '$unit', '$total', '$id_item','$id_empresa','$id_solicitud','$nombre_usu','$ruta')";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute(); 
         $consulta = "SELECT*FROM cotizacion_items ORDER BY id_item_cotizacion DESC LIMIT 1";

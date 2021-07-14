@@ -21,7 +21,7 @@ switch($opcion){
     case 1: //alta
 
         $consulta = "INSERT INTO items_pendientes (id_pendientes, cantidad, unidad, detalle, ruta, id_usuarios, archivo,id_gasto) 
-        VALUES (NULL, '$cantidad', '$unidad', '$detalle', '$ruta', $id_usuario, '$archivo','$id_unidad')";
+        VALUES (NULL, '$cantidad', '$unidad', '$detalle', '$ruta', $id_usuario, '$ruta','$id_unidad')";
         //$consulta = "INSERT INTO personas (nombre, pais, edad) VALUES('$nombre', '$pais', '$edad') ";			
         $resultado = $conexion->prepare($consulta);
         $resultado->execute(); 
@@ -78,7 +78,7 @@ switch($opcion){
             $archivo=$d['archivo'];
             $ruta=$d['ruta'];
             $id_gasto=$d['id_gasto'];
-            $consulta="INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo,ruta,id_gasto) VALUES ('$ultimoPedido','$cantidad','$unidad','$detalle','$archivo','$ruta','$id_gasto')";
+            $consulta="INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo,ruta,id_gasto) VALUES ('$ultimoPedido','$cantidad','$unidad','$detalle','$ruta','$ruta','$id_gasto')";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
         }

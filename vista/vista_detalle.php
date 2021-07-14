@@ -77,7 +77,7 @@
                                 <td><?php echo $dat['cantidad'] ?></td>
                                 <td><?php echo $dat['unidad'] ?></td>
                                 <td><?php echo $dat['detalle'] ?></td>                                  
-                                <td><a target='_black' href="/Sistema_cotizaciones/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
+                                <td><a target='_black' href="/Sistema_cotizaciones/archivos/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
                                 </td>
                             </tr>
                             <?php

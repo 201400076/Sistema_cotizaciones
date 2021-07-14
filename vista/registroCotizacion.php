@@ -15,7 +15,7 @@
     $resultado->execute();
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
-    $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario FROM cotizacion_items i, solicitudes s WHERE i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and i.id_empresa='$id_empresa'";
+    $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario,i.ruta FROM cotizacion_items i, solicitudes s WHERE i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and i.id_empresa='$id_empresa'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -63,6 +63,7 @@
                             <th>descripcion</th>  
                             <th>p/unitario</th>  
                             <th>p/parcial</th>  
+                            <th>Archivo</th>  
                             <th>Acciones</th>                            
                         </tr>
                     </thead>
@@ -76,7 +77,7 @@
                             <td><?php echo $dat['unidad'] ?></td>
                             <td><?php echo $dat['detalle'] ?></td>                            
                             <td>
-                                <a target='_black' href="/Sistema_cotizaciones/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
+                                <a target='_black' href="/Sistema_cotizaciones/archivos/<?php echo $dat['ruta']?>" type='button'> <?php echo $dat['archivo']?> </a>        
                             </td>
                             <?php  
                             $item_cotizacion=false;                          
@@ -86,7 +87,12 @@
                                     echo "<td>".$d['marca']."</td>";
                                     echo "<td>".$d['modelo']."</td>";
                                     echo "<td>".$d['precio_unitario']."</td>";
-                                    echo "<td>".$d['precio_parcial']."</td>";                                        
+                                    echo "<td>".$d['precio_parcial']."</td>";    
+                            ?>
+                            <td>
+                                <a target='_black' href="/Sistema_cotizaciones/archivos/<?php echo $d['ruta']?>" type='button'> <?php echo $d['ruta']?> </a>        
+                            </td>
+                            <?php                                    
                                     echo "<td></td>";
                                     $item_cotizacion=true;
                                     break;
@@ -97,6 +103,7 @@
                                     echo "<td></td>";
                                     echo "<td></td>";
                                     echo "<td></td>";
+                                    echo "<td></td>";                                                                            
                                     echo "<td></td>";                                                                            
                                     echo "<td></td>";                                                                            
                             }
@@ -126,8 +133,6 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-            </button>
         </div>
     <form id="formPersonas">    
         <div class="modal-body">
@@ -146,7 +151,11 @@
             <div class="form-group">
                 <label for="total" class="col-form-label">PRECIO PARCIAL:</label>
                 <input type="number" class="form-control total"  readonly="readonly" oninput="calcular()" id="total">        
-            </div>                         
+            </div>                       
+            <div class="form-group">
+                <label for="unidad" class="col-form-label">archivo:</label>
+                <input type="file" class="form-control" id="archivo">
+                </div>     
             <div class="form-group">
                 <label for="marca" class="col-form-label">MARCA:</label>
                 <input type="text" class="form-control marca" id="marca">
@@ -157,7 +166,6 @@
             </div>  
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
             <button type="submit" id="btnGuardar" class="btn btn-dark">INSERTAR</button>
         </div>
     </form>    
