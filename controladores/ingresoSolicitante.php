@@ -14,8 +14,8 @@ $exite=false;
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
 
     foreach($data as $d){
-        if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
-        //if($usuario==$d['usuario'] && $password==$d['password']){
+        //if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
+        if($usuario==$d['usuario'] && $password==$d['password']){
             $exite=true;
             $fila=$d;
             if($d['id_unidad']!=null){
