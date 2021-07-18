@@ -23,6 +23,7 @@
         //$id_usuario=$_GET['id_usuario'];
         //$id_pedido=$_GET['id_pedido'];
         $id_solicitud=$_GET['id_solicitud'];
+        $id_sol_coti=$_GET['id_solicitud_cotizacion'];
 
         $conn = new Conexiones();
         $estadoConexion = $conn->getConn();
@@ -252,11 +253,9 @@
 	</div>
 </div>
 
-
-
 <div>
 <div class="col-lg-11" style="text-align: right;">
-            <a class="btn btn-info" target="_blank" href="../vista/vistaPDFCuadroComparativo.php?id_solicitud=<?php echo $id_solicitud;?>">Generar PDF</a>
+            <a class="btn btn-info" target="_blank" href="../vista/vistaPDFCuadroComparativo.php?id_solicitud=<?php echo $id_solicitud;?>&id_solicitud_cotizacion=<?php echo $id_sol_coti;?>">Generar PDF</a>
         </div>
 
 </divS>

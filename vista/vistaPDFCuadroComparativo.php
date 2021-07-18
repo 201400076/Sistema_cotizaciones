@@ -46,7 +46,12 @@ class PDF extends FPDF{
         $y = $this->GetY(); 
         $this->SetXY(0, $y); //Ubicación según coordenadas X, Y. X=0 porque empezará desde el borde izquierdo de la página
         $this->Cell(300, 10, "Moneda (Bs)", 0, 1, 'C');
-         
+        $this->SetFont('courier','B', 15); 
+        $this->setTextColor(255, 87 , 51);
+        $this->SetXY(255, $y);
+        $this->Cell(2,10, utf8_decode("N°:"), 0, 1, 'C');
+        $this->SetXY(0, $y+10);
+        $this->setTextColor(0,0,0);
         $this->SetFont('arial', 'B', 9); //Asignar la fuente, el estilo de la fuente (subrayado) y el tamaño de la fuente
  
         $y = $this->GetY() + 8;
@@ -60,16 +65,7 @@ class PDF extends FPDF{
         $this->MultiCell(19, 4, utf8_decode("Unid."), 1, 'C');
         $this->SetXY(47, $y);
         $this->MultiCell(94, 4, utf8_decode("Detalle"), 1, 'C');
-        $this->SetXY(141, $y);
-        $this->MultiCell(29, 4, utf8_decode("1"), 1, 'C');      
-        $this->SetXY(170, $y);
-        $this->MultiCell(29, 4, utf8_decode("2"), 1, 'C');   
-        $this->SetXY(199, $y);
-        $this->MultiCell(29, 4, utf8_decode("3"), 1, 'C'); 
-        $this->SetXY(228, $y);
-        $this->MultiCell(29, 4, utf8_decode("4"), 1, 'C'); 
-        $this->SetXY(257, $y);
-        $this->MultiCell(29, 4, utf8_decode("5"), 1, 'C');
+  
         $n = 1;
 
 
@@ -156,6 +152,8 @@ $pdf->setX(50);
 require("../modelo/conexionPablo.php");
 
 $id_solicitud=$_GET['id_solicitud'];
+$id_sol_coti=$_GET['id_solicitud_cotizacion'];
+
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
     $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta 
@@ -175,7 +173,7 @@ $id_solicitud=$_GET['id_solicitud'];
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
     //var_dump($data1);
 
-    $consulta="SELECT distinct ci.id_empresa,e.nombre_empresa
+    $consulta="SELECT distinct(ci.user_cotizador), ci.id_empresa,e.nombre_corto
     FROM cotizacion_items ci,empresas e 
     WHERE ci.id_empresa=e.id_empresa 
           AND id_solicitudes=$id_solicitud"; 
@@ -184,22 +182,39 @@ $id_solicitud=$_GET['id_solicitud'];
     $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
 
-    //#######################################33
+    //######################EMPRESAS#################33
 $cantEmpresa=0;
 foreach($data2 as $ne){
     $cantEmpresa++;
+    $y=$pdf->GetY();
+    $x=$pdf->GetX();
+   // $x+=50;
+    $pdf->setFont('Arial','B',10);
+    $pdf->SetXY($x+91,$y-4);
+    $pdf->Cell(29, 4,utf8_decode($ne['nombre_corto']), 1, 0, 'C');
+    $pdf->SetXY($x+29, $y);
+
     
     //echo"<th>".$ne['nombre_empresa']."</th>";
 
 }
 //#######################################
+for($i=$cantEmpresa;$i<5;$i++){
+    $y=$pdf->GetY();
+    $x=$pdf->GetX();
+ $pdf->SetXY($x+91,$y-4);
+    $pdf->Cell(29, 4,'', 1, 0, 'C');
+    $pdf->SetXY($x+29, $y);
+}
+
+//##################CANT EMPRESAS#######################3
 
 //##3##################ENCABEZADO############################
 require_once '../configuraciones/conexion.php';
 session_start();
 $nomUsuAdm = $_SESSION['nombre_usuario']; 
 $unidad = $_SESSION['unidad']; 
-
+$string="0000";
 $nombre = nombreUnidad($unidad);
 
 $y=$pdf->GetY();
@@ -210,7 +225,12 @@ $pdf->SetXY(95,$y-55);
 $pdf->Cell(190, 10,'sistema.cotizaciones.umss@gmail.com', 0, 0, 'R');  
 $pdf->SetXY(194, $y-50);
 $pdf->MultiCell(94, 8,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'), 0, 'C');
+$pdf->setFont('Arial','B',14);
+$pdf->setTextColor(255, 87 , 51);
+$pdf->SetXY(220, $y-21);
+$pdf->MultiCell(94, 8,$string.$id_sol_coti, 0, 'C');
 $pdf->SetXY(190, $y);
+$pdf->setTextColor(0,0,0);
 //$pdf->MultiCell(190, 10,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'), 0, 0, 'R'); 
 
 

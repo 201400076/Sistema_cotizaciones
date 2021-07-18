@@ -51,11 +51,12 @@
                                                         <td>".$registroCotizaciones['nombre_gasto']."</td>
 														<td>".$registroCotizaciones['nombres']."</td>";
                                                         $idSol = $registroCotizaciones['id_solicitudes'];
+														$idSolCot=$registroCotizaciones['id_solicitud_cotizacion'];
                                                 echo    "<td>".$registroCotizaciones['fecha_evaluacion']."</td>
                                                         <td>".$registroCotizaciones['cantidad_cotizaciones']."</td>
 														<td><span class='label label-success'>".$registroCotizaciones['estado_cotizacion']."</span></td>
                                                         <td><a class='btn btn-info' target='_blank' href='../vista/informeCotizaciones.php?id=$idSol&tipo=a'>Ver Informe</a></td>
-														<td><a class='btn btn-info' target='_blank' href='../vista/vistaPDFCuadroComparativo.php?id_solicitud=$idSol'>Ver Cuadros</a></td>
+														<td><a class='btn btn-info' target='_blank' href='../vista/vistaPDFCuadroComparativo.php?id_solicitud=$idSol& id_solicitud_cotizacion=$idSolCot'>Ver Cuadros</a></td>
                                                     </tr>";
 													$aux++;
                                             } 

@@ -62,7 +62,7 @@ class ControladorTablaComparativa
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
     //var_dump($data1);
 
-    $consulta="SELECT distinct ci.id_empresa,e.nombre_empresa
+    $consulta="SELECT distinct (ci.user_cotizador),ci.id_empresa,e.nombre_empresa
     FROM cotizacion_items ci,empresas e 
     WHERE ci.id_empresa=e.id_empresa 
           AND id_solicitudes=$id_solicitud"; 

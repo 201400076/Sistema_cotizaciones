@@ -65,7 +65,7 @@
 											<td><?php echo $valor[$i]['cantidad_cotizaciones']?></td>
 
 											<td>
-												<a class="btn btn-info" target="_top" href="../vista/vista_tablasComparativas.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>">Ver Cotizaciones</a>
+												<a class="btn btn-info" target="_top" href="../vista/vista_tablasComparativas.php?id_solicitud=<?php echo($valor[$i]['id_solicitudes'])?>&id_solicitud_cotizacion=<?php echo($valor[$i]['id_solicitud_cotizacion'])?> ">Ver Cotizaciones</a>
 											</td>
 
 										</tr>
