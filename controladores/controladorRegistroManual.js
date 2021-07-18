@@ -65,6 +65,22 @@ $(document).on("click", ".registrarEmpresa", function(){
     telefono = $.trim($("#telefono").val());
     direccion = $.trim($("#direccion").val());
     rubro = $.trim($("#ru").val());
+    if(nombre.length>=6){
+        if(validarEmail(correo)){
+           // ajaxRegistro(nombre,correo,telefono,direccion,rubro,id_solicitud);
+        }else{
+            Swal.fire("Error!!\ncorreo electronico invalido");
+        }
+    }else{
+        Swal.fire("Error!!\nEl nombre de la empresa debe contener minimo 6 caracteres");
+    }
+    
+});
+
+function redireccionA(url) {
+    window.location.href = url;
+}
+function ajaxRegistro(nombre,correo,telefono,direccion,rubro,id_solicitud){
     $.ajax({
         url: "../controladores/registrarEmpresa.php",
         type: "POST",
@@ -78,8 +94,13 @@ $(document).on("click", ".registrarEmpresa", function(){
             redireccionA("../vista/registroCotizacion.php?solicitud="+data[0]['id_solicitudes']+"&empresa="+data[0]['id_empresa']+"&nombre="+data[0]['user_cotizador']+"&estado="+estado);
         }        
     });
-});
-
-function redireccionA(url) {
-    window.location.href = url;
+}
+function validarEmail(valor) {
+    re=/^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+	if(!re.exec(valor)){
+        return true;
+	}
+	else{
+        return false;
+    }
 }

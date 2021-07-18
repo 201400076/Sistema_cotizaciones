@@ -96,7 +96,14 @@
         <div class="color-secondary col">
           <div class="dropdown text-end">
                 <p  class="mt-2">
-                  <a href="../vista/informeGasto.php">Informe de Solicitudes de pedido</a>
+                  <a href="../vista/informeGasto.php">Solicitudes de pedido</a>
+                </p>                
+          </div>
+        </div>
+        <div class="color-secondary col">
+          <div class="dropdown text-end">
+                <p  class="mt-2">
+                  <a href="../vista/detalleGasto.php">Informe de Solicitudes de pedido</a>
                 </p>                
           </div>
         </div>

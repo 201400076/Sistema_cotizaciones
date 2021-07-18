@@ -4,7 +4,10 @@
     $conn = new Conexiones();
 ?>
 <div class="container-fluid">
+
 <h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES ACEPTADAS</strong></h2>
+
+
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">

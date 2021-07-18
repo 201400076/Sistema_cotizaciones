@@ -45,6 +45,17 @@
 </head>
 
 <body> 
+<h2 class="card-title" style="text-align: center;"><strong>REGISTRO DE COTIZACION</strong></h2>
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-12">            
+            <button id="btnNuevo" type="button" class="btn btn-dark" data-toggle="modal">Adjuntar Archivo
+                
+            </button>    
+            </div>    
+        </div>    
+</div> 
 
 <div class="container-fluid">
     <div class="row">

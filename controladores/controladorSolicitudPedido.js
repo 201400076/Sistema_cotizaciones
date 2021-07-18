@@ -23,7 +23,26 @@ $(document).ready(function(){
              },
              "sProcessing":"Procesando...",
         }
+    }); 
+
+    $(document).on("click", ".btnBorrar", function(){    
+        fila = $(this);
+        id_pendientes = parseInt($(this).closest("tr").find('td:eq(0)').text());
+        opcion = 3 //borrar
+        var respuesta = confirm("¿Esta seguro de eliminar el item?");
+        if(respuesta){
+            $.ajax({
+                url: "../modelo/solicitudes_modelo.php",
+                type: "POST",
+                dataType: "json",
+                data: {opcion:opcion, id_pendientes:id_pendientes,id_unidad:id_unidad},
+                success: function(){
+                    tablaPersonas.row(fila.parents('tr')).remove().draw();
+                }
+            });
+        }   
     });
+
     
 $("#btnNuevo").click(function(){
     $("#formPersonas").trigger("reset");
@@ -70,7 +89,7 @@ $("#btnPedido").click(function(){
         }        
     });   
 });  
-    
+
 
 $(document).on("click", ".btnGuardarJust", function(){    
     justificacion = $.trim($("#Justificacion").val());
@@ -82,34 +101,19 @@ $(document).on("click", ".btnGuardarJust", function(){
             confirmButtonText: `Enviar`,
             denyButtonText: `No Enviar`,
           }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "../modelo/solicitudes_modelo.php",
-                    type: "POST",
-                    cache:false,
-                    dataType: "json",
-                    data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
-                    success: function(data){                         
-                    }        
-                });
-                $("#modalCRUDJust").modal("hide");  
-                window.location.href="../vista/solicitudes_vista.php";      
+              /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                ajaxEnviarSolicitudPedido(opcion,justificacion,id_unidad,id_usu);
+                tablaPersonas.clear().draw();
             } else if (result.isDenied) {
-
+                
             }
-          })
+        })
     }else{
-        $.ajax({
-            url: "../modelo/solicitudes_modelo.php",
-            type: "POST",
-            dataType: "json",
-            data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
-            success: function(data){                   
-            }        
-        });
+        ajaxEnviarSolicitudPedido(opcion,justificacion,id_unidad,id_usu);
+        tablaPersonas.clear().draw();
         $("#modalCRUDJust").modal("hide");     
-        window.location.href="../vista/solicitudes_vista.php";             
+        tablaPersonas.clear().draw();
     }
 });
 
@@ -117,23 +121,7 @@ $(document).on("click", ".btnGuardarJust", function(){
 var fila; 
 
 //botón BORRAR
-$(document).on("click", ".btnBorrar", function(){    
-    fila = $(this);
-    id_pendientes = parseInt($(this).closest("tr").find('td:eq(0)').text());
-    opcion = 3 //borrar
-    var respuesta = confirm("¿Esta seguro de eliminar el item?");
-    if(respuesta){
-        $.ajax({
-            url: "../modelo/solicitudes_modelo.php",
-            type: "POST",
-            dataType: "json",
-            data: {opcion:opcion, id_pendientes:id_pendientes,id_unidad:id_unidad},
-            success: function(){
-                tablaPersonas.row(fila.parents('tr')).remove().draw();
-            }
-        });
-    }   
-});
+
 
 //botón Enviar pedido
 
@@ -147,18 +135,18 @@ $('input[type="file"]').on('change', function(){
     ruta=document.getElementById('archivo').value;;
     
     if ($( this ).val() != '') {
-      if(ext == "pdf"){
-        //alert("La extensión es: " + ext);
+        if(ext == "pdf"){
+            //alert("La extensión es: " + ext);
         if($(this)[0].files[0].size > 5242880){          
-          $('#modal-title').text('¡Precaución!');
-          $('#modal-msg').html("Se solicita un archivo no mayor a 5MB. Por favor verifica.");
+            $('#modal-title').text('¡Precaución!');
+            $('#modal-msg').html("Se solicita un archivo no mayor a 5MB. Por favor verifica.");
           $("#modal-gral").modal();           
           $(this).val('');
         }else{    
             var miArchivo=$(this)[0].files[0]
             var datosForm=new FormData;
             datosForm.append("archivo",miArchivo);
-
+            
             $.ajax({
                 type:'POST',
                 cache:false,
@@ -172,17 +160,17 @@ $('input[type="file"]').on('change', function(){
             }).fail(function(data){
                 Swal.fire("error al subir el archivo, vuelva a seleccionar otro archivo");
             });
-          $("#modal-gral").hide();
+            $("#modal-gral").hide();
         }
-      }
-      else
-      {
-        $( this ).val('');
-        Swal.fire("Solo se puede agregar archivos .pdf");
-      }
     }
+    else
+      {
+          $( this ).val('');
+        Swal.fire("Solo se puede agregar archivos .pdf");
+    }
+}
   });
-
+  
 $("#formPersonas").submit(function(e){
     e.preventDefault();    
     cantidad = $.trim($("#cantidad").val());
@@ -226,5 +214,25 @@ $("#formPersonas").submit(function(e){
         Swal.fire("Error!!\nDebe introducir una cantidad entre 1 y 1000000");
     }
 });    
-    
+   
 });
+function ajaxEnviarSolicitudPedido(opcion,justificacion,id_unidad,id_usu){
+    $.ajax({
+        url: "../modelo/solicitudes_modelo.php",
+        type: "POST",
+        cache:false,
+        dataType: "json",
+        data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
+        success: function(data){    
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Se envio correctamente la solicitud de pedido',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            $(".ti").text("Solicitud de Pedido # "+data);              
+        }        
+    });
+    $("#modalCRUDJust").modal("hide");  
+}

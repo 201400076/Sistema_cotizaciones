@@ -6,6 +6,13 @@
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
+
+    $consulta="SELECT nombres,apellidos FROM usuarios WHERE usuarios.id_usuarios='$id_pendientes'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];
+    
     
     $consulta="SELECT * FROM pedido p WHERE p.id_usuarios='$id_pendientes' and p.id_gasto='$id_unidad'";
     $resultado = $conexion->prepare($consulta);
@@ -17,7 +24,7 @@
 <?php
     include('layouts/navGasto.php')
 ?>
-<h2 class="card-title" style="text-align: center;"><strong>INFORME DE SOLICITUDES DE PEDIDO</strong></h2>
+<h2 class="card-title" style="text-align: center;"><strong>SOLICITUDES DE PEDIDO</strong></h2>
  <div class="container">
         <div class="row">
                 <div class="col-lg-12">

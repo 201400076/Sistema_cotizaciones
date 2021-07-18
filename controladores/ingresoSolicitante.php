@@ -45,7 +45,7 @@ $exite=false;
                 $_SESSION["nombre_usuario"]=$fullName;
                 break;
             }elseif($d['id_gasto']==null && $d['id_unidad']==null){
-                $consulta = "SELECT nombres,apellidos,rolAsignado FROM  usuarios u, usuarioconrol r WHERE  r.id_usuarios=u.id_usuarios and u.id_usuarios=27";
+                $consulta = "SELECT nombres,apellidos,rolAsignado FROM  usuarios u, usuarioconrol r WHERE  r.id_usuarios=u.id_usuarios and u.id_usuarios=28";
                 $resultado = $conexion->prepare($consulta);
                 $resultado->execute();
                 $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
