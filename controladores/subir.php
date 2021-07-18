@@ -5,7 +5,7 @@ if(isset($_FILES["archivo"])){
     
 
     if(move_uploaded_file($_FILES["archivo"]["tmp_name"],$carpeta.$archivo)){
-        echo 'archivos/'.$archivo;
+        echo $archivo;
     }
 }
 ?>

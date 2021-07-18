@@ -8,12 +8,12 @@ $data=null;
         $objeto = new Conexion();
         $conexion = $objeto->Conectar();
 
-        $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido && p.id_pedido=i.id_pedido) && s.id_solicitudes='$id_solicitud'";
+        $consulta="SELECT i.id_items,i.cantidad, i.unidad,i.detalle,i.archivo,i.ruta FROM solicitudes s, pedido p, items i WHERE (s.id_pedido=p.id_pedido and p.id_pedido=i.id_pedido) and s.id_solicitudes='$id_solicitud'";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
-        $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario FROM cotizacion_items i, solicitudes s, usuario_cotizador c WHERE c.id_empresa=i.id_empresa and i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and c.user_cotizador='$nombre_usu'";
+        $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario FROM cotizacion_items i WHERE i.id_solicitudes='$id_solicitud' and i.user_cotizador='$nombre_usu'";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);

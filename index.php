@@ -5,7 +5,7 @@
         <form action="" method="POST">            
             <div class="row">
                 <div class="col-25">
-                    <label for="usuario">Usuario:</label>
+                    <label for="usuario">USUARIO :</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="usuario" name="usuario" placeholder="Usuario">
@@ -14,7 +14,7 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label for="password">Password:</label>
+                    <label for="password">PASSWORD :</label>
                 </div>
                 <div class="col-75">
                     <input type="password" id="password" name="password" placeholder="Password" >
@@ -22,7 +22,7 @@
             </div>                     
             <div class="row">
                 <div class="col">
-                <button type="button" id="ingresar" class="btn btn-dark text-center btn-block mt-2 mb-2 ingresar">Ingresar</button>
+                <button type="button" id="ingresar" class="btn btn-dark text-center btn-block mt-2 mb-2 ingresar">INGRESAR</button>
                 </div>                
             </div>
         </form>   

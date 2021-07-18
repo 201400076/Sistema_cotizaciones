@@ -21,7 +21,7 @@ switch($opcion){
     case 1: //alta
 
         $consulta = "INSERT INTO items_pendientes (id_pendientes, cantidad, unidad, detalle, ruta, id_usuarios, archivo,id_gasto) 
-        VALUES (NULL, '$cantidad', '$unidad', '$detalle', '$ruta', $id_usuario, '$archivo','$id_unidad')";
+        VALUES (NULL, '$cantidad', '$unidad', '$detalle', '$ruta', $id_usuario, '$ruta','$id_unidad')";
         //$consulta = "INSERT INTO personas (nombre, pais, edad) VALUES('$nombre', '$pais', '$edad') ";			
         $resultado = $conexion->prepare($consulta);
         $resultado->execute(); 
@@ -78,7 +78,7 @@ switch($opcion){
             $archivo=$d['archivo'];
             $ruta=$d['ruta'];
             $id_gasto=$d['id_gasto'];
-            $consulta="INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo,ruta,id_gasto) VALUES ('$ultimoPedido','$cantidad','$unidad','$detalle','$archivo','$ruta','$id_gasto')";
+            $consulta="INSERT INTO items(id_pedido,cantidad,unidad,detalle,archivo,ruta,id_gasto) VALUES ('$ultimoPedido','$cantidad','$unidad','$detalle','$ruta','$ruta','$id_gasto')";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
         }
@@ -94,8 +94,14 @@ switch($opcion){
         $consulta = "SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes where items_pendientes.id_usuarios='$id_usuario' ORDER BY id_pendientes DESC LIMIT 1";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
-        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);        
-        print json_encode($data, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);     
+
+        $consulta="SELECT count(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_usuario' and pedido.id_gasto='$id_unidad'";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        $nro=$data1['0']['count(pedido.id_pedido)']+1;
+        print json_encode($nro, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS
         $conexion = NULL;                
         break;     
          

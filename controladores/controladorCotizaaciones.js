@@ -69,14 +69,36 @@ $(document).on("click", ".btnEnviar", function(){
         success: function(fila){ 
             console.log(fila);                        
             if(fila==null){                                
-                alert("Error no puedo registrar la cotizacion");
+                Swal.fire("Error, todas los items deben tener una cotizacion");
             }else{               
                 if(estado=='empresa'){
-                    alert("Se agrego correctamente tu cotizacion");
-                    window.location.href = "../index.php";
+                    Swal.fire({
+                        title: 'Atencion!',
+                        text: "Desea enviar su solicitud de Cotizacion",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Enviar'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "../index.php";
+                        }
+                      })
                 }else{
-                    alert("Se agrego correctamente tu cotizacion");
-                    window.location.href = "../ruta/rutas.php?ruta=mostrar&con=aceptada";
+                    Swal.fire({
+                        title: 'Atencion!',
+                        text: "Desea enviar su solicitud de Cotizacion",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Enviar'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "../ruta/rutas.php?ruta=mostrar&con=aceptada";
+                        }
+                      })
                 }
             }
         }              
@@ -92,7 +114,7 @@ $(document).on("click", ".cotizar", function(){
     $(".modal-title").text("COTIZACION DE ITEM "+parseInt($(this).closest("tr").find('td:eq(0)').text()));   
     $("#cantidad").val(parseInt($(this).closest("tr").find('td:eq(1)').text()));     
     console.log(parseInt($(this).closest("tr").find('td:eq(1)').text()));
-    
+    ruta='';
     $.ajax({        
         url:"../modelo/actualizarPedido.php",
         type: "POST",
@@ -132,7 +154,7 @@ $(document).on("click", ".cotizar", function(){
 });
 
 $(document).on("click", ".cotizado", function(){    
-    
+    ruta='';
     $("#formPersonas").trigger("reset");
     $(".modal-header1").css("background-color", "#17a2b8");
     $(".modal-header1").css("color", "white");
@@ -149,7 +171,6 @@ $(document).on("click", ".cotizado", function(){
 
 
 $('input[type="file"]').on('change', function(){
-    
     var ext = $( this ).val().split('.').pop();
     archivo=$(this)[0].files[0].name;    
     //ruta0=$(this).val();    
@@ -202,33 +223,29 @@ $('input[type="file"]').on('change', function(){
     descripcion = $.trim($("#descripcion").val());      
     unit = $.trim($("#unit").val());      
     total = $.trim($("#total").val());         
-    if(marca!='' && marca.length>=1 && marca.length<=20){
-        if(modelo!='' && modelo.length<=50 && modelo.length>=1){
+    if(descripcion!='' && descripcion.length>=1 && descripcion.length<=50){
             if(unit!=''){
                 $.ajax({        
                     url:"../modelo/cotizacionItem.php",
                     type: "POST",
                     dataType: "json",
-                    data: {marca:marca,modelo:modelo,descripcion:descripcion,unit:unit,total:total,id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud,nombre_usu:nombre_usu},
+                    data: {marca:marca,modelo:modelo,descripcion:descripcion,unit:unit,total:total,id_item:id_item,id_empresa:id_empresa,id_solicitud:id_solicitud,nombre_usu:nombre_usu,ruta:ruta},
                     success: function(fila){  
                         console.log(fila);                        
                         if(fila==null){                                
-                            alert("No se pudo ingresar la cotizacion!");
+                            Swal.fire("No se pudo ingresar la cotizacion!");
                         }else{
-                            alert("Se agrego una nueva cotizacion del item: "+fila[0]['id_items']);
+                            Swal.fire("Se agrego una nueva cotizacion del item: "+fila[0]['id_items']);
                         }
                     }              
                 });
                 $("#modalCRUD").modal("hide");
                 window.location.href="../vista/registroCotizacion.php?solicitud="+id_solicitud+"&empresa="+id_empresa+"&nombre="+nombre_usu+"&estado="+estado;
             }else{        
-                alert("Debe ingresar un precio unitario");
+                Swal.fire("Debe ingresar un precio unitario");
             }
-        }else{        
-            alert("La Modelo debe ser un texto entre 1 y 50 caracteres");
-        }
     }else{        
-        alert("La marca debe ser un texto entre 1 y 20 caracteres");
+        Swal.fire("La descripcion debe ser un texto entre 1 y 50 caracteres");
     } 
 });    
     

@@ -5,6 +5,7 @@
     include_once '../modelo/conexionPablo.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
+
     $consulta="SELECT count(pedido.id_pedido) from pedido where pedido.id_usuarios='$id_pendientes' and pedido.id_gasto='$id_unidad'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
@@ -16,6 +17,7 @@
     $resultado->execute();
     $data2=$resultado->fetchAll(PDO::FETCH_ASSOC);
     $nombre=$data2['0']['apellidos']." ".$data2['0']['nombres'];
+    
     $consulta="SELECT id_pendientes,cantidad, unidad, detalle,archivo,ruta FROM items_pendientes i WHERE i.id_usuarios='$id_pendientes' and i.id_gasto='$id_unidad'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
@@ -27,7 +29,7 @@
     <section>
         <div class="row">
             <div class="col-lg-12">
-                <h2>Solicitud de Pedido # <?php echo $nro?></h2>
+                <h2 id="ti" class="ti">Solicitud de Pedido # <?php echo $nro?></h2>
             </div>          
             <div class="col-lg-12">
                 <h2>Fecha:  <?php echo date('y-m-d')?></h2>
@@ -93,8 +95,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
             </div>
         <form id="formPersonas">    
             <div class="modal-body">
@@ -116,7 +116,7 @@
                 </div>           
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                <button type="button" id="cancelar" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
                 <button type="submit" id="btnGuardar" class="btn btn-dark">INSERTAR</button>
             </div>
         </form>    
@@ -129,8 +129,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class=" text-center modal-title1" id="exampleModalLabel">Enviar Solicitud de Pedido</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
             </div>
         <form id="formPersonas">    
             <div class="modal-body">            
@@ -140,7 +138,7 @@
                 </div>                         
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                <button type="button" id="cancelarJust" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
                 <button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-dark">GUARDAR</button>
             </div>
         </form>    
@@ -163,12 +161,6 @@
 </div>
 
 
-
-<!--Menu sidebar -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js"></script>
 <script src="../librerias/js/custom.min.js"></script>
-<?php
-  include('../vista/layouts/piePagina.php')
-?>
-
+</body>
+</html>

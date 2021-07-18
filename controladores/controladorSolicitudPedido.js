@@ -23,7 +23,26 @@ $(document).ready(function(){
              },
              "sProcessing":"Procesando...",
         }
+    }); 
+
+    $(document).on("click", ".btnBorrar", function(){    
+        fila = $(this);
+        id_pendientes = parseInt($(this).closest("tr").find('td:eq(0)').text());
+        opcion = 3 //borrar
+        var respuesta = confirm("¿Esta seguro de eliminar el item?");
+        if(respuesta){
+            $.ajax({
+                url: "../modelo/solicitudes_modelo.php",
+                type: "POST",
+                dataType: "json",
+                data: {opcion:opcion, id_pendientes:id_pendientes,id_unidad:id_unidad},
+                success: function(){
+                    tablaPersonas.row(fila.parents('tr')).remove().draw();
+                }
+            });
+        }   
     });
+
     
 $("#btnNuevo").click(function(){
     $("#formPersonas").trigger("reset");
@@ -37,6 +56,12 @@ $("#btnNuevo").click(function(){
     archivo='';
     ruta='';
 });   
+$("#cancelar").click(function(){
+    $("#modalCRUD").modal("hide");    
+});  
+$("#cancelarJust").click(function(){
+    $("#modalCRUDJust").modal("hide");    
+});  
 //boton enviar pedido
 $("#btnPedido").click(function(){   
     console.log("hola");
@@ -57,67 +82,46 @@ $("#btnPedido").click(function(){
                     opcion=4; 
                     justificacion='';                    
                 }else{
-                    alert("Debe ingresar almenos 1 item antes de enviar");                
+                    Swal.fire("Debe ingresar almenos 1 item antes de enviar");                
                 }                              
             }else{                
             }
         }        
     });   
 });  
-    
+
 
 $(document).on("click", ".btnGuardarJust", function(){    
     justificacion = $.trim($("#Justificacion").val());
     if(justificacion==''){
-        var respuesta = confirm("¿Está seguro que desea agregar el pedido si ninguna justificacion?");
-        if(respuesta){           
-            $.ajax({
-                url: "../modelo/solicitudes_modelo.php",
-                type: "POST",
-                cache:false,
-                dataType: "json",
-                data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
-                success: function(data){                         
-                }        
-            });
-            $("#modalCRUDJust").modal("hide");  
-            window.location.href="../vista/solicitudes_vista.php";             
-        }
+        Swal.fire({
+            title: 'Desea enviar el pedido sin ninguna justificacion?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Enviar`,
+            denyButtonText: `No Enviar`,
+          }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                ajaxEnviarSolicitudPedido(opcion,justificacion,id_unidad,id_usu);
+                tablaPersonas.clear().draw();
+            } else if (result.isDenied) {
+                
+            }
+        })
     }else{
-        $.ajax({
-            url: "../modelo/solicitudes_modelo.php",
-            type: "POST",
-            dataType: "json",
-            data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
-            success: function(data){                   
-            }        
-        });
+        ajaxEnviarSolicitudPedido(opcion,justificacion,id_unidad,id_usu);
+        tablaPersonas.clear().draw();
         $("#modalCRUDJust").modal("hide");     
-        window.location.href="../vista/solicitudes_vista.php";             
+        tablaPersonas.clear().draw();
     }
 });
 
 
-var fila; //capturar la fila para editar o borrar el registro    
+var fila; 
 
 //botón BORRAR
-$(document).on("click", ".btnBorrar", function(){    
-    fila = $(this);
-    id_pendientes = parseInt($(this).closest("tr").find('td:eq(0)').text());
-    opcion = 3 //borrar
-    var respuesta = confirm("¿Esta seguro de eliminar el item?");
-    if(respuesta){
-        $.ajax({
-            url: "../modelo/solicitudes_modelo.php",
-            type: "POST",
-            dataType: "json",
-            data: {opcion:opcion, id_pendientes:id_pendientes,id_unidad:id_unidad},
-            success: function(){
-                tablaPersonas.row(fila.parents('tr')).remove().draw();
-            }
-        });
-    }   
-});
+
 
 //botón Enviar pedido
 
@@ -131,19 +135,18 @@ $('input[type="file"]').on('change', function(){
     ruta=document.getElementById('archivo').value;;
     
     if ($( this ).val() != '') {
-      if(ext == "pdf"){
-        //alert("La extensión es: " + ext);
+        if(ext == "pdf"){
+            //alert("La extensión es: " + ext);
         if($(this)[0].files[0].size > 5242880){          
-          $('#modal-title').text('¡Precaución!');
-          $('#modal-msg').html("Se solicita un archivo no mayor a 5MB. Por favor verifica.");
+            $('#modal-title').text('¡Precaución!');
+            $('#modal-msg').html("Se solicita un archivo no mayor a 5MB. Por favor verifica.");
           $("#modal-gral").modal();           
           $(this).val('');
         }else{    
             var miArchivo=$(this)[0].files[0]
             var datosForm=new FormData;
             datosForm.append("archivo",miArchivo);
-            var destino="subir.php";            
-
+            
             $.ajax({
                 type:'POST',
                 cache:false,
@@ -152,21 +155,22 @@ $('input[type="file"]').on('change', function(){
                 data:datosForm,
                 url:"../controladores/subir.php"
             }).done(function(data){
-                ruta=data;                
+                ruta=data;       
+                console.log(ruta);         
             }).fail(function(data){
-                alert("error al subir el archivo, vuelva a seleccionar otro archivo");
+                Swal.fire("error al subir el archivo, vuelva a seleccionar otro archivo");
             });
-          $("#modal-gral").hide();
+            $("#modal-gral").hide();
         }
-      }
-      else
-      {
-        $( this ).val('');
-        alert("Solo se puede agregar archivos .pdf");
-      }
     }
+    else
+      {
+          $( this ).val('');
+        Swal.fire("Solo se puede agregar archivos .pdf");
+    }
+}
   });
-
+  
 $("#formPersonas").submit(function(e){
     e.preventDefault();    
     cantidad = $.trim($("#cantidad").val());
@@ -181,7 +185,7 @@ $("#formPersonas").submit(function(e){
                         url: "../modelo/solicitudes_modelo.php",
                         type: "POST",
                         dataType: "json",
-                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes,id_usu:id_usu, opcion:opcion,ruta:ruta, archivo:archivo,id_unidad:id_unidad},
+                        data: {cantidad:cantidad, unidad:unidad, detalle:detalle, id_pendientes:id_pendientes,id_usu:id_usu, opcion:opcion,ruta:ruta, ruta:ruta,id_unidad:id_unidad,archivo:archivo},
                         success: function(data){                          
                             id_pendientes = data[0].id_pendientes;            
                             cantidad = data[0].cantidad;
@@ -198,17 +202,37 @@ $("#formPersonas").submit(function(e){
                     });
                     $("#modalCRUD").modal("hide");    
                 }else{
-                    alert("Error!!\nDebe introducir detelle maximo de 200 caracteres");
+                    Swal.fire("Error!!\nDebe introducir detelle maximo de 200 caracteres");
                 }                                        
             }else{
-                alert("Error!!\nDebe introducir el detalle o un archivo");
+                Swal.fire("Error!!\nDebe introducir el detalle o un archivo");
             }
         }else{
-            alert("Error!!\nDebe introducir una unidad entre 1 y 10 caracteres");
+            Swal.fire("Error!!\nDebe introducir una unidad entre 1 y 10 caracteres");
         }
     }else{
-        alert("Error!!\nDebe introducir una cantidad entre 1 y 1000000");
+        Swal.fire("Error!!\nDebe introducir una cantidad entre 1 y 1000000");
     }
 });    
-    
+   
 });
+function ajaxEnviarSolicitudPedido(opcion,justificacion,id_unidad,id_usu){
+    $.ajax({
+        url: "../modelo/solicitudes_modelo.php",
+        type: "POST",
+        cache:false,
+        dataType: "json",
+        data: {opcion:opcion, justificacion:justificacion,id_usu:id_usu,id_unidad:id_unidad},
+        success: function(data){    
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Se envio correctamente la solicitud de pedido',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            $(".ti").text("Solicitud de Pedido # "+data);              
+        }        
+    });
+    $("#modalCRUDJust").modal("hide");  
+}

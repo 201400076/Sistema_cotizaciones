@@ -14,8 +14,8 @@ $exite=false;
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
 
     foreach($data as $d){
-            //if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
-        if($usuario==$d['usuario'] && $password==$d['password']){
+        if($usuario==$d['usuario'] && password_verify($password,$d['password'])){
+        //if($usuario==$d['usuario'] && $password==$d['password']){
             $exite=true;
             $fila=$d;
             if($d['id_unidad']!=null){
@@ -44,6 +44,13 @@ $exite=false;
                 $fullName=$d['nombres']." ".$d['apellidos'];
                 $_SESSION["nombre_usuario"]=$fullName;
                 break;
+            }elseif($d['id_gasto']==null && $d['id_unidad']==null){
+                $consulta = "SELECT nombres,apellidos,rolAsignado FROM  usuarios u, usuarioconrol r WHERE  r.id_usuarios=u.id_usuarios and u.id_usuarios=28";
+                $resultado = $conexion->prepare($consulta);
+                $resultado->execute();
+                $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);  
+                $fila=$data1[0];
+                break;
             }
         }
     }
@@ -53,7 +60,8 @@ $exite=false;
         $resultado->execute();
         $data=$resultado->fetchAll(PDO::FETCH_ASSOC);  
         foreach($data as $d){
-            if($usuario==$d['user_cotizador'] && $password==$d['password_cotizador']){
+            if($usuario==$d['user_cotizador'] && password_verify($password,$d['password_cotizador'])){
+            //if($usuario==$d['user_cotizador'] && $password==$d['password_cotizador']){
                 $consulta = "SELECT nombre_empresa,rolAsignado,u.estado_cotizador, e.id_empresa,u.id_solicitudes,u.user_cotizador FROM usuario_cotizador u, empresas e WHERE e.id_empresa=u.id_empresa and u.user_cotizador='$usuario'";
                 $resultado = $conexion->prepare($consulta);
                 $resultado->execute();
@@ -65,7 +73,6 @@ $exite=false;
             }
         }
     }
-
 print json_encode($fila, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS
 $conexion = NULL;
 ?>
