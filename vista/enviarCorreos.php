@@ -8,13 +8,13 @@ require '../librerias/phpMailer/PHPMailer.php';
 require '../librerias/phpMailer/SMTP.php';
 
 session_start();
-$nombre = $_SESSION['nombreUA'];
+$nombre = 'juanito'; $_SESSION['nombre_usuario'];
 $conn = new Conexiones();
 $estadoconexion = $conn->getConn();
 
 if(!empty($_POST)){
-    $idSolicitud = $_GET["idSolicitud"];
-    $fechaFin = $_GET["ff"];
+    $idSolicitud = 28;$_GET["idSolicitud"];
+    $fechaFin = "2021-08-01";$_GET["ff"];
     $remitente = $nombre;
 
     if(empty($_POST["marcar"])){
@@ -27,9 +27,9 @@ if(!empty($_POST)){
         foreach($_POST["marcar"] as $correo_marcado){
             $correo = trim($correo_marcado, '/');
             $idCorreoActual = obtenerIdEmpresa($correo, $listaCorreos, $listaIds);
-            enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActual,$idSolicitud, $fechaFin);
+            enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActual,$idSolicitud, $fechaFin);            
         }
-        echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=1";</script>';
+        //echo '<script language="javascript">window.location.href="../vista/correosEnviados.php?marcado=1";</script>';
     }
 }
 
@@ -58,14 +58,14 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         $mail->setFrom('sistema.cotizaciones.umss@gmail.com', $remitente);    //Configurar el emisario(origen)
 
         $mail->addAddress($correo); //<--Enviar a este correo
-        $user = generarUsername();
+        $user = generarUsername($idSolicitud);
         $pass = generarPassword();
 
         while(usuarioExiste($user)){
-            $user = generarUsername();
+            $user = generarUsername($idSolicitud);
         }
 
-        registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud);
+        var_dump( registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud));
         $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion".$idSolicitud.".pdf";
 
         $mail->addAttachment($rutaArchivo); 
@@ -103,7 +103,7 @@ function generarUsername(){
     $tis="TIS";
     $nombres = ["empresa", "compania", "negocio", "sociedad", "comercio", "establecimiento", "firma", "cotizador", "usuario"];
     $letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J","K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-    $nombre = $nombres[ mt_rand(0, count($nombres) -1) ];
+    $nombre = 'cotizacion';//$nombres[ mt_rand(0, count($nombres) -1) ];
     $letra1 = $letras[ mt_rand(0, count($letras) -1) ];
     $letra2 = $letras[ mt_rand(0, count($letras) -1) ];
     $numero1 = mt_rand(0,10);
@@ -130,7 +130,9 @@ function registraUsuarioTemporal($user, $password, $idEmpresa, $estado, $idSolic
     $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes, rolAsignado) VALUES(?,?,?,?,?,?)");
     $stmt->bind_param("ssiiis", $user, $pass, $idEmpresa, $estado, $idSolicitud,$rol);
     if($stmt->execute()){
-        return $estadoconexion->insert_id;
+        $auxiliar=$estadoconexion->insert_id;
+        var_dump($auxiliar);
+        return $auxiliar;
     }else{
         return 0;
     }
@@ -198,6 +200,124 @@ function usuarioExiste($usuario){
 function hashPassword($pass){
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     return $hash;
+}
+
+function generarArchivoPDF($id_solicitud, $unidad){   
+    //$detalle = 'Archivo de Cotizacion Nro: ' . $id_solicitud;
+    $nombre = 'solicitudCotizacion' . $id_solicitud . '.pdf';
+    $ruta = $_SERVER['DOCUMENT_ROOT'].'/Sistema_cotizaciones/archivos/cotizacionesEnviadas/'.$nombre;
+
+    date_default_timezone_set('America/Lima'); //Configuramos el horario de acuerdo a la ubicación del servidor
+    class PDF extends FPDF
+    {
+        function Header()
+        {
+            // Logo
+            $this->Image('../recursos/imagenes/umss.png', 8, 1, 53);
+            $ancho = 172;
+            $this->setFont('Arial', 'B', 8);
+            $this->SetY(12); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
+            $this->Cell($ancho,10,'SOLICITUD DE COTIZACION',0,0,'R');
+            $this->SetY(15);
+            $this->Cell($ancho,10,'sistema.cotizaciones.umss@gmail.com',0,0,'R');
+            $this->SetY(18);
+            $this->Cell($ancho,10,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'),0,0,'R');
+        }
+        function Body(){
+            $yy = 10; //Variable auxiliar para desplazarse 40 puntos del borde superior hacia abajo en la coordenada de las Y para evitar que el título este al nivel de la cabecera.
+            $y = $this->GetY(); 
+            //$x = 12;
+            $this->AddPage($this->CurOrientation);
+             
+            $this->SetFont('helvetica', 'BU', 20); //Asignar la fuente, el estilo de la fuente (negrita) y el tamaño de la fuente
+            $this->SetXY(45, 35); //Ubicación según coordenadas X, Y. X=0 porque empezará desde el borde izquierdo de la página
+            $this->Cell(120, 10, "Solicitud de Cotizacion", 0, 1, 'C');
+        
+            $this->SetFont('Arial', '', 12);
+            $this->setY(50);
+            $this->Cell(50,10,'Solicitado Por: ',0,0,'L');
+        
+        
+            $this->setY(50);
+            $this->setX(105);
+            $this->Cell(50,10,utf8_decode('Solicitud N°:'),0,0,'R');
+            $this->setY(55);
+            $this->setX(120);
+            $this->Cell(50,10,'Fecha de recepcion:',0,0,'R');
+            $this->setY(60);
+            $this->setX(116);
+            $this->Cell(50,10,'Fecha de revision:',0,0,'R');
+        
+        }
+        
+        function plot_table($widths, $lineheight, $table, $border = 1, $aligns = array(), $fills = array(), $links = array())
+        {
+            $func = function ($text, $c_width) {
+                $len = strlen($text);
+                $twidth = $this->GetStringWidth($text);
+                if($twidth==0){
+                    $split = floor($c_width * $len) - 0.5;
+                }else{
+                    $split = floor($c_width * $len / $twidth) - 0.5;
+                }
+
+                
+                $w_text = explode("\n", wordwrap($text, intval($split), "\n", true));
+                return $w_text;
+            };
+            foreach ($table as $line) {
+                $line = array_map($func, $line, $widths);
+                $maxlines = max(array_map("count", $line));
+                foreach ($line as $key => $cell) {
+                    $x_axis = $this->getx();
+                    $height = $lineheight * $maxlines / count($cell);
+                    $len = count($line);
+                    $width = (isset($widths[$key]) === TRUE ? $widths[$key] : $widths / count($line));
+                    $align = (isset($aligns[$key]) === TRUE ? $aligns[$key] : '');
+                    $fill = (isset($fills[$key]) === TRUE ? $fills[$key] : false);
+                    $link = (isset($links[$key]) === TRUE ? $links[$key] : '');
+                    foreach ($cell as $textline) {
+                        $this->cell($widths[$key], $height, $textline, 0, 0, 'L', $fill, $link);
+                        //Cell(float w [, float h [, string txt [, mixed border [, int ln [, string align [, boolean fill [, mixed link]]]]]]])
+                        $height += 2 * $lineheight * $maxlines / count($cell);
+                        $this->SetX($x_axis);
+                    }
+                    if ($key == $len - 1
+                    ) {
+                        $lbreak = 1;
+                    } else {
+                        $lbreak = 0;
+                    }
+                    $this->cell($widths[$key], $lineheight * $maxlines, '', $border, $lbreak);
+                }
+            }
+        }
+        function Footer()
+        {
+            // Posición: a 1,5 cm del final
+            $this->SetY(-15);
+            // Arial italic 8
+            $this->SetFont('Arial', 'I', 8);
+            // Número de página
+            $this->Cell(0, 10,'Page '.$this->PageNo() . '/{nb}',0,0,'C');
+        }  
+    }
+
+    $pdf = new PDF('P', 'mm', 'A4');
+    //$pdf->Body();
+    $lineheight = 8;
+    $fontsize = 10;
+    
+    $pdf->SetFont('Arial', '', $fontsize);
+    $pdf->SetAutoPageBreak(true, 30);
+    $pdf->SetMargins(20, 1, 20);
+
+    $pdf->AddPage();
+    $pdf->Ln();
+    $table = reporteCotizacion($id_solicitud,$unidad);
+    $widths = array(10, 20, 22, 80, 20, 20);
+    $pdf->plot_table($widths, $lineheight, $table);
+    $pdf->Output($ruta, 'F');
 }
 
 ?>
