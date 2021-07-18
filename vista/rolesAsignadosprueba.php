@@ -24,6 +24,7 @@
 	<meta name="description"/>
     <link rel="stylesheet" type="text/css" href="../vista/css/estiloFRU.css" media="screen" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
@@ -134,13 +135,13 @@
                 <div class="col-75">
                     <select name="rolUser" id="rolUser">
                         <option value="0" id="selec1">Ninguno</option>
-                        <option value="100" id="selec2">Usuario de Unidad Administrativa</option>
-                        <option value="200" id="selec3">Usuario de Unidad de Gasto</option>
+                        <option value="Unidad Administrativa" id="selec2">Usuario de Unidad Administrativa</option>
+                        <option value="Unidad de Gasto" id="selec3">Usuario de Unidad de Gasto</option>
                     </select>                   
                 </div>
             </div>
 
-            <div class="row" id="100">
+            <div class="row" id="Unidad Administrativa">
                 <div class="col-25">
                     <label for="correo" id="uad">Unidad Admin:</label>
                 </div>
@@ -151,7 +152,7 @@
                 </div>
             </div>
             
-            <div class="row" id="200">
+            <div class="row" id="Unidad de Gasto">
                 <div class="col-25">
                     <label for="usuario" id="uga">Unidad de Gasto:</label>
                 </div>

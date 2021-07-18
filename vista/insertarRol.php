@@ -19,11 +19,11 @@
     mysqli_set_charset($conexion, "utf8");
 
     // if($usuario != "" or $rol == 0){
-    //     if($rol == 200){
-    //         $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_gasto`) VALUES ('$usuario', '$rol', '$ugasto')";
+    //     if($rol == 'Unidad de Gasto'){
+    //         $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `rolAsignado`, `id_gasto`) VALUES ('$usuario', '$rol', '$ugasto')";
     //     }
-    //     if($rol == 100){
-    //         $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_unidad`) VALUES ('$usuario', '$rol', '$uadmin')";
+    //     if($rol == 'Unidad Administrativa'){
+    //         $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `rol`, `id_unidad`) VALUES ('$usuario', '$rol', '$uadmin')";
     //     }
     // }else{
     //     echo '
@@ -36,28 +36,28 @@
 
 
     
-    if($rol == 200){
+    if($rol == 'Unidad de Gasto'){
              //verificar que unidades no se repitan en la base de datos
 
-     $consultaugasto = "SELECT * FROM `usuarioconrol` WHERE `id_gasto` = '$ugasto'";
-     $verificar_ugasto = mysqli_query($conexion, $consultaugasto);
-     if(mysqli_num_rows($verificar_ugasto) > 0){
-         echo '
-             <script>
-                 alert("Esta Unidad de gasto ya esta registrado");
-                 window.location = "./rolesAsignadosprueba.php";
-             </script>
-             ';
-             exit();
-     }
+        $consultaugasto = "SELECT * FROM `usuarioconrol` WHERE `id_gasto` = '$ugasto'";
+        $verificar_ugasto = mysqli_query($conexion, $consultaugasto);
+        if(mysqli_num_rows($verificar_ugasto) > 0){
+        echo '
+            <script>
+                alert("Esta Unidad de gasto ya esta registrado");
+                window.location = "./rolesAsignadosprueba.php";
+            </script>
+            ';
+            exit();
+        }
 
-        $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_gasto`) VALUES ('$usuario', '$rol', '$ugasto')";
-    }else if($rol == 100){
+        $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `rolAsignado`, `id_gasto`) VALUES ('$usuario', '$rol', '$ugasto')";
+    }else if($rol == 'Unidad Administrativa'){
 
         //verificar que unidades no se repitan en la base de datos
-    $consultauadmin = "SELECT * FROM `usuarioconrol` WHERE `id_unidad` = '$uadmin'";
-    $verificar_uadmin = mysqli_query($conexion, $consultauadmin);
-    if(mysqli_num_rows($verificar_uadmin) > 0){
+        $consultauadmin = "SELECT * FROM `usuarioconrol` WHERE `id_unidad` = '$uadmin'";
+        $verificar_uadmin = mysqli_query($conexion, $consultauadmin);
+        if(mysqli_num_rows($verificar_uadmin) > 0){
         echo '
             <script>
                 alert("Esta Unidad administrativa ya esta registrado");
@@ -65,9 +65,9 @@
             </script>
             ';
             exit();
-    }
+        }
 
-        $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `id_rol`, `id_unidad`) VALUES ('$usuario', '$rol', '$uadmin')";
+        $consultaInsertar = "INSERT INTO `usuarioconrol` (`id_usuarios`, `rolAsignado`, `id_unidad`) VALUES ('$usuario', '$rol', '$uadmin')";
     }else if($rol == 0){
         echo '
             <script>
@@ -75,7 +75,7 @@
                 window.location = "./rolesAsignadosprueba.php";
             </script>
             ';
-    }
+        }
 
     // //verificar que unidades no se repitan en la base de datos
     // $consultauadmin = "SELECT * FROM `usuarioconrol` WHERE `id_unidad` = '$uadmin'";
@@ -106,9 +106,14 @@
     //  }
 
 
-    $resultados = mysqli_query($conexion, $consultaInsertar);
+        $resultados = mysqli_query($conexion, $consultaInsertar);
     if($resultados == false){
-        echo "Error en la insercion";
+        echo '
+        <script>
+            alert("Error!!! Revise que los Campos esten seleccionados cuidadosamente.");
+            window.location = "./rolesAsignadosprueba.php";
+        </script>
+        ';
     }else{
         echo '
             <script>
@@ -119,4 +124,4 @@
     }
 
     mysqli_close($conexion); 
-?>
+?>;
