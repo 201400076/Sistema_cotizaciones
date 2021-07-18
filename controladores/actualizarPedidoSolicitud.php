@@ -81,14 +81,15 @@
             {
                 // Logo
                 $this->Image('../recursos/imagenes/umss.png', 8, 1, 53);
-                $ancho = 172;
-                $this->setFont('Arial', 'B', 8);
+                $ancho = 185;
+                $this->setFont('Arial', 'B', 10);
                 $this->SetY(12); //Mencionamos que el curso en la posición Y empezará a los 12 puntos para escribir el Usuario:
-                $this->Cell($ancho,10,'SOLICITUD DE COTIZACION',0,0,'R');
+                $this->Cell($ancho,10,'Fac.Economia',0,0,'R');
                 $this->SetY(15);
                 $this->Cell($ancho,10,'sistema.cotizaciones.umss@gmail.com',0,0,'R');
                 $this->SetY(18);
                 $this->Cell($ancho,10,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'),0,0,'R');
+                
             }
             function Body(){
                 $yy = 10; //Variable auxiliar para desplazarse 40 puntos del borde superior hacia abajo en la coordenada de las Y para evitar que el título este al nivel de la cabecera.
@@ -99,10 +100,19 @@
                 $this->SetFont('helvetica', 'BU', 20); //Asignar la fuente, el estilo de la fuente (negrita) y el tamaño de la fuente
                 $this->SetXY(45, 35); //Ubicación según coordenadas X, Y. X=0 porque empezará desde el borde izquierdo de la página
                 $this->Cell(120, 10, "Solicitud de Cotizacion", 0, 1, 'C');
-            
+                
+                $this->setTextColor(255, 87 , 51);
+                $this->SetXY(150, 35);
+                $this->SetFont('helvetica', 'B', 15);
+                $this->Cell(12, 10, utf8_decode("N°:"), 0, 1, 'C');
+                $this->setTextColor(0, 0 , 0);
                 $this->SetFont('Arial', '', 12);
                 $this->setY(50);
-                $this->Cell(50,10,'Solicitado Por: ',0,0,'L');
+                $this->Cell(50,10,'Responsable  : ',0,0,'L');
+                $this->setXY(10,55);
+                $this->Cell(50,10,'Solicitante      : ',0,0,'L');
+                $this->setXY(10,60);
+                $this->Cell(50,10,'Encargado de: ',0,0,'L');
             
             
                 $this->setY(50);
@@ -119,6 +129,8 @@
             
             function plot_table($widths, $lineheight, $table, $border = 1, $aligns = array(), $fills = array(), $links = array())
             {
+                $this->GetX();
+                $this->GetY();
                 $func = function ($text, $c_width) {
                     $len = strlen($text);
                     $twidth = $this->GetStringWidth($text);
@@ -170,21 +182,89 @@
             }  
         }
     
+    require_once('../configuraciones/conexion.php');
+  
+    $nomUsuAdm = $_SESSION['nombre_usuario'];
+    $unidad = $_SESSION['unidad'];
+
+    $idRescate=$_GET['id'];
+    
+    $conn = new Conexiones();
+    $estadoConexion = $conn->getConn();
+    $cotizaciones = "SELECT unidad_gasto.nombre_gasto, solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_ini_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, usuarios.apellidos, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
+																													AND pedido.id_pedido=solicitudes.id_pedido
+																															AND usuarios.id_usuarios=pedido.id_usuarios
+																															AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+																															AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
+																															AND solicitudes.id_solicitudes=".$idRescate;
+    	$queryCotizaciones=$estadoConexion->query($cotizaciones);
+        $registroCotizaciones=$queryCotizaciones->fetch_array(MYSQLI_BOTH);
+
+
+
+        $conn = new Conexiones();
+        $estadoconexion = $conn->getConn();
+        $res = $estadoconexion->query("SELECT max(id_usuario_cotizador) FROM usuario_cotizador");
+        $fila = mysqli_fetch_array($res);
+        $max=$fila[0];
+        $max++;
+
         $pdf = new PDF('P', 'mm', 'A4');
         //$pdf->Body();
         $lineheight = 8;
         $fontsize = 10;
-        
+        $pdf->Body();
         $pdf->SetFont('Arial', '', $fontsize);
         $pdf->SetAutoPageBreak(true, 30);
         $pdf->SetMargins(20, 1, 20);
-    
-        $pdf->AddPage();
+       
+        //$pdf->AddPage();
         $pdf->Ln();
         $table = reporteCotizacion($id_solicitud,$unidad);
         $widths = array(10, 20, 22, 80, 20, 20);
         $pdf->plot_table($widths, $lineheight, $table);
-        $pdf->Output($ruta, 'F');
+//###############################################################   
+/*     $pdf->setFont('Arial','B',8);
+    $pdf->SetY(12);
+    $pdf->Cell(190, 10,utf8_decode($datosUnidad['nombre_facultad']), 0, 0, 'R');
+    $pdf->SetY(16);
+    $pdf->Cell(190, 10,'sistema.cotizaciones.umss@gmail.com', 0, 0, 'R');   
+    $pdf->SetY(20);
+    $pdf->Cell(190, 10,utf8_decode('Dir: Av. Oquendo final Jordán(Campus Central)'), 0, 0, 'R');  */
+  
+
+    
+  
+    $pdf->setTextColor(255, 87 , 51);
+    $pdf->SetFont('helvetica', 'B', 15);
+    $pdf->setXY(160,30);
+    $pdf->Cell(10,20,"0000".$max,0,0,'L');
+    $pdf->setTextColor(0, 0 , 0);
+    $pdf->SetFont('Times','BI',14);
+    $pdf->setXY(155,15);
+    $pdf->Cell(10,80,$registroCotizaciones['id_solicitudes'],0,0,'L');
+    $pdf->setXY(170,35);
+    $pdf->Cell(10,50,$registroCotizaciones['fecha_ini_licitacion'],0,0,'L');
+    $pdf->setXY(170,40);
+    $pdf->Cell(10,50,$registroCotizaciones['fecha_evaluacion'],0,0,'L');
+    $pdf->setXY(40,30);
+     $pdf->Cell(10,50,$nomUsuAdm,0,0,'L');
+    $pdf->setXY(40,35);
+    $pdf->Cell(10,50,$registroCotizaciones['nombres']." ".$registroCotizaciones['apellidos'],0,0,'L');
+    $pdf->setXY(40,40); 
+    $pdf->Cell(10,50,$registroCotizaciones['nombre_gasto'],0,0,'L');
+
+    /* $pdf->SetFont('Times','BI',13);
+    $pdf->SetXY(25,45);
+    $pdf->Cell(150, 10, utf8_decode($datosUnidad['nombre_unidad']), 0, 1, 'C'); */
+
+    $pdf->SetFont('Times','I',14);
+    $pdf->setY(95);
+    $pdf->setX(15);
+
+
+
+    $pdf->Output($ruta, 'F');
     }
     
     function reporteCotizacion($id_solicitud,$unidad)
