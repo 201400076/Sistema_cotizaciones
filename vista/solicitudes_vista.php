@@ -63,18 +63,18 @@
                         <tbody>
                             <?php                            
                             foreach($data as $dat) {                                                        
-                            ?>                            
-                            <tr>
-                                <td><?php echo $dat['id_pendientes'] ?></td>
-                                <td><?php echo $dat['cantidad'] ?></td>
-                                <td><?php echo $dat['unidad'] ?></td>
-                                <td><?php echo $dat['detalle'] ?></td>
-                                <td><a target='_black' href="/Sistema_cotizaciones/archivos/<?php echo $dat['archivo']?>" type='button'> <?php echo $dat['archivo']?> </a></td>                                    
-                                <td></td>
-                            </tr>
-                            <?php
-                                }
-                            ?>                                
+                                ?>                            
+                                <tr>
+                                    <td><?php echo $dat['id_pendientes'] ?></td>
+                                    <td><?php echo $dat['cantidad'] ?></td>
+                                    <td><?php echo $dat['unidad'] ?></td>
+                                    <td><?php echo $dat['detalle'] ?></td>
+                                    <td><a target='_black' href="/Sistema_cotizaciones/archivos/solicitudesPedido/<?php echo $dat['archivo']?>" type='button'> <?php echo $dat['archivo']?> </a></td>                                    
+                                    <td></td>
+                                </tr>
+                                <?php
+                                    }
+                                ?>                             
                         </tbody>        
                        </table>                    
                     </div>

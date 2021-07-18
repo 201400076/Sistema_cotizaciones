@@ -19,6 +19,8 @@
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
+    
 ?>
 
 <!doctype html>

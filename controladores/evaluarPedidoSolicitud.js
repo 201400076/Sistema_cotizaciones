@@ -71,7 +71,7 @@ function rechazar() {
                     allowEnterKey: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        redireccionA("../controladores/actualizarPedidoSolicitud.php?detalle=" + detalle + "&id=" + id + "&fecha=" + fechaAccion + "&e=0");
+                    redireccionA("../controladores/actualizarPedidoSolicitud.php?detalle=" + detalle + "&id=" + id + "&fecha=" + fechaAccion + "&e=0");
                     }
                 })
             } else {

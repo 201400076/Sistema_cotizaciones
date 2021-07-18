@@ -68,8 +68,7 @@
     }
 
     //funcion temporal
-    function generarArchivoPDF($id_solicitud, $unidad)
-    {   
+    function generarArchivoPDF($id_solicitud, $unidad){   
         //$detalle = 'Archivo de Cotizacion Nro: ' . $id_solicitud;
         $nombre = 'solicitudCotizacion' . $id_solicitud . '.pdf';
         $ruta = '../archivos/cotizacionesIniciales/' . $nombre;
