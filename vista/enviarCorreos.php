@@ -2,6 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+include_once '../modelo/conexionPablo.php';
 require '../configuraciones/conexion.php';
 require '../librerias/phpMailer/Exception.php';
 require '../librerias/phpMailer/PHPMailer.php';
@@ -11,6 +12,7 @@ session_start();
 $nombre = 'juanito'; $_SESSION['nombre_usuario'];
 $conn = new Conexiones();
 $estadoconexion = $conn->getConn();
+
 
 if(!empty($_POST)){
     $idSolicitud = 28;$_GET["idSolicitud"];
@@ -65,7 +67,7 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
             $user = generarUsername($idSolicitud);
         }
 
-        var_dump( registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud));
+        registraUsuarioTemporal($user, $pass, $idCorreoActual, 0, $idSolicitud);
         $rutaArchivo = "../archivos/cotizacionesIniciales/"."solicitudCotizacion".$idSolicitud.".pdf";
 
         $mail->addAttachment($rutaArchivo); 
@@ -95,6 +97,7 @@ function generarUsername($id_solicitud){
     $letra2 = $letras[ mt_rand(0, count($letras) -1) ];
     $numero1 = mt_rand(0,10);
     $numero2 = mt_rand(0,10);
+    echo $nombre."-".$letra1.$numero1.$letra2.$numero2."-".$id_solicitud;
     return $nombre."-".$letra1.$numero1.$letra2.$numero2."-".$id_solicitud;
 }
 
@@ -107,19 +110,22 @@ function generarPassword(){
     return $password;
 }
 
-function registraUsuarioTemporal($user, $password, $idEmpresa, $estado, $idSolicitud){
-    global $estadoconexion;
+function registraUsuarioTemporal($user, $password, $id_empresa, $estado, $id_solicitud){
     $pass = hashPassword($password);
     $rol = 'Empresa';
-    $stmt = $estadoconexion->prepare("INSERT INTO usuario_cotizador (user_cotizador, password_cotizador, id_empresa, estado_cotizador, id_solicitudes, rolAsignado) VALUES(?,?,?,?,?,?)");
-    $stmt->bind_param("ssiiis", $user, $pass, $idEmpresa, $estado, $idSolicitud,$rol);
-    if($stmt->execute()){
-        $auxiliar=$estadoconexion->insert_id;
-        var_dump($auxiliar);
-        return $auxiliar;
-    }else{
-        return 0;
-    }
+
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+
+    $consulta = "INSERT INTO usuario_cotizador (user_cotizador,password_cotizador,id_empresa,estado_cotizador,id_solicitudes,rolAsignado) 
+    VALUES ('$user', '$pass', '$id_empresa', '$estado', $id_solicitud, '$rol')";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(); 
+
+    $consulta = "SELECT * FROM usuario_cotizador ORDER BY id_usuario_cotizador DESC LIMIT 1";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function obtenerIds(){
