@@ -1,77 +1,102 @@
 <?php
-    require '../configuraciones/conexion.php';
-    require '../librerias/fpdf/fpdf.php';
-    require_once('../configuraciones/conexion.php');
-        session_start();
-        $unidad = $_SESSION['unidad'];
-    $conn = new Conexiones();
-    $estadoconexion = $conn->getConn();
+include_once '../modelo/conexionPablo.php';
+require '../librerias/fpdf/fpdf.php';
+require_once('../configuraciones/conexion.php');
 
-    $id_solicitud=$_GET["id"];
-    $fecha=$_GET["fecha"];
-    $codigoEstado=$_GET['e'];
-    $detalle=$_GET['detalle'];
+$id_solicitud=$_POST['id_solicitud'];
+    
+session_start();
+$nombre = $_SESSION['nombre_usuario'];
+$conn = new Conexiones();
+$objeto = new Conexion();
+$conexion = $objeto->Conectar();
+$estadoconexion = $conn->getConn();
 
-    actualizarSolicitud($id_solicitud,$fecha,$codigoEstado,$detalle,$unidad);
 
-    function actualizarSolicitud($id_solicitud,$fecha,$codigoEstado,$detalle,$unidad){
-        global $estadoconexion;
-        //if(validarPatron($detalle,"/^[a-zA-Z][a-zA-Z0-9ñÑáéíóú\d_\s]{1,2800}$/i")){
-            $stmt = $estadoconexion->prepare("UPDATE solicitudes SET estado=?, fecha_evaluacion=?, detalle=? WHERE id_solicitudes=".$id_solicitud);
-            if($codigoEstado == 0){
-                $estado='rechazada';
-                $detalle = str_replace("_", " ", $detalle);
-            }else{
-                registrarSolicitudCotizacion($id_solicitud, $fecha, $codigoEstado);
-                $estado='aceptada';
-                $detalle=(NULL);
+    $user = generarUsername();
+    $pass = generarPassword();
 
-                //archivo pdf
-                generarArchivoPDF($id_solicitud, $unidad);
-            }
-            
-            $stmt->bind_param("sss",$estado,$fecha,$detalle);
-                if ($stmt->execute()) {
-                    redireccion();
-                } else {
-                    echo 0;
-            }
-            //registrarCotizacion($id_solicitud, $fecha, $codigoEstado);
-        //}else{
-            //echo("no cumple el patron");
-        //}
-    }
-
-    function registrarSolicitudCotizacion($idSolicitud, $fechaInicio, $dias){
-        $fechaFin = date("Y-m-d",strtotime($fechaInicio."+ ".$dias." days")); 
-        //echo $fechaFin;
-        global $estadoconexion;
-        $estado = 'cotizando';
-            $stmt = $estadoconexion->prepare("INSERT INTO solicitudes_cotizaciones (id_solicitudes, fecha_ini_licitacion, fecha_fin_licitacion, estado_cotizacion) VALUES(?,?,?,?)");
-            $stmt->bind_param("isss", $idSolicitud, $fechaInicio, $fechaFin, $estado);
-            if($stmt->execute()){
-                return $estadoconexion->insert_id;
-            }else{
-                return 0;
-            }
-    }
-
-    function validarPatron($str, $patron){
-        $str = trim($str);
-        if ($str !== '') {
-            $pattern = $patron;
-            if (preg_match($pattern, $str)) {
-                return true;   
-            }
+        while(usuarioExiste($user)){
+            $user = generarUsername();
         }
-        return false;   
-    }
+    $id_empresa=0.;
+    $estado=0;
+    $rol = 'Empresa';
 
-    //funcion temporal
-    function generarArchivoPDF($id_solicitud, $unidad){   
+    $consulta = "INSERT INTO usuario_cotizador (user_cotizador,password_cotizador,id_empresa,estado_cotizador,id_solicitudes,rolAsignado) 
+    VALUES ('$user', '$pass', '$id_empresa', '$estado', $id_solicitud, '$rol')";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(); 
+    $consulta = "SELECT * FROM usuario_cotizador ORDER BY id_usuario_cotizador DESC LIMIT 1";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $usuarioCotizador=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    generarArchivoPDF($user);
+    print json_encode($usuarioCotizador, JSON_UNESCAPED_UNICODE);
+
+
+function generarUsername(){
+    global $estadoconexion;
+   
+    //$i=0;
+    $res = $estadoconexion->query("SELECT max(id_usuario_cotizador) FROM usuario_cotizador");
+    $fila = mysqli_fetch_array($res);
+    $max=$fila[0];
+   /*  foreach($res as $elem){
+        $codigo[$i]=$elem['id_usuario_cotizador'];
+        //var_dump($codigo);
+        
+    } */
+    $max++;
+    $tis="TIS";
+    $nombres = ["empresa", "compania", "negocio", "sociedad", "comercio", "establecimiento", "firma", "cotizador", "usuario"];
+    $letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J","K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    $nombre = 'cotizacion';//$nombres[ mt_rand(0, count($nombres) -1) ];
+    $letra1 = $letras[ mt_rand(0, count($letras) -1) ];
+    $letra2 = $letras[ mt_rand(0, count($letras) -1) ];
+    $numero1 = mt_rand(0,9);
+    $numero2 = mt_rand(0,9);
+    return "$tis"."-"."$letra1$numero1$letra2$numero2"."-"."00$max";
+
+   // return "$tis"."-"."$nombre$letra1$numero1$letra2$numero2";
+}
+
+
+function generarPassword(){
+    $str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+    $password = "";
+    for($i=0;$i<16;$i++) {
+        $password .= substr($str,rand(0,62),1);
+    }
+    return $password;
+}
+
+function usuarioExiste($usuario){
+    global $estadoconexion;
+
+    $stmt = $estadoconexion->prepare("SELECT user_cotizador FROM usuario_cotizador WHERE user_cotizador = ? LIMIT 1");
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $stmt->store_result();
+    $num = $stmt->num_rows;
+    $stmt->close();
+    
+    if($num > 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function hashPassword($pass){
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+    return $hash;
+}
+
+function generarArchivoPDF($id_solicitud){   
         //$detalle = 'Archivo de Cotizacion Nro: ' . $id_solicitud;
-        $nombre = 'solicitudCotizacion' . $id_solicitud . '.pdf';
-        $ruta = '../archivos/cotizacionesIniciales/' . $nombre;
+        $nombre = $id_solicitud . '.pdf';
+        $ruta = '../archivos/cotizacionesEnviadas/' . $nombre;
     
         date_default_timezone_set('America/Lima'); //Configuramos el horario de acuerdo a la ubicación del servidor
         class PDF extends FPDF
@@ -163,6 +188,7 @@
                         if ($key == $len - 1
                         ) {
                             $lbreak = 1;
+
                         } else {
                             $lbreak = 0;
                         }
@@ -186,7 +212,7 @@
         $nomUsuAdm = $_SESSION['nombre_usuario'];
         $unidad = $_SESSION['unidad'];
 
-        $idRescate=$_GET['id'];
+        $idRescate=32;//$_GET['id_solicitud'];
         
         $conn = new Conexiones();
         $estadoConexion = $conn->getConn();
@@ -237,7 +263,7 @@
         $pdf->setTextColor(255, 87 , 51);
         $pdf->SetFont('helvetica', 'B', 15);
         $pdf->setXY(160,30);
-        $pdf->Cell(10,20,"0000".$max,0,0,'L');
+        $pdf->Cell(10,20,$id_solicitud,0,0,'L');
         $pdf->setTextColor(0, 0 , 0);
         $pdf->SetFont('Times','BI',14);
         $pdf->setXY(155,15);
@@ -265,39 +291,33 @@
 
         $pdf->Output($ruta, 'F');
     }
-    
     function reporteCotizacion($id_solicitud,$unidad)
     {
+        $objeto = new Conexion();
+        $conexion = $objeto->Conectar();
+
+        $consulta = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute(); 
+        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
         $mysqli = new mysqli('localhost', 'root', '', 'sistema_de_cotizaciones');
         $query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
-        /*$query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido  FROM pedido,items,usuarios,usuarioconrol,unidad_gasto, solicitudes WHERE pedido.id_pedido=items.id_pedido 
-                                                                                                AND usuarios.id_usuarios=pedido.id_usuarios 
-                                                                                                AND usuarios.id_usuarios=usuarioconrol.id_usuarios
-                                                                                                AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
-                                                                                                AND solicitudes.id_solicitudes=".$id_solicitud;
-                                                                                                */
         $respuesta = [];
         $numero = 0;
-        $resultado = $mysqli->query($query);
-        array_push($respuesta, ['Nro', 'Cantidad', 'Unidad', 'Detalle', 'Precio Unitario', 'Precio Total']);
-        while ($valor = $resultado->fetch_assoc()) {
-    
-            if ($id_solicitud == $valor['id_solicitudes']) {
+
+        foreach($data as $d){
+            if($id_solicitud==$d['id_solicitudes']){
                 $numero = $numero + 1;
-                $cantidad = $valor['cantidad'];
-                $unidad = $valor['unidad'];
-                $detalle = $valor['detalle'];
+                $cantidad = $d['cantidad'];
+                $unidad = $d['unidad'];
+                $detalle = $d['detalle'];
                 $preciounitario = "";
                 $preciototal = "";
                 array_push($respuesta, [utf8_decode($numero), utf8_decode($cantidad), utf8_decode($unidad), utf8_decode($detalle), utf8_decode($preciounitario), utf8_decode($preciototal)]);
             }
-            //$contador++;
         }
         $contador = 0;
         return $respuesta;
-    }
-    
-    function redireccion(){
-        echo '<script language="javascript">window.location.href="../ruta/rutas.php?ruta=mostrar&con=nueva"</script>';
     }
 ?>

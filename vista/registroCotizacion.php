@@ -18,9 +18,13 @@
     $consulta="SELECT i.descripcion,i.marca,i.modelo,i.precio_parcial,i.id_items,i.precio_unitario,i.ruta FROM cotizacion_items i, solicitudes s WHERE i.id_solicitudes=s.id_solicitudes and i.id_solicitudes='$id_solicitud' and i.id_empresa='$id_empresa' and i.user_cotizador='$nombre'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
-    $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);    
 
-    
+    $consulta="SELECT * FROM usuario_cotizador u WHERE u.user_cotizador='$nombre' and u.id_solicitudes='$id_solicitud'";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute();
+    $data3=$resultado->fetchAll(PDO::FETCH_ASSOC);
+    $cotizacion_manual=$data3[0]['cotizacion_manual'];
 ?>
 
 <!doctype html>
@@ -51,10 +55,15 @@
 
 <div class="container">
         <div class="row">
-            <div class="col-lg-12">            
-            <button id="btnNuevo" type="button" class="btn btn-dark" data-toggle="modal">Adjuntar Archivo
-                
-            </button>    
+            <div class="col-lg-12">  
+                <?php
+                    
+                    if($cotizacion_manual==null){
+                        echo "<input type='file' class='form-control manual' id='manual'>";
+                    }else{
+                        echo "<td><a target='_black' href='/Sistema_cotizaciones/archivos/cotizacionManual/".$cotizacion_manual['cotizacion_manual']."' type='button'>".$cotizacion_manual['cotizacion_manual']."</a></td>";
+                    }
+                ?>
             </div>    
         </div>    
 </div> 
@@ -167,7 +176,7 @@
             </div>                       
             <div class="form-group">
                 <label for="unidad" class="col-form-label">archivo:</label>
-                <input type="file" class="form-control" id="archivo">
+                <input type="file" class="form-control archivo" id="archivo">
                 </div>     
             <div class="form-group">
                 <label for="marca" class="col-form-label">MARCA:</label>

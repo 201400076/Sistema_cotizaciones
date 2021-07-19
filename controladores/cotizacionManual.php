@@ -6,7 +6,7 @@
 
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $consulta="SELECT * FROM usuario_cotizador u WHERE user_cotizador='$codigo' and id_solicitudes='$id_solicitud'";
+    $consulta="SELECT * FROM usuario_cotizador u WHERE u.user_cotizador='$codigo' and u.id_solicitudes='$id_solicitud'";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
     $data=$resultado->fetchAll(PDO::FETCH_ASSOC);

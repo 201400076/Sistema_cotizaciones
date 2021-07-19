@@ -63,9 +63,7 @@
 												<button type="button" id="btnGuardarJust" class=" btnGuardarJust btn btn-info">Registrar</button>
 											</td>
 											<td>
-												<a style="padding: 0; margin-top: 0;" target="_blank" href="../archivos/cotizacionesIniciales/solicitudCotizacion<?php echo $valor[$i]['id_solicitudes']?>.pdf">
-													<input style="padding: 0; margin-top: 0;" type="image" src="../recursos/imagenes/iconoImprimir.png" name="imprimir" alt="imprimir" width="40px"/>
-												</a>
+													<input style="padding: 0; margin-top: 0;" id="imprimir" class="imprimir" type="image" src="../recursos/imagenes/iconoImprimir.png" name="imprimir" alt="imprimir" width="40px"/>
 											</td>
 
 										</tr>

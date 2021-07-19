@@ -123,9 +123,6 @@ var fila;
 //botón BORRAR
 
 
-//botón Enviar pedido
-
-
 $('input[type="file"]').on('change', function(){
     
     var ext = $( this ).val().split('.').pop();

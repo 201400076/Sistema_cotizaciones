@@ -169,8 +169,8 @@ $(document).on("click", ".cotizado", function(){
 
 //botón Enviar pedido
 
-
-$('input[type="file"]').on('change', function(){
+//$('input[type="file"]').on('change', function(){
+$(document).on("change", ".archivo", function(){   
     var ext = $( this ).val().split('.').pop();
     archivo=$(this)[0].files[0].name;    
     //ruta0=$(this).val();    
@@ -248,5 +248,70 @@ $('input[type="file"]').on('change', function(){
         Swal.fire("La descripcion debe ser un texto entre 1 y 50 caracteres");
     } 
 });    
+
+
+
+$(document).on("change", ".manual", function(){  
+    rutaManual=''; 
+    console.log('holas'); 
+    var ext = $( this ).val().split('.').pop();
+    archivo=$(this)[0].files[0].name;    
+    //ruta0=$(this).val();    
+    
+    ruta=document.getElementById('archivo').value;;
+    
+    if ($( this ).val() != '') {
+      if(ext == "pdf"){
+        //alert("La extensión es: " + ext);
+        if($(this)[0].files[0].size > 5242880){
+          console.log("El documento excede el tamaño máximo");
+          $('#modal-title').text('¡Precaución!');
+          $('#modal-msg').html("Se solicita un archivo no mayor a 5MB. Por favor verifica.");
+          $("#modal-gral").modal();           
+          $(this).val('');
+        }else{    
+            var miArchivo=$(this)[0].files[0]
+            var datosForm=new FormData;
+            datosForm.append("archivo",miArchivo);
+            var destino="subirManual.php";
+            console.log(miArchivo);
+
+            $.ajax({
+                type:'POST',
+                cache:false,
+                contentType:false,
+                processData:false,
+                data:datosForm,
+                url:"../controladores/subirManual.php",
+            }).done(function(data){
+                rutaManual=data; 
+                console.log(rutaManual);               
+            }).fail(function(data){
+                alert("error al subir el archivo, vuelva a seleccionar otro archivo");
+            });
+          $("#modal-gral").hide();
+        }
+       /* $.ajax({        
+            url:"../modelo/actualizacionManual.php",
+            type: "POST",
+            dataType: "json",
+            data: {id_empresa:id_empresa,rutaManual:rutaManual,nombre_usu:nombre_usu},
+            success: function(fila){  
+                console.log(fila);                        
+                if(fila==null){                                
+                    Swal.fire("No se pudo ingresar la cotizacion!");
+                }else{
+                    Swal.fire("Se agrego una nueva cotizacion del i");
+                }
+            }              
+        });        */
+      }
+      else
+      {
+        $( this ).val('');
+        alert("Solo se puede agregar archivos .pdf");
+      }
+    }
+  });
     
 });
