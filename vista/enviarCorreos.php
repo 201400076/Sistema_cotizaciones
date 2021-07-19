@@ -87,19 +87,32 @@ function enviarCorreos($remitente, $asunto, $descripcion, $correo, $idCorreoActu
         echo "Hubo un error al enviar el mensaje: {$mail->ErrorInfo}";
     }
 }
-
-function generarUsername($id_solicitud){
-    //TIS-
-    //$nombres = ["empresa", "compania", "negocio", "sociedad", "comercio", "establecimiento", "firma", "cotizador", "usuario"];
+function generarUsername(){
+    global $estadoconexion;
+   
+    //$i=0;
+    $res = $estadoconexion->query("SELECT max(id_usuario_cotizador) FROM usuario_cotizador");
+    $fila = mysqli_fetch_array($res);
+    $max=$fila[0];
+   /*  foreach($res as $elem){
+        $codigo[$i]=$elem['id_usuario_cotizador'];
+        //var_dump($codigo);
+        
+    } */
+    $max++;
+    $tis="TIS";
+    $nombres = ["empresa", "compania", "negocio", "sociedad", "comercio", "establecimiento", "firma", "cotizador", "usuario"];
     $letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J","K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     $nombre = 'cotizacion';//$nombres[ mt_rand(0, count($nombres) -1) ];
     $letra1 = $letras[ mt_rand(0, count($letras) -1) ];
     $letra2 = $letras[ mt_rand(0, count($letras) -1) ];
     $numero1 = mt_rand(0,10);
     $numero2 = mt_rand(0,10);
-    echo $nombre."-".$letra1.$numero1.$letra2.$numero2."-".$id_solicitud;
-    return $nombre."-".$letra1.$numero1.$letra2.$numero2."-".$id_solicitud;
+    return "$tis"."-"."$letra1$numero1$letra2$numero2"."-"."00$max";
+
+   // return "$tis"."-"."$nombre$letra1$numero1$letra2$numero2";
 }
+
 
 function generarPassword(){
     $str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
