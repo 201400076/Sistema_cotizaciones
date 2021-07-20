@@ -17,15 +17,24 @@ $data=null;
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
         $data1=$resultado->fetchAll(PDO::FETCH_ASSOC);
-        if(count($data2)==count($data1)){
-                $consulta = "UPDATE usuario_cotizador SET estado_cotizador=true WHERE usuario_cotizador.user_cotizador='$nombre_usu'";        	
-                $resultado = $conexion->prepare($consulta);
-                $resultado->execute(); 
-                
-                $consulta = "UPDATE solicitudes_cotizaciones SET cantidad_cotizaciones = cantidad_cotizaciones + 1 WHERE id_solicitudes='$id_solicitud'";        	        
-                $resultado = $conexion->prepare($consulta);
-                $resultado->execute(); 
-                $data='exito';        
+
+
+        $consulta = "SELECT * FROM usuario_cotizador WHERE usuario_cotizador.user_cotizador='$nombre_usu'";
+        $resultado = $conexion->prepare($consulta);
+        $resultado->execute();
+        $registroManual=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        if($registroManual[0]['cotizacion_manual']!=''){                
+                if(count($data2)==count($data1)){
+                        $consulta = "UPDATE usuario_cotizador SET estado_cotizador=true WHERE usuario_cotizador.user_cotizador='$nombre_usu'";        	
+                        $resultado = $conexion->prepare($consulta);
+                        $resultado->execute(); 
+                        
+                        $consulta = "UPDATE solicitudes_cotizaciones SET cantidad_cotizaciones = cantidad_cotizaciones + 1 WHERE id_solicitudes='$id_solicitud'";        	        
+                        $resultado = $conexion->prepare($consulta);
+                        $resultado->execute(); 
+                        $data='exito';        
+                }
         }
         
 print json_encode($data, JSON_UNESCAPED_UNICODE); //enviar el array final en formato json a JS

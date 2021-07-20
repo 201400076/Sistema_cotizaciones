@@ -69,7 +69,7 @@ $(document).on("click", ".btnEnviar", function(){
         success: function(fila){ 
             console.log(fila);                        
             if(fila==null){                                
-                Swal.fire("Error, todas los items deben tener una cotizacion");
+                Swal.fire("Error, todas los items deben tener una cotizacion\nDebe ingresar el domuento de cotizacion");
             }else{               
                 if(estado=='empresa'){
                     Swal.fire({
@@ -285,7 +285,22 @@ $(document).on("change", ".manual", function(){
                 url:"../controladores/subirManual.php",
             }).done(function(data){
                 rutaManual=data; 
-                console.log(rutaManual);               
+                console.log(rutaManual,nombre_usu);
+                $.ajax({
+                    url: "../controladores/actualizarArchivo.php",
+                    type: "POST",
+                    cache:false,
+                    dataType: "json",
+                    data: {rutaManual:rutaManual, nombre_usu:nombre_usu},
+                    success: function(data){ 
+                        console.log(data);
+                        window.location.href="../vista/registroCotizacion.php?solicitud="+id_solicitud+"&empresa="+id_empresa+"&nombre="+nombre_usu+"&estado="+estado;                        
+                    }        
+                });
+                   
+
+
+                
             }).fail(function(data){
                 alert("error al subir el archivo, vuelva a seleccionar otro archivo");
             });

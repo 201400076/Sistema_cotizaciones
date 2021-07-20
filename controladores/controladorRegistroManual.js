@@ -1,3 +1,4 @@
+usuario='';
 $(document).on("click", ".imprimir", function(){    
     id_solicitud = parseInt($(this).closest("tr").find('td:eq(1)').text());
     Swal.fire({
@@ -44,11 +45,27 @@ $(document).on("click", ".btnGuardarJust", function(){
                             console.log(data);
                             if(data.length!=0){
                                 if(data[0]['estado_cotizador']==0){
-                                    id_solicitud=data[0]['id_solicitudes'];
-                                    id_empresa=data[0]['id_empresa'];
-                                    nombre_usu=data[0]['user_cotizador'];
-                                    estado='administracion';
-                                    window.location.href="../vista/registroCotizacion.php?solicitud="+id_solicitud+"&empresa="+id_empresa+"&nombre="+nombre_usu+"&estado="+estado;
+                                    if (data[0]['id_empresa']!=0) {
+                                        id_solicitud=data[0]['id_solicitudes'];
+                                        id_empresa=data[0]['id_empresa'];
+                                        nombre_usu=data[0]['user_cotizador'];
+                                        estado='administracion';
+                                        window.location.href="../vista/registroCotizacion.php?solicitud="+id_solicitud+"&empresa="+id_empresa+"&nombre="+nombre_usu+"&estado="+estado;                                        
+                                    }else{
+                                        Swal.fire({
+                                            title: 'Esta empresa aun no fue registrada\nDesea registrar empresa?',
+                                            showDenyButton: true,
+                                            showCancelButton: true,
+                                            confirmButtonText: `Si`,
+                                            denyButtonText: `No`,
+                                          }).then((result) => {
+                                            /* Read more about isConfirmed, isDenied below */
+                                            if (result.isConfirmed) {
+                                                usuario=nombre_usu=data[0]['user_cotizador'];
+                                                $("#modalRegistro").modal("show"); 
+                                            }                                            
+                                          })
+                                    }
                                 }else{
                                     alert("La empresa ya registro su cotizacion");
                                 }
@@ -129,11 +146,8 @@ $(document).on("click", ".registrarEmpresa", function(){
     direccion = $.trim($("#direccion").val());
     rubro = $.trim($("#ru").val());
     if(nombre.length>=6){
-        if(validarEmail(correo)){
-           // ajaxRegistro(nombre,correo,telefono,direccion,rubro,id_solicitud);
-        }else{
-            Swal.fire("Error!!\ncorreo electronico invalido");
-        }
+            console.log(usuario);
+            ajaxRegistro(nombre,correo,telefono,direccion,rubro,id_solicitud,usuario);
     }else{
         Swal.fire("Error!!\nEl nombre de la empresa debe contener minimo 6 caracteres");
     }
@@ -143,17 +157,16 @@ $(document).on("click", ".registrarEmpresa", function(){
 function redireccionA(url) {
     window.location.href = url;
 }
-function ajaxRegistro(nombre,correo,telefono,direccion,rubro,id_solicitud){
+function ajaxRegistro(nombre,correo,telefono,direccion,rubro,id_solicitud,usuario){
     $.ajax({
         url: "../controladores/registrarEmpresa.php",
         type: "POST",
         cache:false,
         dataType: "json",
-        data: {nombre:nombre, correo:correo,nit:nit,telefono:telefono,direccion:direccion,rubro:rubro,id_solicitud:id_solicitud},
+        data: {nombre:nombre, correo:correo,nit:nit,telefono:telefono,direccion:direccion,rubro:rubro,id_solicitud:id_solicitud,usuario:usuario},
         success: function(data){ 
             console.log(data);     
             estado='administracion';
-            alert('El usuario temporal para esta cotizacion es:\nUser:'+data[0]['user_cotizador']+"\nPassword"+data[0]['password_cotizador']);
             redireccionA("../vista/registroCotizacion.php?solicitud="+data[0]['id_solicitudes']+"&empresa="+data[0]['id_empresa']+"&nombre="+data[0]['user_cotizador']+"&estado="+estado);
         }        
     });

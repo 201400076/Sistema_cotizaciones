@@ -57,11 +57,12 @@
         <div class="row">
             <div class="col-lg-12">  
                 <?php
-                    
-                    if($cotizacion_manual==null){
-                        echo "<input type='file' class='form-control manual' id='manual'>";
-                    }else{
-                        echo "<td><a target='_black' href='/Sistema_cotizaciones/archivos/cotizacionManual/".$cotizacion_manual['cotizacion_manual']."' type='button'>".$cotizacion_manual['cotizacion_manual']."</a></td>";
+                    if($estado!='empresa'){
+                        if($cotizacion_manual==""){
+                            echo "<input type='file' class='form-control manual' id='manual'>";
+                        }else{
+                            echo "<td><a target='_black' href='/Sistema_cotizaciones/archivos/cotizacionManual/".$cotizacion_manual."' type='button'>".$cotizacion_manual."</a></td>";
+                        }
                     }
                 ?>
             </div>    
@@ -207,6 +208,8 @@
     var id_empresa = '<?php echo $id_empresa?>';
     var nombre_usu = '<?php echo $nombre?>';
     var estado = '<?php echo $estado?>';
+    var cotizacion_manual = '<?php echo $cotizacion_manual?>';
+    
 </script>
 <script type="text/javascript" src="../controladores/controladorCotizaaciones.js"></script>  
 
