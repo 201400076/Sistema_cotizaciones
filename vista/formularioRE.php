@@ -51,6 +51,16 @@
 
             <div class="row">
                 <div class="col-25">
+                    <label for="nombre">Nombre Corto:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="nombreCorto" name="nombreCorto"  value="<?php echo isset($_POST['nombreCorto']) ? $_POST['nombreCorto'] : '';?>" required>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
                     <label for="correo">Correo electrónico:</label>
                 </div>
                 <div class="col-75">

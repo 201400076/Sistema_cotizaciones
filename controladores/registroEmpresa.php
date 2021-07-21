@@ -9,19 +9,24 @@
     if(!empty($_POST)){
 
         $nombre = $_POST['nombre'];
+        $nombreCorto=$_POST['nombreCorto'];
         $correo = $_POST['correo'];
         $nit = $_POST['nit'];
         $telefono = $_POST['telefono'];
         $direccion = $_POST['direccion'];
         $rubro = $_POST['rubro'];
         
-        if(empty($nombre) || empty($correo) || empty($nit) || empty($telefono) || empty($direccion) || empty($rubro)){
+        if(empty($nombre) || empty($nombreCorto) || empty($correo) || empty($nit) || empty($telefono) || empty($direccion) || empty($rubro)){
             $error = "* Todos los campos son obligatorios";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
 
         }else if(!validarPatron($nombre, "/^[a-zA-Z]([a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s]+){5}$/")){ 
             $error = "* Nombre no Valido";
+            echo "<p class='error'>".$error."</p>";
+            $errors[] = $error;
+        }else if(!validarPatron($nombreCorto, "/^([a-zA-Z0-9áÁéÉíÍóÓúÚñÑüÜ\s#?]+)(?=.{3,12}$)/")){ 
+            $error = "* Nombre Corto no valido";
             echo "<p class='error'>".$error."</p>";
             $errors[] = $error;
         }else if(!validarPatron($correo, "/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/")){
@@ -53,7 +58,7 @@
         echo '<script src="../librerias/js/sweetalert2.all.min.js"></script><script src="../librerias/js/jquery-3.6.0.js"></script>';
         
         if(count($errors) == 0){ //no errores
-            $registro = registraEmpresa($nombre, $correo, $nit, $telefono, $direccion, $rubro);
+            $registro = registraEmpresa($nombre,$nombreCorto, $correo, $nit, $telefono, $direccion, $rubro);
             if($registro > 0){
 
                 echo '<script language="javascript">Swal.fire({
@@ -66,12 +71,12 @@
                     allowEnterKey: true
                 }).then((result) =>{
                     if(result.isConfirmed){
-                        window.location.href="../vista/home.php";
+                        window.location.href="../vista/formularioRE.php";
                     }
                 })</script>';
                 exit;        
             }else{
-                echo '<script language="javascript">window.location.href="../vista/home.php"</script>';
+                echo '<script language="javascript">window.location.href="../vista/formularioRE.php"</script>';
                 $error = "Error al registrar";
                 echo "<p class='error'>".$error."</p>";
                 $errors[] = $error;
@@ -109,11 +114,11 @@
         }
     }
 
-    function registraEmpresa($nombre, $correo, $nit, $telefono, $direccion, $rubro){
+    function registraEmpresa($nombre,$nombreCorto, $correo, $nit, $telefono, $direccion, $rubro){
         global $estadoconexion;
         
-        $stmt = $estadoconexion->prepare("INSERT INTO empresas (nombre_empresa, correo_empresa, rubro, nit, telefono, direccion) VALUES(?,?,?,?,?,?)");
-        $stmt->bind_param("ssiiss", $nombre, $correo, $rubro, $nit, $telefono, $direccion);
+        $stmt = $estadoconexion->prepare("INSERT INTO empresas (nombre_empresa, correo_empresa, rubro, nit, telefono, direccion,nombre_corto) VALUES(?,?,?,?,?,?,?)");
+        $stmt->bind_param("ssiisss", $nombre, $correo, $rubro, $nit, $telefono, $direccion,$nombreCorto);
 
         if($stmt->execute()){
             return $estadoconexion->insert_id;
