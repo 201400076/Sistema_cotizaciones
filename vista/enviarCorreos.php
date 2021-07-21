@@ -9,9 +9,19 @@ require '../librerias/phpMailer/SMTP.php';
 require '../librerias/fpdf/fpdf.php';
 require_once('../configuraciones/conexion.php');
 
-session_start();
+/* session_start();
 $nombre = $_SESSION['nombre_usuario'];
 $conn = new Conexiones();
+$estadoconexion = $conn->getConn(); */
+session_start();
+$id_solicitud=$_GET['idSolicitud'];
+$unidad=$_SESSION['unidad'];
+$idRescate=$id_solicitud;
+
+$nombre = $_SESSION['nombre_usuario'];
+$conn = new Conexiones();
+$objeto = new Conexion();
+$conexion = $objeto->Conectar();
 $estadoconexion = $conn->getConn();
 
 
@@ -326,10 +336,10 @@ function generarArchivoPDF($id_solicitud){
         require_once('../configuraciones/conexion.php');
     
         $nomUsuAdm = $_SESSION['nombre_usuario'];
-        $unidad = $_SESSION['unidad'];
+        $unidad2 = $_SESSION['unidad'];
 
         $idRescate=$_GET['idSolicitud'];
-        //$idRescate=$_POST['idSolicitud'];
+        
         $conn = new Conexiones();
         $estadoConexion = $conn->getConn();
         $cotizaciones = "SELECT unidad_gasto.nombre_gasto, solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_ini_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, usuarios.apellidos, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
@@ -361,7 +371,7 @@ function generarArchivoPDF($id_solicitud){
        
         //$pdf->AddPage();
         $pdf->Ln();
-        $table = reporteCotizacion($id_solicitud,$unidad);
+        $table = reporteCotizacion($idRescate,$unidad2);
         $widths = array(10, 20, 22, 80, 20, 20);
         $pdf->plot_table($widths, $lineheight, $table);
         //###############################################################   
@@ -409,7 +419,6 @@ function generarArchivoPDF($id_solicitud){
     }
     function reporteCotizacion($id_solicitud,$unidad)
     {
-        require_once('../configuraciones/conexion.php');
         $mysqli = new mysqli('localhost', 'root', '', 'sistema_de_cotizaciones');
         $query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
         /*$query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido  FROM pedido,items,usuarios,usuarioconrol,unidad_gasto, solicitudes WHERE pedido.id_pedido=items.id_pedido 

@@ -12,12 +12,12 @@
         if(isset($_FILES["archivo"])){
             $temp=explode(".",$_FILES['archivo']['name']);
             $source_file=$_FILES['archivo']['tmp_name'];
-            $destino="archivos";
+            $destino="public_html/archivos/solicitudesPedido";
             $nombre=$_FILES["archivo"]['name'];
             //ftp_pasv($con_id,true);
             $subio=ftp_put($con_id,$destino.'/'.$nombre,$source_file,FTP_BINARY);
             if($subio){
-                echo 'archivo subido';
+                echo $nombre;
             }else {
                 echo 'error de';
             }

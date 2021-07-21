@@ -65,7 +65,7 @@ $(document).on("click", ".btnEnviar", function(){
         url:"../modelo/actualizarCotizacionEmpresa.php",
         type: "POST",
         dataType: "json",
-        data: {id_solicitud:id_solicitud,nombre_usu:nombre_usu,id_empresa:id_empresa},
+        data: {id_solicitud:id_solicitud,nombre_usu:nombre_usu,estado:estado},
         success: function(fila){ 
             console.log(fila);                        
             if(fila==null){                                

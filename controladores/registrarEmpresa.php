@@ -6,7 +6,8 @@ $telefono =(isset($_POST['telefono'])) ? $_POST['telefono'] : '';
 $direccion =(isset($_POST['direccion'])) ? $_POST['direccion'] : '';
 $rubro =(isset($_POST['rubro'])) ? $_POST['rubro'] : '';
 $id_solicitud =(isset($_POST['id_solicitud'])) ? $_POST['id_solicitud'] : '';
-$usuario =(isset($_POST['usuario'])) ? $_POST['usuario'] : '';
+$codigo =(isset($_POST['codigo'])) ? $_POST['codigo'] : '';
+$corto =(isset($_POST['corto'])) ? $_POST['corto'] : '';
 
 include_once '../modelo/conexionPablo.php';
 $objeto = new Conexion();
@@ -14,8 +15,8 @@ $conexion = $objeto->Conectar();
 $fila=null;
 $exite=false;
 
-$consulta = "INSERT INTO empresas (nombre_empresa,correo_empresa,rubro,nit,telefono,direccion) 
-VALUES ('$nombre', '$correo', '$rubro', '$nit', $telefono, '$direccion')";
+$consulta = "INSERT INTO empresas (nombre_empresa,correo_empresa,rubro,nit,telefono,direccion,nombre_corto) 
+VALUES ('$nombre', '$correo', '$rubro', '$nit', $telefono, '$direccion','$corto')";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute(); 
 
@@ -25,12 +26,12 @@ $resultado->execute();
 $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 $id_empresa=$data[0]['id_empresa'];
 
-$consulta = "UPDATE usuario_cotizador SET id_empresa='$id_empresa' WHERE usuario_cotizador.user_cotizador='$usuario'";
+$consulta = "UPDATE usuario_cotizador SET id_empresa='$id_empresa' WHERE usuario_cotizador.user_cotizador='$codigo'";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
-$consulta = "SELECT * FROM usuario_cotizador WHERE usuario_cotizador.user_cotizador='$usuario'";
+$consulta = "SELECT * FROM usuario_cotizador WHERE usuario_cotizador.user_cotizador='$codigo'";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
