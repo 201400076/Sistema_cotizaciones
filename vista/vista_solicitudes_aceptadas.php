@@ -135,12 +135,22 @@
 
 					<div class="row">
 						<div class="col-25">
+							<label for="corto">Nombre corto:</label>
+						</div>
+						<div class="col-75">
+							<input type="text" id="corto" name="corto" required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-25">
 							<label for="correo">Correo electrónico:</label>
 						</div>
 						<div class="col-75">
 							<input type="email" id="correo" name="correo" required>
 						</div>
 					</div>
+
 					<div class="row">
 						<div class="col-25">
 							<label for="nit">NIT:</label>
