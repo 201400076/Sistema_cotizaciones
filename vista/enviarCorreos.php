@@ -329,7 +329,7 @@ function generarArchivoPDF($id_solicitud){
         $unidad = $_SESSION['unidad'];
 
         $idRescate=$_GET['idSolicitud'];
-        
+        //$idRescate=$_POST['idSolicitud'];
         $conn = new Conexiones();
         $estadoConexion = $conn->getConn();
         $cotizaciones = "SELECT unidad_gasto.nombre_gasto, solicitudes.id_solicitudes, solicitudes_cotizaciones.fecha_ini_licitacion, solicitudes_cotizaciones.fecha_evaluacion, usuarios.nombres, usuarios.apellidos, solicitudes_cotizaciones.detalle, empresa_adjudicada FROM pedido,solicitudes,usuarios,usuarioconrol,unidad_gasto,solicitudes_cotizaciones WHERE solicitudes.id_solicitudes=solicitudes_cotizaciones.id_solicitudes
@@ -409,29 +409,31 @@ function generarArchivoPDF($id_solicitud){
     }
     function reporteCotizacion($id_solicitud,$unidad)
     {
-        $objeto = new Conexion();
-        $conexion = $objeto->Conectar();
-
-        $consulta = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
-        $resultado = $conexion->prepare($consulta);
-        $resultado->execute(); 
-        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
-
+        require_once('../configuraciones/conexion.php');
         $mysqli = new mysqli('localhost', 'root', '', 'sistema_de_cotizaciones');
         $query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
+        /*$query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido  FROM pedido,items,usuarios,usuarioconrol,unidad_gasto, solicitudes WHERE pedido.id_pedido=items.id_pedido 
+                                                                                                AND usuarios.id_usuarios=pedido.id_usuarios 
+                                                                                                AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+                                                                                                AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
+                                                                                                AND solicitudes.id_solicitudes=".$id_solicitud;
+                                                                                                */
         $respuesta = [];
         $numero = 0;
-
-        foreach($data as $d){
-            if($id_solicitud==$d['id_solicitudes']){
+        $resultado = $mysqli->query($query);
+        array_push($respuesta, ['Nro', 'Cantidad', 'Unidad', 'Detalle', 'Precio Unitario', 'Precio Total']);
+        while ($valor = $resultado->fetch_assoc()) {
+    
+            if ($id_solicitud == $valor['id_solicitudes']) {
                 $numero = $numero + 1;
-                $cantidad = $d['cantidad'];
-                $unidad = $d['unidad'];
-                $detalle = $d['detalle'];
+                $cantidad = $valor['cantidad'];
+                $unidad = $valor['unidad'];
+                $detalle = $valor['detalle'];
                 $preciounitario = "";
                 $preciototal = "";
                 array_push($respuesta, [utf8_decode($numero), utf8_decode($cantidad), utf8_decode($unidad), utf8_decode($detalle), utf8_decode($preciounitario), utf8_decode($preciototal)]);
             }
+            //$contador++;
         }
         $contador = 0;
         return $respuesta;
