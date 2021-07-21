@@ -15,6 +15,8 @@ $(document).on("click", ".imprimir", function() {
     })
 });
 
+
+
 $(document).on("click", ".btnGuardarJust", function() {
     id_solicitud = parseInt($(this).closest("tr").find('td:eq(1)').text());
 

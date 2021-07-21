@@ -9,9 +9,19 @@ require '../librerias/phpMailer/SMTP.php';
 require '../librerias/fpdf/fpdf.php';
 require_once('../configuraciones/conexion.php');
 
-session_start();
+/* session_start();
 $nombre = $_SESSION['nombre_usuario'];
 $conn = new Conexiones();
+$estadoconexion = $conn->getConn(); */
+session_start();
+$id_solicitud=$_GET['idSolicitud'];
+$unidad=$_SESSION['unidad'];
+$idRescate=$id_solicitud;
+
+$nombre = $_SESSION['nombre_usuario'];
+$conn = new Conexiones();
+$objeto = new Conexion();
+$conexion = $objeto->Conectar();
 $estadoconexion = $conn->getConn();
 
 
@@ -326,7 +336,7 @@ function generarArchivoPDF($id_solicitud){
         require_once('../configuraciones/conexion.php');
     
         $nomUsuAdm = $_SESSION['nombre_usuario'];
-        $unidad = $_SESSION['unidad'];
+        $unidad2 = $_SESSION['unidad'];
 
         $idRescate=$_GET['idSolicitud'];
         
@@ -361,7 +371,7 @@ function generarArchivoPDF($id_solicitud){
        
         //$pdf->AddPage();
         $pdf->Ln();
-        $table = reporteCotizacion($id_solicitud,$unidad);
+        $table = reporteCotizacion($idRescate,$unidad2);
         $widths = array(10, 20, 22, 80, 20, 20);
         $pdf->plot_table($widths, $lineheight, $table);
         //###############################################################   
@@ -409,29 +419,30 @@ function generarArchivoPDF($id_solicitud){
     }
     function reporteCotizacion($id_solicitud,$unidad)
     {
-        $objeto = new Conexion();
-        $conexion = $objeto->Conectar();
-
-        $consulta = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
-        $resultado = $conexion->prepare($consulta);
-        $resultado->execute(); 
-        $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
-
         $mysqli = new mysqli('localhost', 'root', '', 'sistema_de_cotizaciones');
         $query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido FROM pedido,items,solicitudes WHERE pedido.id_pedido=items.id_pedido AND pedido.id_pedido=solicitudes.id_pedido AND solicitudes.id_solicitudes=".$id_solicitud." AND pedido.id_unidad=".$unidad;
+        /*$query = "SELECT items.cantidad, items.unidad, items.detalle, solicitudes.id_solicitudes, items.id_pedido  FROM pedido,items,usuarios,usuarioconrol,unidad_gasto, solicitudes WHERE pedido.id_pedido=items.id_pedido 
+                                                                                                AND usuarios.id_usuarios=pedido.id_usuarios 
+                                                                                                AND usuarios.id_usuarios=usuarioconrol.id_usuarios
+                                                                                                AND usuarioconrol.id_gasto=unidad_gasto.id_gasto
+                                                                                                AND solicitudes.id_solicitudes=".$id_solicitud;
+                                                                                                */
         $respuesta = [];
         $numero = 0;
-
-        foreach($data as $d){
-            if($id_solicitud==$d['id_solicitudes']){
+        $resultado = $mysqli->query($query);
+        array_push($respuesta, ['Nro', 'Cantidad', 'Unidad', 'Detalle', 'Precio Unitario', 'Precio Total']);
+        while ($valor = $resultado->fetch_assoc()) {
+    
+            if ($id_solicitud == $valor['id_solicitudes']) {
                 $numero = $numero + 1;
-                $cantidad = $d['cantidad'];
-                $unidad = $d['unidad'];
-                $detalle = $d['detalle'];
+                $cantidad = $valor['cantidad'];
+                $unidad = $valor['unidad'];
+                $detalle = $valor['detalle'];
                 $preciounitario = "";
                 $preciototal = "";
                 array_push($respuesta, [utf8_decode($numero), utf8_decode($cantidad), utf8_decode($unidad), utf8_decode($detalle), utf8_decode($preciounitario), utf8_decode($preciototal)]);
             }
+            //$contador++;
         }
         $contador = 0;
         return $respuesta;
