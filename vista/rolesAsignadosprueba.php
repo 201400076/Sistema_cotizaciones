@@ -136,7 +136,7 @@
                     <select name="rolUser" id="rolUser">
                         <option value="0" id="selec1">Ninguno</option>
                         <option value="Unidad Administrativa" id="selec2">Usuario de Unidad Administrativa</option>
-                        <option value="Unidad de Gasto" id="selec3">Usuario de Unidad de Gasto</option>
+                        <option value="Unidad de Gasto" id="selec3">Administrador de Unidad de Gasto</option>
                     </select>                   
                 </div>
             </div>

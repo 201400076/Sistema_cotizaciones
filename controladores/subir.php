@@ -1,5 +1,5 @@
 <?php
-
+/*
     $ftp_server="pef.tis.cs.umss.edu.bo";
     $ftp_usuario="pef";
     $ftp_pass="h{4a9=Z^v%v:FcP";
@@ -22,8 +22,8 @@
                 echo 'error de';
             }
         }
-    }
-    /*
+    }*/
+
 if(isset($_FILES["archivo"])){
     $archivo=$_FILES["archivo"]["name"];
     $carpeta=$_SERVER['DOCUMENT_ROOT'].'/Sistema_cotizaciones/archivos/solicitudesPedido/';
@@ -31,5 +31,5 @@ if(isset($_FILES["archivo"])){
     if(move_uploaded_file($_FILES["archivo"]["tmp_name"],$carpeta.$archivo)){
         echo $archivo;
     }
-}*/
+
 ?>
